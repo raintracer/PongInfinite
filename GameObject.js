@@ -9,6 +9,9 @@ function GameObject(x,y) {
     this.xvel = 0;
     this.yvel = 0;
 
+    this.friction = 0.95;
+    this.staticFriction = 0.2;
+
     this.accX = function(force){
         this.xvel += force;
     };
@@ -18,6 +21,17 @@ function GameObject(x,y) {
     };
 
     this.update = function(){
+        this.xvel *= this.friction;
+        this.yvel *= this.friction;
+
+        if(Math.abs(this.xvel) < this.staticFriction){
+            this.xvel = 0;
+        }
+
+        if(Math.abs(this.yvel) < this.staticFriction){
+            this.yvel = 0;
+        }
+
         this.moveX();
         this.moveY();
     };
