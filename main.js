@@ -1,14 +1,17 @@
 let Balls = [], paddleTop, paddleBottom;
 
+const BALL_QUANTITY = 1;
 const PADDLEACC = 10;
+
+const CHAOS = 5;
 
 const STAGE_WIDTH = 500;
 const STAGE_HEIGHT = 500;
 
 function setup(){
     createCanvas(STAGE_WIDTH,STAGE_HEIGHT);
-    for(let i=0;i<10;i++) {
-        Balls.push(new Ball(width / 2, height / 2, Math.random()*20, Math.random()*20));
+    for(let i=0;i<BALL_QUANTITY;i++) {
+        Balls.push(new Ball(width / 2, height / 2, Math.random()*CHAOS, Math.random()*CHAOS));
     }
 
     paddleTop = new Paddle(STAGE_WIDTH/2, 20, 255, 0, 0);
@@ -16,12 +19,8 @@ function setup(){
 }
 
 function draw(){
-    background(0);
-    for(let i=0;i<10;i++) {
-        Balls[i].update();
-        Balls[i].show();
-    }
 
+    // CONTROLS
     if(keyIsDown(LEFT_ARROW)){
         paddleTop.accX(-PADDLEACC);
     }
@@ -37,10 +36,26 @@ function draw(){
     }
 
 
+    // UPDATES
+    for(let i=0;i<BALL_QUANTITY;i++) {
+        Balls[i].update();
+    }
     paddleTop.update();
-    paddleTop.show();
     paddleBottom.update();
-    paddleBottom.show();
 
+    // HIT DETECT
+    for(let i=0;i<BALL_QUANTITY;i++) {
+        paddleTop.deflectBall(Balls[i]);
+        paddleBottom.deflectBall(Balls[i]);
+    }
+
+
+    // DRAW
+    background(0);
+    for(let i=0;i<BALL_QUANTITY;i++) {
+        Balls[i].show();
+    }
+    paddleTop.show();
+    paddleBottom.show();
 
 }

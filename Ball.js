@@ -7,6 +7,8 @@ function Ball(x,y, xvel, yvel){
     GameObject.call(this,x,y);
 
     const BallSize = 25;
+    this.w = BallSize;
+    this.h = BallSize;
 
     this.xvel = xvel;
     this.yvel = yvel;
