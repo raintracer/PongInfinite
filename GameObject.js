@@ -63,8 +63,8 @@ function GameObject(x,y) {
             this.xvel*=-1;
         }
 
-        else if(this.x>STAGE_WIDTH){
-            this.x=STAGE_WIDTH;
+        else if(this.x>width){
+            this.x=width;
             this.xvel*=-1;
         }
     };
