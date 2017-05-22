@@ -1,0 +1,13 @@
+body{
+    background-color: navajowhite;
+}
+
+#score{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 20px auto;
+    color: black;
+    font-size: 2em;
+    width: 500px;
+}
