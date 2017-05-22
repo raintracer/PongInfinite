@@ -58,13 +58,15 @@ function GameObject(x,y) {
         this.oldx = this.x;
         this.x += this.xvel;
 
-        if(this.x<0){
-            this.x=0;
+    // left edge boundary crossing prevention
+        if(this.x - (this.w/2) < 0){
+            this.x = this.w/2;
             this.xvel*=-1;
         }
 
-        else if(this.x>width){
-            this.x=width;
+    // right edge boundary crossing prevention
+        else if(this.x + (this.w/2) > width){
+            this.x= width - (this.w/2);
             this.xvel*=-1;
         }
     };
