@@ -1,26 +1,41 @@
-let Balls = [], paddleTop, paddleBottom;
+// global variables and constants
 
-const BALL_QUANTITY = 1;
-const PADDLEACC = 10;
+let canvas, Balls = [], paddleTop, paddleBottom, score, topScore = 0, bottomScore = 0, start = false;
 
-const CHAOS = 5;
+// ALL YOUR CONSTANTS ARE BELONG TO US. I DON'T KNOW WHAT WERE YELLING ABOUT
+const BALL_QUANTITY = 1, PADDLEACC = 10, CHAOS = 2, STAGE_WIDTH = 500, STAGE_HEIGHT = 500;
 
-const STAGE_WIDTH = 500;
-const STAGE_HEIGHT = 500;
-
+// setup function --> deployed during page load
 function setup(){
-    createCanvas(STAGE_WIDTH,STAGE_HEIGHT);
+    canvas = createCanvas(STAGE_WIDTH,STAGE_HEIGHT);
+    centerCanvas();
+
     for(let i=0;i<BALL_QUANTITY;i++) {
-        Balls.push(new Ball(width / 2, height / 2, Math.random()*CHAOS, Math.random()*CHAOS));
+        Balls.push(new Ball(width / 2, height / 2));
     }
 
-    paddleTop = new Paddle(STAGE_WIDTH/2, 20, 255, 0, 0);
-    paddleBottom = new Paddle(STAGE_WIDTH/2, STAGE_HEIGHT-20, 0, 255, 0);
+    paddleTop = new Paddle(width/2, 20, 0, 255, 0);
+    paddleBottom = new Paddle(width/2, height-20, 0, 255, 0);
+    score = new Score();
+
 }
 
+// center the canvas
+function centerCanvas(){
+    let x = (windowWidth - width) / 2, y = (windowHeight - height) / 2;
+    canvas.position(x,y);
+}
+
+// center on window resize (responsive design)
+function windowResized(){
+    centerCanvas();
+}
+
+
+// draw function performs actions in control --> update --> detect collision --> show order
 function draw(){
 
-    // CONTROLS
+// CONTROLS
     if(keyIsDown(LEFT_ARROW)){
         paddleTop.accX(-PADDLEACC);
     }
@@ -36,21 +51,22 @@ function draw(){
     }
 
 
-    // UPDATES
+// UPDATES
     for(let i=0;i<BALL_QUANTITY;i++) {
         Balls[i].update();
     }
     paddleTop.update();
     paddleBottom.update();
 
-    // HIT DETECT
+// COLLISION DETECTECTION / BALL DEFLECTION
     for(let i=0;i<BALL_QUANTITY;i++) {
         paddleTop.deflectBall(Balls[i]);
         paddleBottom.deflectBall(Balls[i]);
+        score.scorePoint(Balls[i]);
     }
 
 
-    // DRAW
+// SHOW
     background(0);
     for(let i=0;i<BALL_QUANTITY;i++) {
         Balls[i].show();
@@ -58,4 +74,24 @@ function draw(){
     paddleTop.show();
     paddleBottom.show();
 
+}
+
+// drops the ball on movement of either paddle
+// sets start to true to prevent repeated ball dropping like a free eunuch clinic
+// start is reset to false on page load or point being awarded
+function keyPressed(){
+    if(start === false && (key == 'A' || key == 'D' || key == '%' || key == "'")){
+
+        for(let i = 0; i < BALL_QUANTITY; i++){
+
+        // sets a randomX and randomY value for each ball, may pass a negative y velocity to bring variation to ball
+        // dropping direction
+            let randomX = Math.random()*CHAOS, randomY = (Math.random()*CHAOS)+1;
+            if(randomY < CHAOS/2){
+                randomY *= -1;
+            }
+            Balls[i].drop(randomX, randomY);
+        }
+        start = true;
+    }
 }

@@ -1,0 +1,8 @@
+let paddles shoot at each other like space invaders
+as the paddles are damaged it becomes harder to deflect the balls
+
+let paddles play with 2 balls and hold one with space bar
+
+each side has a wall that must be shot / hit by the ball to create spaces where the player can pass the ball through
+for points
+    correctly defending your wall / goal (deflecting the ball on your side) will replace a brick?
