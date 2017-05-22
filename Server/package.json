@@ -1,0 +1,29 @@
+{
+  "name": "pongifinite_server",
+  "version": "1.0.0",
+  "description": "server to enable web socket based multiplayer for PongInfinite",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/the-vampiire/PongInfinite.git"
+  },
+  "keywords": [
+    "Pong",
+    "Multiplayer",
+    "Server"
+  ],
+  "author": "RainTracer and Vampiire",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/the-vampiire/PongInfinite/issues"
+  },
+  "homepage": "https://github.com/the-vampiire/PongInfinite#readme",
+  "dependencies": {
+    "ejs": "^2.5.6",
+    "express": "^4.15.3"
+  }
+}
