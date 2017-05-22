@@ -14,7 +14,7 @@ function setup(){
         Balls.push(new Ball(width / 2, height / 2));
     }
 
-    paddleTop = new Paddle(width/2, 20, 255, 0, 0);
+    paddleTop = new Paddle(width/2, 20, 0, 255, 0);
     paddleBottom = new Paddle(width/2, height-20, 0, 255, 0);
     score = new Score();
 
