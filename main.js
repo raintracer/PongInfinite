@@ -60,8 +60,8 @@ function draw(){
 
 // COLLISION DETECTECTION / BALL DEFLECTION
     for(let i=0;i<BALL_QUANTITY;i++) {
-        paddleTop.collision(Balls[i]);
-        paddleBottom.collision(Balls[i]);
+        paddleTop.deflectBall(Balls[i]);
+        paddleBottom.deflectBall(Balls[i]);
         score.scorePoint(Balls[i]);
     }
 
