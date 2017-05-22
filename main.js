@@ -3,7 +3,7 @@
 let canvas, Balls = [], paddleTop, paddleBottom, score, topScore = 0, bottomScore = 0, start = false;
 
 // ALL YOUR CONSTANTS ARE BELONG TO US. I DON'T KNOW WHAT WERE YELLING ABOUT
-const BALL_QUANTITY = 1, PADDLEACC = 10, CHAOS = 5, STAGE_WIDTH = 500, STAGE_HEIGHT = 500;
+const BALL_QUANTITY = 1, PADDLEACC = 10, CHAOS = 2, STAGE_WIDTH = 500, STAGE_HEIGHT = 500;
 
 // setup function --> deployed during page load
 function setup(){
@@ -60,8 +60,8 @@ function draw(){
 
 // COLLISION DETECTECTION / BALL DEFLECTION
     for(let i=0;i<BALL_QUANTITY;i++) {
-        paddleTop.deflectBall(Balls[i]);
-        paddleBottom.deflectBall(Balls[i]);
+        paddleTop.collision(Balls[i]);
+        paddleBottom.collision(Balls[i]);
         score.scorePoint(Balls[i]);
     }
 
