@@ -9,8 +9,8 @@ function GameObject(x,y) {
     this.xvel = 0;
     this.yvel = 0;
 
-    this.friction = 0.95;
-    this.staticFriction = 0.2;
+    this.friction = 0.6;
+    this.staticFriction = 0.5;
 
     this.accX = function(force){
         this.xvel += force;

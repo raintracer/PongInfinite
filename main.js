@@ -1,6 +1,6 @@
 let Balls = [], paddleTop, paddleBottom;
 
-const PADDLEACC = 5;
+const PADDLEACC = 10;
 
 const STAGE_WIDTH = 500;
 const STAGE_HEIGHT = 500;
@@ -22,34 +22,25 @@ function draw(){
         Balls[i].show();
     }
 
+    if(keyIsDown(LEFT_ARROW)){
+        paddleTop.accX(-PADDLEACC);
+    }
+    else if(keyIsDown(RIGHT_ARROW)){
+        paddleTop.accX(PADDLEACC);
+    }
+
+    if(keyIsDown(65)){
+        paddleBottom.accX(-PADDLEACC);
+    }
+    else if(keyIsDown(68)){
+        paddleBottom.accX(PADDLEACC);
+    }
+
+
     paddleTop.update();
     paddleTop.show();
     paddleBottom.update();
     paddleBottom.show();
 
-
-}
-
-function keyPressed(){
-
-    switch(key){
-        // top player left
-        case 'A':
-            paddleTop.accX(-PADDLEACC);
-            break;
-        // top player right
-        case 'D':
-            paddleTop.accX(PADDLEACC);
-            break;
-        // bottom player left
-        case '%':
-            paddleBottom.accX(-PADDLEACC);
-            break;
-        // bottom player right
-        case "'":
-            paddleBottom.accX(PADDLEACC);
-            break;
-
-    }
 
 }

@@ -11,6 +11,8 @@ function Ball(x,y, xvel, yvel){
     this.xvel = xvel;
     this.yvel = yvel;
 
+    this.friction = 1;
+
     this.show = function(){
         fill(255);
         ellipse(this.x,this.y,BallSize,BallSize);
