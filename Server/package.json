@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/the-vampiire/PongInfinite.git"
+    "url": "git+https://github.com/raintracer/PongInfinite"
   },
   "keywords": [
     "Pong",
@@ -19,9 +19,9 @@
   "author": "RainTracer and Vampiire",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/the-vampiire/PongInfinite/issues"
+    "url": "https://github.com/raintracer/PongInfinite/issues"
   },
-  "homepage": "https://github.com/the-vampiire/PongInfinite#readme",
+  "homepage": "https://github.com/raintracer/PongInfinite#readme",
   "dependencies": {
     "ejs": "^2.5.6",
     "express": "^4.15.3"
