@@ -4,9 +4,9 @@
 
 // paddle object, inherits gameobject properties
 // color can be passed or defaults to white (255, 255, 255)
-function Paddle(x,y, red = 255, green = 255, blue = 255){
+function Paddle(id, x,y, red = 255, green = 255, blue = 255){
 
-    GameObject.call(this,x,y);
+    GameObject.call(this,id,x,y);
 
 // assigns the rgb color values passed into the constructor, defaults to white
     this.red = red;
@@ -30,32 +30,6 @@ function Paddle(x,y, red = 255, green = 255, blue = 255){
 
         rect(this.x-this.w/2, this.y-this.h/2, this.w, this.h);
 
-    };
-
-// collision detection / ball deflection method of the paddle object
-
-    this.deflectBall = function(ball) {
-
-    // The ball is within paddle's x range
-        if ((ball.rightEdge() >= this.leftEdge()) && ((ball.leftEdge() <= this.rightEdge()))){
-
-        // Check ball collision with top edge
-            if (ball.bottomEdge()>this.topEdge() && ball.oldBottomEdge()<this.topEdge()){
-                // ball.setPosition(ball.x,this.topEdge()-ball.h/2);
-                ball.yvel*=-1;
-                ball.accX(this.xvel*this.dampen);
-                ball.accY(-.4);
-            }
-
-        // Check ball collision with bottom edge
-            else if (ball.topEdge()<this.bottomEdge() && ball.oldTopEdge()>this.bottomEdge()){
-                ball.yvel*=-1;
-                ball.accX(this.xvel*this.dampen);
-                ball.accY(+.4);
-            }
-
-        }
-
-    };
+    }
 
 }
