@@ -8,10 +8,16 @@ function Ball(id,x,y){
 
 // ball diameter
 
-    const BallSize = 10;
-
+    const BallSize = 20;
     this.w = BallSize;
     this.h = BallSize;
+
+    this.randomize = function(x = Math.random()*width, y = Math.random()*height, xvel = Math.random()*CHAOS, yvel = Math.random()*CHAOS){
+        this.x = x;
+        this.y = y;
+        this.xvel = xvel;
+        this.yvel = yvel;
+    };
 
 // ball drop (on startup or reset after point is awarded)
 
@@ -36,59 +42,59 @@ function Ball(id,x,y){
 
         this.x += this.xvel;
 
-        // DETECT COLLISION WITH OTHER OBJECTS
-        for (let i = 0; i < GameObjects.length; i++) {
+        // DETECT COLLISION WITH OTHER BALLS
+        for (let i = 0; i < Balls.length; i++) {
 
             // If the target object and the current object aren't the same
-            if (GameObjects[i].id !== this.id) {
+            if (Balls[i].id !== this.id) {
                 // If the ball is moving right
                 if (this.xvel > 0) {
 
                     // If there is a collision on the right
-                    if (this.collidesRight(GameObjects[i]) || this.collidesTopRight(GameObjects[i]) || this.collidesBottomRight(GameObjects[i])) {
+                    if (this.collidesRight(Balls[i]) || this.collidesTopRight(Balls[i]) || this.collidesBottomRight(Balls[i])) {
 
                         // Set the active object against the left side of the target object
-                        this.setPosition(GameObjects[i].leftEdge() - this.w / 2, this.y);
+                        this.setPosition(Balls[i].leftEdge() - this.w / 2, this.y);
 
                         // Transfer Momentum
-                        this.TransferMomentumX(GameObjects[i]);
+                        this.TransferMomentumX(Balls[i]);
 
                         // If the active object and the target object are moving in opposite, reflect the target object
-                        if(this.xDir() === -GameObjects[i].xDir()){
+                        if(this.xDir() === -Balls[i].xDir()){
 
-                            GameObjects[i].reflectX();
+                            Balls[i].reflectX();
 
                         }
 
                         // Reflect the active objects
                         this.reflectX();
 
-                        console.log("Right Collision");
+                        // console.log("Right Collision");
                     }
 
                 }
                 else if (this.xvel < 0) {
 
                     // If there is a collision on the left
-                    if (this.collidesLeft(GameObjects[i]) || this.collidesTopLeft(GameObjects[i]) || this.collidesBottomLeft(GameObjects[i])) {
+                    if (this.collidesLeft(Balls[i]) || this.collidesTopLeft(Balls[i]) || this.collidesBottomLeft(Balls[i])) {
 
                         // Set the active object against the left side of the target object
-                        this.setPosition(GameObjects[i].rightEdge() + this.w / 2, this.y);
+                        this.setPosition(Balls[i].rightEdge() + this.w / 2, this.y);
 
                         // Transfer Momentum
-                        this.TransferMomentumX(GameObjects[i]);
+                        this.TransferMomentumX(Balls[i]);
 
                         // If the active object and the target object are moving in opposite, reflect the target object
-                        if(this.xDir() === -GameObjects[i].xDir()){
+                        if(this.xDir() === -Balls[i].xDir()){
 
-                            GameObjects[i].reflectX();
+                            Balls[i].reflectX();
 
                         }
 
                         // Reflect the active objects
                         this.reflectX();
 
-                        console.log("Left Collision");
+                        // console.log("Left Collision");
                     }
 
                 }
@@ -115,34 +121,35 @@ function Ball(id,x,y){
     this.moveY = function(){
 
         this.y += this.yvel;
+        score.scorePoint(this);
 
-        // DETECT COLLISION WITH OTHER OBJECTS
-        for (let i = 0; i < GameObjects.length; i++) {
+        // DETECT COLLISION WITH OTHER BALLS
+        for (let i = 0; i < Balls.length; i++) {
 
             // If the target object and the current object aren't the same
-            if (GameObjects[i].id !== this.id) {
+            if (Balls[i].id !== this.id) {
                 // If the ball is moving down
                 if (this.yvel > 0) {
 
                     // If there is a collision on the bottom
-                    if (this.collidesBottomLeft(GameObjects[i]) || this.collidesBottom(GameObjects[i]) || this.collidesBottomRight(GameObjects[i])) {
+                    if (this.collidesBottomLeft(Balls[i]) || this.collidesBottom(Balls[i]) || this.collidesBottomRight(Balls[i])) {
 
-                        this.setPosition(this.x, GameObjects[i].topEdge() - this.h / 2);
+                        this.setPosition(this.x, Balls[i].topEdge() - this.h / 2);
 
                         // Transfer Momentum
-                        this.TransferMomentumY(GameObjects[i]);
+                        this.TransferMomentumY(Balls[i]);
 
                         // If the active object and the target object are moving in opposite, reflect the target object
-                        if(this.yDir() === -GameObjects[i].yDir()){
+                        if(this.yDir() === -Balls[i].yDir()){
 
-                            GameObjects[i].reflectY();
+                            Balls[i].reflectY();
 
                         }
 
                         // Reflect the active objects
                         this.reflectY();
 
-                        console.log("Bottom Collision");
+                        // console.log("Bottom Collision");
                     }
 
                 }
@@ -150,41 +157,58 @@ function Ball(id,x,y){
                 else if (this.yvel < 0) {
 
                     // If there is a collision on the top
-                    if (this.collidesTopLeft(GameObjects[i]) || this.collidesTop(GameObjects[i]) || this.collidesTopRight(GameObjects[i])) {
-                        this.setPosition(this.x, GameObjects[i].bottomEdge() + this.h / 2);
+                    if (this.collidesTopLeft(Balls[i]) || this.collidesTop(Balls[i]) || this.collidesTopRight(Balls[i])) {
+                        this.setPosition(this.x, Balls[i].bottomEdge() + this.h / 2);
 
                         // Transfer Momentum
-                        this.TransferMomentumY(GameObjects[i]);
+                        this.TransferMomentumY(Balls[i]);
 
                         // If the active object and the target object are moving in opposite, reflect the target object
-                        if(this.yDir() === -GameObjects[i].yDir()){
+                        if(this.yDir() === -Balls[i].yDir()){
 
-                            GameObjects[i].reflectY();
+                            Balls[i].reflectY();
 
                         }
 
                         // Reflect the active objects
                         this.reflectY();
 
-                        console.log("Top Collision");
+                        // console.log("Top Collision");
                     }
 
                 }
             }
         }
 
-        // DETECT COLLISION BOUNDARIES
-        // top edge boundary crossing prevention
-        if (this.y - (this.h / 2) < 0) {
-            this.y = this.h / 2;
-            this.reflectY();
+        // DETECT COLLISION WITH PADDLES AT ANY OF THE BALLS CORNERS OR SIDES
+        if (this.collidesAny(paddleTop)){
+            this.setPosition(this.x, paddleTop.bottomEdge() + this.h/2);
+            this.yvel = Math.abs(this.yvel);
+            this.yvel *= 1.1;
+            this.xvel += paddleTop.xvel/10;
         }
 
-        // bottom edge boundary crossing prevention
-        else if (this.y + (this.h / 2) > height) {
-            this.y = height - (this.h / 2);
-            this.reflectY();
+        if (this.collidesAny(paddleBottom)){
+            this.setPosition(this.x, paddleBottom.topEdge() - this.h/2);
+            this.yvel = -Math.abs(this.yvel);
+            this.yvel *= 1.1;
+            this.xvel += paddleTop.xvel/10;
         }
+
+
+
+        // DETECT COLLISION BOUNDARIES - Disabled to allow pass-through and scoring
+        // // top edge boundary crossing prevention
+        // if (this.y - (this.h / 2) < 0) {
+        //     this.y = this.h / 2;
+        //     this.reflectY();
+        // }
+        //
+        // // bottom edge boundary crossing prevention
+        // else if (this.y + (this.h / 2) > height) {
+        //     this.y = height - (this.h / 2);
+        //     this.reflectY();
+        // }
 
     };
 
