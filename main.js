@@ -1,6 +1,6 @@
 // global variables and constants
 
-let canvas, Balls = [], GameObjects = [], paddleTop, paddleBottom, score, topScore = 0, bottomScore = 0, start = false;
+let canvas, Balls = [], paddleTop, paddleBottom, score, topScore = 0, bottomScore = 0, start = false;
 
 // ALL YOUR CONSTANTS ARE BELONG TO US. I DON'T KNOW WHAT WERE YELLING ABOUT
 const BALL_QUANTITY = 3, PADDLEACC = 10, STAGE_WIDTH = 500, STAGE_HEIGHT = 500;
@@ -18,12 +18,10 @@ function setup(){
     paddleBottom = new Paddle(1, width/2, height-20, 0, 255, 0);
 
     // CREATE A LIST OF GAME OBJECTS, WHILE INITIALIZING BALLS IN RANDOM STATES
-    GameObjects[0] = paddleTop;
-    GameObjects[1] = paddleBottom;
+
     for(let i=0;i<BALL_QUANTITY;i++) {
         Balls.push(new Ball(2+i, width / 2, height / 2, i));
         Balls[i].randomize();
-        GameObjects[i+2] = Balls[i];
     }
 
     // INITIALIZE THE SCORE OBJECT

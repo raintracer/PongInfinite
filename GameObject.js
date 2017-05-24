@@ -12,8 +12,6 @@ function GameObject(id,x,y) {
     this.oldx = x;
     this.oldy = y;
 
-    this.type = "general";
-
 // width and height of the game object
     this.w = 0;
     this.h = 0;
