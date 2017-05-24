@@ -22,7 +22,7 @@ function setup(){
     GameObjects[1] = paddleBottom;
     for(let i=0;i<BALL_QUANTITY;i++) {
         Balls.push(new Ball(2+i, width / 2, height / 2, i));
-        Balls[i].randomize;
+        Balls[i].randomize();
         GameObjects[i+2] = Balls[i];
     }
 
