@@ -10,6 +10,7 @@ function Ball(id,x,y){
     const BallSize = 10;
     this.w = BallSize;
     this.h = BallSize;
+    this.type = "ball";
 
 // ball drop (on startup or reset after point is awarded)
 
@@ -49,7 +50,9 @@ function Ball(id,x,y){
                         this.setPosition(GameObjects[i].leftEdge() - this.w / 2, this.y);
 
                         // Transfer Momentum
-                        this.TransferMomentumX(GameObjects[i]);
+                        if (GameObjects[i].type !== "paddle") {
+                            this.TransferMomentumX(GameObjects[i]);
+                        }
 
                         // If the active object and the target object are moving in opposite, reflect the target object
                         if(this.xDir() === -GameObjects[i].xDir()){
@@ -74,7 +77,9 @@ function Ball(id,x,y){
                         this.setPosition(GameObjects[i].rightEdge() + this.w / 2, this.y);
 
                         // Transfer Momentum
-                        this.TransferMomentumX(GameObjects[i]);
+                        if (GameObjects[i].type !== "paddle") {
+                            this.TransferMomentumX(GameObjects[i]);
+                        }
 
                         // If the active object and the target object are moving in opposite, reflect the target object
                         if(this.xDir() === -GameObjects[i].xDir()){
@@ -128,7 +133,9 @@ function Ball(id,x,y){
                         this.setPosition(this.x, GameObjects[i].topEdge() - this.h / 2);
 
                         // Transfer Momentum
-                        this.TransferMomentumY(GameObjects[i]);
+                        if (GameObjects[i].type !== "paddle") {
+                            this.TransferMomentumY(GameObjects[i]);
+                        }
 
                         // If the active object and the target object are moving in opposite, reflect the target object
                         if(this.yDir() === -GameObjects[i].yDir()){
@@ -152,7 +159,9 @@ function Ball(id,x,y){
                         this.setPosition(this.x, GameObjects[i].bottomEdge() + this.h / 2);
 
                         // Transfer Momentum
-                        this.TransferMomentumY(GameObjects[i]);
+                        if (GameObjects[i].type !== "paddle") {
+                            this.TransferMomentumY(GameObjects[i]);
+                        }
 
                         // If the active object and the target object are moving in opposite, reflect the target object
                         if(this.yDir() === -GameObjects[i].yDir()){

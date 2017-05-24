@@ -12,6 +12,8 @@ function GameObject(id,x,y) {
     this.oldx = x;
     this.oldy = y;
 
+    this.type = "general";
+
 // width and height of the game object
     this.w = 0;
     this.h = 0;
@@ -198,7 +200,7 @@ function GameObject(id,x,y) {
 
         // Transfer some velocity between active and target objects
         let MomentumDifference = Math.abs(Math.abs(this.yvel) - Math.abs(TargetObject.yvel));
-        let MomentumTransfer = MomentumDifference*TRANSFER_COEFFICIENT/2;
+        let MomentumTransfer = MomentumDifference*TRANSFER_COEFFICIENT;
 
         if (Math.abs(this.yvel) > TargetObject.yvel){
             this.yvel -= MomentumTransfer*this.yDir();

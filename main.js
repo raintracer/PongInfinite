@@ -3,9 +3,9 @@
 let canvas, Balls = [], GameObjects = [], paddleTop, paddleBottom, score, topScore = 0, bottomScore = 0, start = false;
 
 // ALL YOUR CONSTANTS ARE BELONG TO US. I DON'T KNOW WHAT WERE YELLING ABOUT
-const BALL_QUANTITY = 50, PADDLEACC = 10, CHAOS = 20, STAGE_WIDTH = 500, STAGE_HEIGHT = 500;
-const BALL_PUSH_SPEED = .5;
-const TRANSFER_COEFFICIENT = 1;
+const BALL_QUANTITY = 3, PADDLEACC = 10, CHAOS = 20, STAGE_WIDTH = 500, STAGE_HEIGHT = 500;
+
+const TRANSFER_COEFFICIENT = .5;
 
 // setup function --> deployed during page load
 function setup(){
@@ -28,11 +28,6 @@ function setup(){
 
     score = new Score();
 
-    //TESTING
-    Balls[0].setPosition(50,50);
-    Balls[1].xvel=1;
-    Balls[1].yvel=2;
-
 }
 
 // center the canvas
@@ -53,18 +48,9 @@ function draw(){
 // CONTROLS
     if(keyIsDown(LEFT_ARROW)){
         paddleBottom.accX(-PADDLEACC);
-        Balls[0].accX(-BALL_PUSH_SPEED);
     }
     else if(keyIsDown(RIGHT_ARROW)){
         paddleBottom.accX(PADDLEACC);
-        Balls[0].accX(BALL_PUSH_SPEED);
-    }
-
-    if(keyIsDown(UP_ARROW)){
-        Balls[0].accY(-BALL_PUSH_SPEED);
-    }
-    else if(keyIsDown(DOWN_ARROW)){
-        Balls[0].accY(BALL_PUSH_SPEED);
     }
 
     if(keyIsDown(65)){
