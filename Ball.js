@@ -61,7 +61,7 @@ function Ball(id,x,y){
                         // Reflect the active objects
                         this.reflectX();
 
-                        console.log("Right Collision");
+                        // console.log("Right Collision");
                     }
 
                 }
@@ -86,7 +86,7 @@ function Ball(id,x,y){
                         // Reflect the active objects
                         this.reflectX();
 
-                        console.log("Left Collision");
+                        // console.log("Left Collision");
                     }
 
                 }
@@ -140,7 +140,7 @@ function Ball(id,x,y){
                         // Reflect the active objects
                         this.reflectY();
 
-                        console.log("Bottom Collision");
+                        // console.log("Bottom Collision");
                     }
 
                 }
@@ -164,7 +164,7 @@ function Ball(id,x,y){
                         // Reflect the active objects
                         this.reflectY();
 
-                        console.log("Top Collision");
+                        // console.log("Top Collision");
                     }
 
                 }

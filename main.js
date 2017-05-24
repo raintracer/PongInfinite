@@ -3,7 +3,7 @@
 let canvas, Balls = [], GameObjects = [], paddleTop, paddleBottom, score, topScore = 0, bottomScore = 0, start = false;
 
 // ALL YOUR CONSTANTS ARE BELONG TO US. I DON'T KNOW WHAT WERE YELLING ABOUT
-const BALL_QUANTITY = 20, PADDLEACC = 10, CHAOS = 5, STAGE_WIDTH = 500, STAGE_HEIGHT = 500;
+const BALL_QUANTITY = 50, PADDLEACC = 10, CHAOS = 20, STAGE_WIDTH = 500, STAGE_HEIGHT = 500;
 const BALL_PUSH_SPEED = .5;
 const TRANSFER_COEFFICIENT = 1;
 
