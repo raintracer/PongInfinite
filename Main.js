@@ -1,6 +1,6 @@
 // global variables and constants
 
-let canvas, Balls = [], paddleTop, paddleBottom, score, topScore = 0, bottomScore = 0, start = false,
+let canvas, Balls = [], paddleTop, laserTop, paddleBottom, laserBottom, score, topScore = 0, bottomScore = 0, start = false,
     ballCollide, pointAwarded, paddleCollide, mute = false;
 
 
@@ -27,7 +27,9 @@ function setup(){
 
     // INITIALIZE THE PADDLES
     paddleTop = new Paddle(0, width/2, 20, 0, 255, 0);
+    laserTop = new Laser(paddleTop.x, paddleTop.bottomEdge(), 1, 255, 0, 0);
     paddleBottom = new Paddle(1, width/2, height-20, 0, 255, 0);
+    laserBottom = new Laser(paddleBottom.x, paddleBottom.topEdge(), -1, 255, 0, 0);
 
     // CREATE A LIST OF GAME OBJECTS, WHILE INITIALIZING BALLS IN RANDOM STATES
 
@@ -93,7 +95,9 @@ function draw(){
         Balls[i].show();
     }
     paddleTop.show();
+    laserTop.show();
     paddleBottom.show();
+    laserBottom.show();
 
 }
 
