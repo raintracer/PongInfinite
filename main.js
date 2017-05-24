@@ -3,8 +3,8 @@
 let canvas, Balls = [], paddleTop, paddleBottom, score, topScore = 0, bottomScore = 0, start = false;
 
 // ALL YOUR CONSTANTS ARE BELONG TO US. I DON'T KNOW WHAT WERE YELLING ABOUT
-const BALL_QUANTITY = 3, PADDLEACC = 10, STAGE_WIDTH = 500, STAGE_HEIGHT = 500;
-const CHAOS = 20;                   // CHAOS IS THE MAXIMUM STARTING SPEED OF THE BALLS
+const BALL_QUANTITY = 5, PADDLEACC = 10, STAGE_WIDTH = 300, STAGE_HEIGHT = 600;
+const CHAOS = 6;                    // CHAOS IS THE MAXIMUM STARTING SPEED OF THE BALLS
 const TRANSFER_COEFFICIENT = .5;    // THE TRANSFER COEFFICIENT IS HOW MUCH OF THE MOMENTUM DELTA IS TRANSFERRED IN A COLLISION
 
 // setup function --> deployed during page load
@@ -67,9 +67,9 @@ function draw(){
     }
 
     // SCORE DETECTION
-    for(let i=0;i<BALL_QUANTITY;i++) {
-        score.scorePoint(Balls[i]);
-    }
+    // for(let i=0;i<BALL_QUANTITY;i++) {
+    //     score.scorePoint(Balls[i]);
+    // }
 
 
     // SHOW
@@ -85,19 +85,19 @@ function draw(){
 // drops the ball on movement of either paddle
 // sets start to true to prevent repeated ball dropping like a free eunuch clinic
 // start is reset to false on page load or point being awarded
-function keyPressed(){
-    if(start === false && (key == 'A' || key == 'D' || key == '%' || key == "'")){
-
-        for(let i = 0; i < BALL_QUANTITY; i++){
-
-        // sets a randomX and randomY value for each ball, may pass a negative y velocity to bring variation to ball
-        // dropping direction
-            let randomX = Math.random()*CHAOS, randomY = (Math.random()*CHAOS)+1;
-            if(randomY < CHAOS/2){
-                randomY *= -1;
-            }
-            Balls[i].drop(randomX, randomY);
-        }
-        start = true;
-    }
-}
+// function keyPressed(){
+//     if(start === false && (key == 'A' || key == 'D' || key == '%' || key == "'")){
+//
+//         for(let i = 0; i < BALL_QUANTITY; i++){
+//
+//         // sets a randomX and randomY value for each ball, may pass a negative y velocity to bring variation to ball
+//         // dropping direction
+//             let randomX = Math.random()*CHAOS, randomY = (Math.random()*CHAOS)+1;
+//             if(randomY < CHAOS/2){
+//                 randomY *= -1;
+//             }
+//             Balls[i].drop(randomX, randomY);
+//         }
+//         start = true;
+//     }
+// }

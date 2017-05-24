@@ -10,29 +10,29 @@ function Score(){
         if(ball.y >= STAGE_HEIGHT){
             topScore++;
             this.showScore('topScore', topScore);
-            this.reset(ball);
+            ball.randomize(width/2,height/2);
         }
 
         if(ball.y <= 0){
             bottomScore++;
             this.showScore('bottomScore', bottomScore);
-            this.reset(ball);
+            ball.randomize(width/2,height/2);
         }
 
     };
 
 // on point score of a ball have that ball reset to center
-    this.reset = function(ball){
-        ball.y = width/2;
-        ball.x = height/2;
-        ball.xvel = 0;
-        ball.yvel = 0;
-
-    // issue with multiple balls: allows "ball drop" before all balls have been reset
-        // works fine with 1 ball
-        start = false;
-
-    };
+//     this.reset = function(ball){
+//         ball.y = width/2;
+//         ball.x = height/2;
+//         ball.xvel = 0;
+//         ball.yvel = 0;
+//
+//     // issue with multiple balls: allows "ball drop" before all balls have been reset
+//         // works fine with 1 ball
+//         start = false;
+//
+//     };
 
     this.showScore = function(pointsDiv, playerPoints){
         document.getElementById(pointsDiv).textContent = playerPoints;

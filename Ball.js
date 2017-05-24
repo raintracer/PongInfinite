@@ -7,7 +7,7 @@ function Ball(id,x,y){
     GameObject.call(this,id,x,y);
 
 // ball diameter
-    const BallSize = 10;
+    const BallSize = 20;
     this.w = BallSize;
     this.h = BallSize;
 
@@ -41,7 +41,7 @@ function Ball(id,x,y){
 
         this.x += this.xvel;
 
-        // DETECT COLLISION WITH OTHER OBJECTS
+        // DETECT COLLISION WITH OTHER BALLS
         for (let i = 0; i < Balls.length; i++) {
 
             // If the target object and the current object aren't the same
@@ -120,8 +120,9 @@ function Ball(id,x,y){
     this.moveY = function(){
 
         this.y += this.yvel;
+        score.scorePoint(this);
 
-        // DETECT COLLISION WITH OTHER OBJECTS
+        // DETECT COLLISION WITH OTHER BALLS
         for (let i = 0; i < Balls.length; i++) {
 
             // If the target object and the current object aren't the same
@@ -178,18 +179,35 @@ function Ball(id,x,y){
             }
         }
 
-        // DETECT COLLISION BOUNDARIES
-        // top edge boundary crossing prevention
-        if (this.y - (this.h / 2) < 0) {
-            this.y = this.h / 2;
-            this.reflectY();
+        // DETECT COLLISION WITH PADDLES AT ANY OF THE BALLS CORNERS OR SIDES
+        if (this.collidesAny(paddleTop)){
+            this.setPosition(this.x, paddleTop.bottomEdge() + this.h/2);
+            this.yvel = Math.abs(this.yvel);
+            this.yvel *= 1.1;
+            this.xvel += paddleTop.xvel/10;
         }
 
-        // bottom edge boundary crossing prevention
-        else if (this.y + (this.h / 2) > height) {
-            this.y = height - (this.h / 2);
-            this.reflectY();
+        if (this.collidesAny(paddleBottom)){
+            this.setPosition(this.x, paddleBottom.topEdge() - this.h/2);
+            this.yvel = -Math.abs(this.yvel);
+            this.yvel *= 1.1;
+            this.xvel += paddleTop.xvel/10;
         }
+
+
+
+        // DETECT COLLISION BOUNDARIES - Disabled to allow pass-through and scoring
+        // // top edge boundary crossing prevention
+        // if (this.y - (this.h / 2) < 0) {
+        //     this.y = this.h / 2;
+        //     this.reflectY();
+        // }
+        //
+        // // bottom edge boundary crossing prevention
+        // else if (this.y + (this.h / 2) > height) {
+        //     this.y = height - (this.h / 2);
+        //     this.reflectY();
+        // }
 
     };
 

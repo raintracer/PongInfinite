@@ -129,6 +129,10 @@ function GameObject(id,x,y) {
         return game_object.containsPoint(this.x,this.bottomEdge());
     };
 
+    this.collidesAny = function(game_object){
+        return (this.collidesTopLeft(game_object) || this.collidesTop(game_object) || this.collidesTopRight(game_object) || this.collidesRight(game_object) || this.collidesBottomRight(game_object) || this.collidesBottom(game_object) || this.collidesBottomLeft(game_object) || this.collidesLeft(game_object));
+    }
+
     // Check if the point is inside the object, treating it like a rectangle
     this.containsPoint = function(x,y){
 
