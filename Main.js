@@ -20,8 +20,6 @@ function preload(){
 // setup function --> deployed during page load
 function setup(){
 
-    console.log(ballCollide.isLoaded());
-
     canvas = createCanvas(STAGE_WIDTH,STAGE_HEIGHT);
     centerCanvas();
 
