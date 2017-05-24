@@ -2,20 +2,14 @@
  * Created by Richard Tyler on 5/21/2017.
  */
 
-<<<<<<< HEAD
-function Ball(x,y){
-=======
 function Ball(id,x,y){
->>>>>>> 84be2afb93a7230eb73f9565a0ac54a367906943
 
     GameObject.call(this,id,x,y);
 
 // ball diameter
-<<<<<<< HEAD
-    const BallSize = 25;
-=======
+
     const BallSize = 10;
->>>>>>> 84be2afb93a7230eb73f9565a0ac54a367906943
+
     this.w = BallSize;
     this.h = BallSize;
 
@@ -26,10 +20,6 @@ function Ball(id,x,y){
         this.yvel = yvel;
     };
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 84be2afb93a7230eb73f9565a0ac54a367906943
 // negates GameObject dynamic friction
     this.friction = 1;
     this.staticFriction = 0;
@@ -40,8 +30,6 @@ function Ball(id,x,y){
         ellipse(this.x,this.y,BallSize,BallSize);
     };
 
-<<<<<<< HEAD
-=======
     // moves the game object in the x direction, assigns the old x position to the previous x position before movement
 // sets bounds in the x direction to contain the game object within the canvas
     this.moveX = function(){
@@ -200,5 +188,4 @@ function Ball(id,x,y){
 
     };
 
->>>>>>> 84be2afb93a7230eb73f9565a0ac54a367906943
 }
