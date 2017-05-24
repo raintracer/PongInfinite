@@ -11,12 +11,25 @@ function Score(){
             topScore++;
             this.showScore('topScore', topScore);
             ball.randomize(width/2,height/2);
+
+            // play point scored sound if mute is off
+            if(!mute){
+                pointAwarded.playMode('restart');
+                pointAwarded.play();
+            }
         }
 
         if(ball.y <= 0){
             bottomScore++;
             this.showScore('bottomScore', bottomScore);
             ball.randomize(width/2,height/2);
+
+            // play point scored sound if mute is off
+            if(!mute){
+                pointAwarded.playMode('restart');
+                pointAwarded.play();
+            }
+
         }
 
     };

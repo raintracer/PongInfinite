@@ -18,9 +18,13 @@ body{
     margin: 0 auto;
 }
 
-#topScoreDiv{
+#bottomScoreDiv{
+    margin-top: 540px;
 }
 
-#bottomScoreDiv{
-    margin-top: 700px;
+#mute{
+    position: absolute;
+    top: 20px;
+    left: 50px;
 }
+
