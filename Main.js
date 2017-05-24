@@ -1,12 +1,21 @@
 // global variables and constants
 
-let canvas, Balls = [], paddleTop, paddleBottom, score, topScore = 0, bottomScore = 0, start = false;
+let canvas, Balls = [], paddleTop, paddleBottom, score, topScore = 0, bottomScore = 0, start = false,
+    ballCollide, pointAwarded, paddleCollide, mute = false;
 
 
 // ALL YOUR CONSTANTS ARE BELONG TO US. I DON'T KNOW WHAT WERE YELLING ABOUT
-const BALL_QUANTITY = 5, PADDLEACC = 10, STAGE_WIDTH = 300, STAGE_HEIGHT = 600;
+const BALL_QUANTITY = 2, PADDLEACC = 10, STAGE_WIDTH = 400, STAGE_HEIGHT = 500;
 const CHAOS = 6;                    // CHAOS IS THE MAXIMUM STARTING SPEED OF THE BALLS
 const TRANSFER_COEFFICIENT = .5;    // THE TRANSFER COEFFICIENT IS HOW MUCH OF THE MOMENTUM DELTA IS TRANSFERRED IN A COLLISION
+
+
+// PRELOAD THE SOUND EFFECTS TO BE READY FOR USE
+function preload(){
+    ballCollide = loadSound('Sound Effects/Ball_Collide.mp3');
+    pointAwarded = loadSound('Sound Effects/Light_Fapping.mp3');
+    paddleCollide = loadSound('Sound Effects/Soft_Ding.mp3');
+}
 
 // setup function --> deployed during page load
 function setup(){
@@ -27,6 +36,9 @@ function setup(){
 
     // INITIALIZE THE SCORE OBJECT
     score = new Score();
+
+    // INITIALIZE THE SOUND EFFECTS
+
 
 }
 

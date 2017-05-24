@@ -70,6 +70,12 @@ function Ball(id,x,y){
                         this.reflectX();
 
                         // console.log("Right Collision");
+
+                        // play ball collision sound if mute is off
+                        if(!mute){
+                            ballCollide.playMode('restart');
+                            ballCollide.play();
+                        }
                     }
 
                 }
@@ -95,7 +101,16 @@ function Ball(id,x,y){
                         this.reflectX();
 
                         // console.log("Left Collision");
+
+                        // play ball collision sound if mute is off
+                        if(!mute){
+                            ballCollide.playMode('restart');
+                            ballCollide.play();
+                        }
+
                     }
+
+
 
                 }
             }
@@ -150,6 +165,12 @@ function Ball(id,x,y){
                         this.reflectY();
 
                         // console.log("Bottom Collision");
+
+                        // play ball collision sound if mute is off
+                        if(!mute){
+                            ballCollide.playMode('restart');
+                            ballCollide.play();
+                        }
                     }
 
                 }
@@ -174,6 +195,12 @@ function Ball(id,x,y){
                         this.reflectY();
 
                         // console.log("Top Collision");
+
+                        // play ball collision sound if mute is off
+                        if(!mute){
+                            ballCollide.playMode('restart');
+                            ballCollide.play();
+                        }
                     }
 
                 }
@@ -186,6 +213,14 @@ function Ball(id,x,y){
             this.yvel = Math.abs(this.yvel);
             this.yvel *= 1.1;
             this.xvel += paddleTop.xvel/10;
+
+            // play paddle collision sound if mute is off
+            if(!mute){
+                paddleCollide.playMode('restart');
+                paddleCollide.play();
+            }
+
+
         }
 
         if (this.collidesAny(paddleBottom)){
@@ -193,6 +228,12 @@ function Ball(id,x,y){
             this.yvel = -Math.abs(this.yvel);
             this.yvel *= 1.1;
             this.xvel += paddleTop.xvel/10;
+
+            // play paddle collision sound if mute is off
+            if(!mute){
+                paddleCollide.playMode('restart');
+                paddleCollide.play();
+            }
         }
 
 
