@@ -3,29 +3,30 @@
 let canvas, Balls = [], GameObjects = [], paddleTop, paddleBottom, score, topScore = 0, bottomScore = 0, start = false;
 
 // ALL YOUR CONSTANTS ARE BELONG TO US. I DON'T KNOW WHAT WERE YELLING ABOUT
-const BALL_QUANTITY = 3, PADDLEACC = 10, CHAOS = 20, STAGE_WIDTH = 500, STAGE_HEIGHT = 500;
-
-const TRANSFER_COEFFICIENT = .5;
+const BALL_QUANTITY = 3, PADDLEACC = 10, STAGE_WIDTH = 500, STAGE_HEIGHT = 500;
+const CHAOS = 20;                   // CHAOS IS THE MAXIMUM STARTING SPEED OF THE BALLS
+const TRANSFER_COEFFICIENT = .5;    // THE TRANSFER COEFFICIENT IS HOW MUCH OF THE MOMENTUM DELTA IS TRANSFERRED IN A COLLISION
 
 // setup function --> deployed during page load
 function setup(){
+
     canvas = createCanvas(STAGE_WIDTH,STAGE_HEIGHT);
     centerCanvas();
 
+    // INITIALIZE THE PADDLES
     paddleTop = new Paddle(0, width/2, 20, 0, 255, 0);
     paddleBottom = new Paddle(1, width/2, height-20, 0, 255, 0);
 
+    // CREATE A LIST OF GAME OBJECTS, WHILE INITIALIZING BALLS IN RANDOM STATES
     GameObjects[0] = paddleTop;
     GameObjects[1] = paddleBottom;
     for(let i=0;i<BALL_QUANTITY;i++) {
         Balls.push(new Ball(2+i, width / 2, height / 2, i));
-        Balls[i].xvel = CHAOS*Math.random();
-        Balls[i].yvel = CHAOS*Math.random();
-        Balls[i].x = width*Math.random();
-        Balls[i].y = height*Math.random();
+        Balls[i].randomize;
         GameObjects[i+2] = Balls[i];
     }
 
+    // INITIALIZE THE SCORE OBJECT
     score = new Score();
 
 }
@@ -45,7 +46,7 @@ function windowResized(){
 // draw function performs actions in control --> update --> detect collision --> show order
 function draw(){
 
-// CONTROLS
+    // CONTROLS
     if(keyIsDown(LEFT_ARROW)){
         paddleBottom.accX(-PADDLEACC);
     }
@@ -60,20 +61,20 @@ function draw(){
         paddleTop.accX(PADDLEACC);
     }
 
-// UPDATES
+    // UPDATES
     paddleTop.update();
     paddleBottom.update();
     for(let i=0;i<BALL_QUANTITY;i++) {
         Balls[i].update();
     }
 
-// SCORE DETECTION
+    // SCORE DETECTION
     for(let i=0;i<BALL_QUANTITY;i++) {
-        // score.scorePoint(Balls[i]);
+        score.scorePoint(Balls[i]);
     }
 
 
-// SHOW
+    // SHOW
     background(0);
     for(let i=0;i<BALL_QUANTITY;i++) {
         Balls[i].show();

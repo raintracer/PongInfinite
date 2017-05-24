@@ -12,6 +12,13 @@ function Ball(id,x,y){
     this.h = BallSize;
     this.type = "ball";
 
+    this.randomize = function(x = Math.random()*width, y = Math.random()*height, xvel = Math.random()*CHAOS(), yvel = Math.random()*CHAOS()){
+        this.x = x;
+        this.y = y;
+        this.xvel = xvel;
+        this.yvel = yvel;
+    };
+
 // ball drop (on startup or reset after point is awarded)
 
     this.drop = function(xvel, yvel){
