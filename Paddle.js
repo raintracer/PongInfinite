@@ -20,7 +20,6 @@ function Paddle(id, x,y, red = 255, green = 255, blue = 255){
 // dampening coefficient used when imparting the velocity of the paddle to the ball during collision
     this.dampen = .4;
 
-
 // show method of the paddle, draws the paddle object as a rectangle of specified color, width, height, and position
     this.show = function(){
 

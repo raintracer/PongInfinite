@@ -1,7 +1,7 @@
 // global variables and constants
 
-let canvas, Balls = [], paddleTop, laserTop, paddleBottom, laserBottom, score, topScore = 0, bottomScore = 0, start = false,
-    ballCollide, pointAwarded, paddleCollide, mute = false;
+let canvas, Balls = [], paddleTop, laserTop, shotsTop = [], paddleBottom, laserBottom, shotsBottom = []; score, topScore = 0, bottomScore = 0, start = false,
+    ballCollide = '', pointAwarded = '', paddleCollide = '', mute = true;
 
 
 // ALL YOUR CONSTANTS ARE BELONG TO US. I DON'T KNOW WHAT WERE YELLING ABOUT
@@ -25,14 +25,19 @@ function setup(){
 
     // INITIALIZE THE PADDLES
     paddleTop = new Paddle(0, width/2, 20, 0, 255, 0);
-    laserTop = new Laser(paddleTop.x, paddleTop.bottomEdge(), 1, 255, 0, 0);
+    laserTop = new Laser(2, paddleTop.x, paddleTop.bottomEdge(), 1, 255, 0, 0);
     paddleBottom = new Paddle(1, width/2, height-20, 0, 255, 0);
-    laserBottom = new Laser(paddleBottom.x, paddleBottom.topEdge(), -1, 255, 0, 0);
+    laserBottom = new Laser(4, paddleBottom.x, paddleBottom.topEdge(), -1, 255, 0, 0);
+
+    for(let i = 0; i < 10; i++){
+        shotsTop.push(new Projectile(4+i, laserTop.x, laserTop.y+20));
+        shotsBottom.push(new Projectile(4+i, laserBottom.x, laserBottom.y-20));
+    }
 
     // CREATE A LIST OF GAME OBJECTS, WHILE INITIALIZING BALLS IN RANDOM STATES
 
     for(let i=0;i<BALL_QUANTITY;i++) {
-        Balls.push(new Ball(2+i, width / 2, height / 2, i));
+        Balls.push(new Ball(24+i, width / 2, height / 2));
         Balls[i].randomize();
     }
 
@@ -62,21 +67,29 @@ function draw(){
     // CONTROLS
     if(keyIsDown(LEFT_ARROW)){
         paddleBottom.accX(-PADDLEACC);
+        laserBottom.accX(-PADDLEACC);
     }
     else if(keyIsDown(RIGHT_ARROW)){
         paddleBottom.accX(PADDLEACC);
+        laserBottom.accX(PADDLEACC);
     }
 
     if(keyIsDown(65)){
         paddleTop.accX(-PADDLEACC);
+        laserTop.accX(-PADDLEACC);
     }
     else if(keyIsDown(68)){
         paddleTop.accX(PADDLEACC);
+        laserTop.accX(PADDLEACC);
     }
+
+
 
     // UPDATES
     paddleTop.update();
+    laserTop.update();
     paddleBottom.update();
+    laserBottom.update();
     for(let i=0;i<BALL_QUANTITY;i++) {
         Balls[i].update();
     }
@@ -118,3 +131,17 @@ function draw(){
 //         start = true;
 //     }
 // }
+
+// key press to shoot
+function keyPressed(){
+
+    if(keyCode === UP_ARROW){
+        console.log('shoot');
+        laserBottom.shoot();
+    }
+
+    if(key === 'S'){
+        console.log('top shoot');
+        laserTop.shoot();
+    }
+}
