@@ -32,8 +32,8 @@ function Laser(id, x,y, orientation, red = 255, green = 255, blue = 255){
             if(shotsTop.length >= 1){
                 console.log('shot top');
                 shotsTop[0].show();
-                shotsTop[0].yvel = 2;
-                shotsTop.shift();
+                shotsTop[0].yvel = 10;
+                // shotsTop.shift();
 
             }
         }
@@ -42,8 +42,8 @@ function Laser(id, x,y, orientation, red = 255, green = 255, blue = 255){
             if(shotsBottom.length >= 1){
                 console.log('shot bottom');
                 shotsBottom[0].show();
-                shotsBottom[0].yvel = -2;
-                shotsBottom.shift();
+                shotsBottom[0].yvel = -10;
+                // shotsBottom.shift();
 
             }
         }

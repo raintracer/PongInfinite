@@ -1,6 +1,6 @@
 // global variables and constants
 
-let canvas, Balls = [], paddleTop, laserTop, shotsTop = [], paddleBottom, laserBottom, shotsBottom = []; score, topScore = 0, bottomScore = 0, start = false,
+let canvas, Balls = [], paddleTop, laserTop, shotsTop = [], paddleBottom, laserBottom, shotsBottom = [], score, topScore = 0, bottomScore = 0, start = false,
     ballCollide = '', pointAwarded = '', paddleCollide = '', mute = true;
 
 

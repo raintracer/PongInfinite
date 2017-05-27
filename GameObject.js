@@ -2,7 +2,7 @@
  * Created by Richard Tyler on 5/21/2017.
  */
 
-function GameObject(id,x,y) {
+function GameObject(id,x,y, red=255, green=255, blue=255) {
 
 // x,y position of the game object [ball(s), paddles]
     this.x = x;

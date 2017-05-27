@@ -6,7 +6,7 @@
 // color can be passed or defaults to white (255, 255, 255)
 function Paddle(id, x,y, red = 255, green = 255, blue = 255){
 
-    GameObject.call(this,id,x,y);
+    GameObject.call(this,id,x,y,red, green, blue);
 
 // assigns the rgb color values passed into the constructor, defaults to white
     this.red = red;

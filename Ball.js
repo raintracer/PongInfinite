@@ -2,9 +2,9 @@
  * Created by Richard Tyler on 5/21/2017.
  */
 
-function Ball(id,x,y){
+function Ball(id,x,y, red=255, green=255, blue=255){
 
-    GameObject.call(this,id,x,y);
+    GameObject.call(this,id,x,y, red, green, blue);
 
 // ball diameter
 

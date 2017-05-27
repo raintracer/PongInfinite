@@ -9,9 +9,7 @@ function Projectile(id, x, y){
     this.show = function(){
         console.log('show called', id);
         fill(0,0, 255);
-        rect(this.x, this.y, 10, 10);
+        rect(this.x, this.y, 100, 100);
     }
-
-
 
 }
