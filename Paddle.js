@@ -9,6 +9,7 @@ function Paddle(player, id, x,y, red = 255, green = 255, blue = 255){
     GameObject.call(this,id,x,y,red, green, blue);
     this.type = "Paddle";
     this.player = player;
+    const LASER_SPEED = 2;
 
 // assigns the width and height of the paddle object
     this.w = 75;
@@ -20,17 +21,12 @@ function Paddle(player, id, x,y, red = 255, green = 255, blue = 255){
 // show method of the paddle, draws the paddle object as a rectangle of specified color, width, height, and position
     this.show = function(){
 
-        if (this.player===1){
-            orientation = 1;
-        }
-        else if (this.player===2){
-            orientation = -1;
-        }
+
 
         fill(this.red, this.green, this.blue);
         rect(this.x-this.w/2, this.y-this.h/2, this.w, this.h);
         fill(255,0,0);
-        triangle(this.x-10, this.y+(orientation*10), this.x, this.y+(orientation*30), this.x+10, this.y+(orientation*10));
+        triangle(this.x-10, this.y+(this.orientation()*10), this.x, this.y+(this.orientation()*30), this.x+10, this.y+(this.orientation()*10));
     };
 
     this.PaddleUpdate = function() {
@@ -46,6 +42,13 @@ function Paddle(player, id, x,y, red = 255, green = 255, blue = 255){
                 this.accX(PADDLEACC);
                 // laserBottom.accX(PADDLEACC);
             }
+
+            if (keyIsDown(UP_ARROW)) {
+                let newLaser = objectFactory.createObject("Laser", this.x, this.y + this.h*this.orientation(), Math.random()*255, Math.random()*255, Math.random()*255);
+                newLaser.accY(LASER_SPEED*this.orientation());
+                // laserBottom.accX(PADDLEACC);
+            }
+
         }
         else if (this.player === 1) {
 
@@ -62,5 +65,14 @@ function Paddle(player, id, x,y, red = 255, green = 255, blue = 255){
         this.update();
 
     };
+
+    this.orientation = function(){
+        if (this.player===1){
+            return 1;
+        }
+        else if (this.player===2){
+            return -1;
+        }
+    }
 
 }
