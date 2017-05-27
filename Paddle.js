@@ -27,11 +27,40 @@ function Paddle(player, id, x,y, red = 255, green = 255, blue = 255){
             orientation = -1;
         }
 
-
         fill(this.red, this.green, this.blue);
         rect(this.x-this.w/2, this.y-this.h/2, this.w, this.h);
         fill(255,0,0);
         triangle(this.x-10, this.y+(orientation*10), this.x, this.y+(orientation*30), this.x+10, this.y+(orientation*10));
-    }
+    };
+
+    this.PaddleUpdate = function() {
+
+        // CONTROLS
+        if (this.player === 2) {
+
+            if (keyIsDown(LEFT_ARROW)) {
+                this.accX(-PADDLEACC);
+                // laserBottom.accX(-PADDLEACC);
+            }
+            else if (keyIsDown(RIGHT_ARROW)) {
+                this.accX(PADDLEACC);
+                // laserBottom.accX(PADDLEACC);
+            }
+        }
+        else if (this.player === 1) {
+
+            if (keyIsDown(65)) {
+                this.accX(-PADDLEACC);
+                // laserTop.accX(-PADDLEACC);
+            }
+            else if (keyIsDown(68)) {
+                this.accX(PADDLEACC);
+                // laserTop.accX(PADDLEACC);
+            }
+        }
+
+        this.update();
+
+    };
 
 }
