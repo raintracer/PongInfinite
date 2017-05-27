@@ -1,6 +1,6 @@
 // global variables and constants
 
-let canvas, Balls = [], paddleTop, laserTop, shotsTop = [], paddleBottom, laserBottom, shotsBottom = [], score, topScore = 0, bottomScore = 0, start = false,
+let canvas, objectFactory, Balls = [], paddleTop, laserTop, shotsTop = [], paddleBottom, laserBottom, shotsBottom = [], score, topScore = 0, bottomScore = 0, start = false,
     ballCollide = '', pointAwarded = '', paddleCollide = '', mute = true;
 
 
@@ -23,23 +23,27 @@ function setup(){
     canvas = createCanvas(STAGE_WIDTH,STAGE_HEIGHT);
     centerCanvas();
 
-    // INITIALIZE THE PADDLES
-    paddleTop = new Paddle(0, width/2, 20, 0, 255, 0);
-    laserTop = new Laser(2, paddleTop.x, paddleTop.bottomEdge(), 1, 255, 0, 0);
-    paddleBottom = new Paddle(1, width/2, height-20, 0, 255, 0);
-    laserBottom = new Laser(4, paddleBottom.x, paddleBottom.topEdge(), -1, 255, 0, 0);
+    objectFactory = new ObjectFactory();
 
-    for(let i = 0; i < 10; i++){
-        shotsTop.push(new Projectile(4+i, laserTop.x, laserTop.y+20));
-        shotsBottom.push(new Projectile(4+i, laserBottom.x, laserBottom.y-20));
-    }
+    // INITIALIZE THE PADDLES
+    paddleTop = new Paddle(1, 0, width/2, 20, 0, 255, 0);
+    paddleBottom = new Paddle(2, 1, width/2, height-20, 0, 255, 0);
+
+    // for(let i = 0; i < 10; i++){
+    //     shotsTop.push(new Projectile(4+i, laserTop.x, laserTop.y+20));
+    //     shotsBottom.push(new Projectile(4+i, laserBottom.x, laserBottom.y-20));
+    // }
 
     // CREATE A LIST OF GAME OBJECTS, WHILE INITIALIZING BALLS IN RANDOM STATES
 
     for(let i=0;i<BALL_QUANTITY;i++) {
-        Balls.push(new Ball(24+i, width / 2, height / 2));
-        Balls[i].randomize();
+        objectFactory.createObject("Ball", width/2, height/2, Math.random()*255, Math.random()*255, Math.random()*255);
     }
+    objectFactory.randomizeBalls();
+
+    let PrimaryBall = objectFactory.createObject("Ball",100,100,255);
+    PrimaryBall.randomize();
+
 
     // INITIALIZE THE SCORE OBJECT
     score = new Score();
@@ -67,32 +71,31 @@ function draw(){
     // CONTROLS
     if(keyIsDown(LEFT_ARROW)){
         paddleBottom.accX(-PADDLEACC);
-        laserBottom.accX(-PADDLEACC);
+        // laserBottom.accX(-PADDLEACC);
     }
     else if(keyIsDown(RIGHT_ARROW)){
         paddleBottom.accX(PADDLEACC);
-        laserBottom.accX(PADDLEACC);
+        // laserBottom.accX(PADDLEACC);
     }
 
     if(keyIsDown(65)){
         paddleTop.accX(-PADDLEACC);
-        laserTop.accX(-PADDLEACC);
+        // laserTop.accX(-PADDLEACC);
     }
     else if(keyIsDown(68)){
         paddleTop.accX(PADDLEACC);
-        laserTop.accX(PADDLEACC);
+        // laserTop.accX(PADDLEACC);
     }
 
 
 
     // UPDATES
     paddleTop.update();
-    laserTop.update();
+    // laserTop.update();
     paddleBottom.update();
-    laserBottom.update();
-    for(let i=0;i<BALL_QUANTITY;i++) {
-        Balls[i].update();
-    }
+    // laserBottom.update();
+
+    objectFactory.update();
 
     // SCORE DETECTION
     // for(let i=0;i<BALL_QUANTITY;i++) {
@@ -102,13 +105,11 @@ function draw(){
 
     // SHOW
     background(0);
-    for(let i=0;i<BALL_QUANTITY;i++) {
-        Balls[i].show();
-    }
+    objectFactory.show();
     paddleTop.show();
-    laserTop.show();
+    // laserTop.show();
     paddleBottom.show();
-    laserBottom.show();
+    // laserBottom.show();
 
 }
 

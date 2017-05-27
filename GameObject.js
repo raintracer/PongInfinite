@@ -8,6 +8,11 @@ function GameObject(id,x,y, red=255, green=255, blue=255) {
     this.x = x;
     this.y = y;
     this.id = id;
+    this.type = "General";
+
+    this.red = red;
+    this.green = green;
+    this.blue = blue;
 
 // previous x,y position of the game object [ball(s)]
     this.oldx = x;

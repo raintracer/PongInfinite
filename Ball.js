@@ -5,6 +5,7 @@
 function Ball(id,x,y, red=255, green=255, blue=255){
 
     GameObject.call(this,id,x,y, red, green, blue);
+    this.type = "Ball";
 
 // ball diameter
 
@@ -32,7 +33,7 @@ function Ball(id,x,y, red=255, green=255, blue=255){
 
 // draws the ball object
     this.show = function(){
-        fill(255);
+        fill(red, green, blue);
         ellipse(this.x,this.y,BallSize,BallSize);
     };
 
@@ -41,28 +42,29 @@ function Ball(id,x,y, red=255, green=255, blue=255){
     this.moveX = function(){
 
         this.x += this.xvel;
+        let HitObjects = objectFactory.getObjectTypes("Ball");
 
         // DETECT COLLISION WITH OTHER BALLS
-        for (let i = 0; i < Balls.length; i++) {
+        for (let i = 0; i < HitObjects.length; i++) {
 
             // If the target object and the current object aren't the same
-            if (Balls[i].id !== this.id) {
+            if (HitObjects[i].id !== this.id) {
                 // If the ball is moving right
                 if (this.xvel > 0) {
 
                     // If there is a collision on the right
-                    if (this.collidesRight(Balls[i]) || this.collidesTopRight(Balls[i]) || this.collidesBottomRight(Balls[i])) {
+                    if (this.collidesRight(HitObjects[i]) || this.collidesTopRight(HitObjects[i]) || this.collidesBottomRight(HitObjects[i])) {
 
                         // Set the active object against the left side of the target object
-                        this.setPosition(Balls[i].leftEdge() - this.w / 2, this.y);
+                        this.setPosition(HitObjects[i].leftEdge() - this.w / 2, this.y);
 
                         // Transfer Momentum
-                        this.TransferMomentumX(Balls[i]);
+                        this.TransferMomentumX(HitObjects[i]);
 
                         // If the active object and the target object are moving in opposite, reflect the target object
-                        if(this.xDir() === -Balls[i].xDir()){
+                        if(this.xDir() === -HitObjects[i].xDir()){
 
-                            Balls[i].reflectX();
+                            HitObjects[i].reflectX();
 
                         }
 
@@ -82,18 +84,18 @@ function Ball(id,x,y, red=255, green=255, blue=255){
                 else if (this.xvel < 0) {
 
                     // If there is a collision on the left
-                    if (this.collidesLeft(Balls[i]) || this.collidesTopLeft(Balls[i]) || this.collidesBottomLeft(Balls[i])) {
+                    if (this.collidesLeft(HitObjects[i]) || this.collidesTopLeft(HitObjects[i]) || this.collidesBottomLeft(HitObjects[i])) {
 
                         // Set the active object against the left side of the target object
-                        this.setPosition(Balls[i].rightEdge() + this.w / 2, this.y);
+                        this.setPosition(HitObjects[i].rightEdge() + this.w / 2, this.y);
 
                         // Transfer Momentum
-                        this.TransferMomentumX(Balls[i]);
+                        this.TransferMomentumX(HitObjects[i]);
 
                         // If the active object and the target object are moving in opposite, reflect the target object
-                        if(this.xDir() === -Balls[i].xDir()){
+                        if(this.xDir() === -HitObjects[i].xDir()){
 
-                            Balls[i].reflectX();
+                            HitObjects[i].reflectX();
 
                         }
 
@@ -137,27 +139,28 @@ function Ball(id,x,y, red=255, green=255, blue=255){
 
         this.y += this.yvel;
         score.scorePoint(this);
+        let HitObjects = objectFactory.getObjectTypes("Ball");
 
         // DETECT COLLISION WITH OTHER BALLS
-        for (let i = 0; i < Balls.length; i++) {
+        for (let i = 0; i < HitObjects.length; i++) {
 
             // If the target object and the current object aren't the same
-            if (Balls[i].id !== this.id) {
+            if (HitObjects[i].id !== this.id) {
                 // If the ball is moving down
                 if (this.yvel > 0) {
 
                     // If there is a collision on the bottom
-                    if (this.collidesBottomLeft(Balls[i]) || this.collidesBottom(Balls[i]) || this.collidesBottomRight(Balls[i])) {
+                    if (this.collidesBottomLeft(HitObjects[i]) || this.collidesBottom(HitObjects[i]) || this.collidesBottomRight(HitObjects[i])) {
 
-                        this.setPosition(this.x, Balls[i].topEdge() - this.h / 2);
+                        this.setPosition(this.x, HitObjects[i].topEdge() - this.h / 2);
 
                         // Transfer Momentum
-                        this.TransferMomentumY(Balls[i]);
+                        this.TransferMomentumY(HitObjects[i]);
 
                         // If the active object and the target object are moving in opposite, reflect the target object
-                        if(this.yDir() === -Balls[i].yDir()){
+                        if(this.yDir() === -HitObjects[i].yDir()){
 
-                            Balls[i].reflectY();
+                            HitObjects[i].reflectY();
 
                         }
 
@@ -178,16 +181,16 @@ function Ball(id,x,y, red=255, green=255, blue=255){
                 else if (this.yvel < 0) {
 
                     // If there is a collision on the top
-                    if (this.collidesTopLeft(Balls[i]) || this.collidesTop(Balls[i]) || this.collidesTopRight(Balls[i])) {
-                        this.setPosition(this.x, Balls[i].bottomEdge() + this.h / 2);
+                    if (this.collidesTopLeft(HitObjects[i]) || this.collidesTop(HitObjects[i]) || this.collidesTopRight(HitObjects[i])) {
+                        this.setPosition(this.x, HitObjects[i].bottomEdge() + this.h / 2);
 
                         // Transfer Momentum
-                        this.TransferMomentumY(Balls[i]);
+                        this.TransferMomentumY(HitObjects[i]);
 
                         // If the active object and the target object are moving in opposite, reflect the target object
-                        if(this.yDir() === -Balls[i].yDir()){
+                        if(this.yDir() === -HitObjects[i].yDir()){
 
-                            Balls[i].reflectY();
+                            HitObjects[i].reflectY();
 
                         }
 

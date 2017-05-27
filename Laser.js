@@ -6,6 +6,7 @@ function Laser(id, x,y, orientation, red = 255, green = 255, blue = 255){
 
 
     GameObject.call(this, id, x, y);
+    this.type = "Laser";
 
     this.x = x;
     this.y = y;
