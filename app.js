@@ -15,4 +15,13 @@ app.set('view engine', 'ejs');
 
 app.use(express.static('assets'));
 
-const gameStateController = require('./controllers/gameStateController');
+const gameStateController = require('./Unused/controllers/gameStateController');
+
+const socket = require('socket.io');
+const io = socket();
+
+io.sockets.on('Connection', ProcessConnection);
+
+function ProcessConnection(){
+
+}
