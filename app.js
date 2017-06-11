@@ -2,26 +2,29 @@
  * Created by Vampiire on 5/22/17.
  */
 
+let express = require('express'), app = express();
 
-const express = require('express'), app = express();
+let port = process.env.PORT || 3000;
 
-const port = process.env.PORT || 3000;
-
-const server = app.listen(port, function(){
+let server = app.listen(port, function(){
     console.log(`listening on port ${port}`);
 });
 
-app.set('view engine', 'ejs');
+app.use(express.static('Public'));
 
-app.use(express.static('assets'));
 
-const gameStateController = require('./Unused/controllers/gameStateController');
+// let gameStateController = require('./Unused/controllers/gameStateController');
 
-const socket = require('socket.io');
-const io = socket();
+let socket = require('socket.io');
+let io = socket(server);
 
-io.sockets.on('Connection', ProcessConnection);
+io.sockets.on('connection', ProcessConnection);
+io.sockets.on('connect_error', ProcessDisconnection);
 
-function ProcessConnection(){
+function ProcessConnection(socket){
+    console.log("Connected");
+}
 
+function ProcessDisconnection(socket){
+    console.log("Error");
 }

@@ -1,5 +1,7 @@
 // global variables and constants
 
+let socket;
+
 let canvas, objectFactory, Balls = [], paddleTop, laserTop, shotsTop = [], paddleBottom, laserBottom, shotsBottom = [], score, topScore = 0, bottomScore = 0, start = false,
     ballCollide = '', pointAwarded = '', paddleCollide = '', mute = true;
 
@@ -40,6 +42,9 @@ function setup(){
 
     // INITIALIZE THE SOUND EFFECTS
 
+    // CONNECT TO THE SERVER
+    // socket = io.connect("http://localhost:3000");
+    socket = io.connect("http://0b658504.ngrok.io/");
 
 }
 
