@@ -5,12 +5,14 @@ let socket;
 let canvas, objectFactory, Balls = [], paddleTop, laserTop, shotsTop = [], paddleBottom, laserBottom, shotsBottom = [], score, topScore = 0, bottomScore = 0, start = false,
     ballCollide = '', pointAwarded = '', paddleCollide = '', mute = true;
 
+let player;
+
 
 // ALL YOUR CONSTANTS ARE BELONG TO US. I DON'T KNOW WHAT WERE YELLING ABOUT
 const BALL_QUANTITY = 2, PADDLEACC = 10, STAGE_WIDTH = 400, STAGE_HEIGHT = 500;
 const CHAOS = 6;                    // CHAOS IS THE MAXIMUM STARTING SPEED OF THE BALLS
 const TRANSFER_COEFFICIENT = .5;    // THE TRANSFER COEFFICIENT IS HOW MUCH OF THE MOMENTUM DELTA IS TRANSFERRED IN A COLLISION
-
+const LASER_SPEED = 2;
 
 // PRELOAD THE SOUND EFFECTS TO BE READY FOR USE
 function preload(){
@@ -44,7 +46,12 @@ function setup(){
 
     // CONNECT TO THE SERVER
     // socket = io.connect("http://localhost:3000");
-    socket = io.connect("http://0b658504.ngrok.io/");
+    socket = io.connect("http://44caf9fc.ngrok.io");
+    socket.once("AssignPlayer", assignPlayer);
+    socket.emit("RequestPlayer");
+    socket.on('serverKeyPress', serverKeyPress);
+
+    console.log(objectFactory);
 
 }
 
@@ -108,14 +115,31 @@ function draw(){
 
 // key press to shoot
 function keyPressed(){
+    socket.emit("shootKey", {keyCode:keyCode});
+}
 
-    if(keyCode === UP_ARROW){
+function serverKeyPress(data){
+
+
+    if(data.keyCode === UP_ARROW){
+
         console.log('shoot');
-        laserBottom.shoot();
+        let newLaser = objectFactory.createObject("Laser", paddleBottom.x, paddleBottom.y + paddleBottom.h*paddleBottom.orientation(), Math.random()*255, Math.random()*255, Math.random()*255);
+        newLaser.accY(LASER_SPEED*paddleBottom.orientation());
+
     }
 
-    if(key === 'S'){
+    if(data.keyCode === 83){
         console.log('top shoot');
-        laserTop.shoot();
+        let newLaser = objectFactory.createObject("Laser", paddleTop.x, paddleTop.y + paddleTop.h*paddleTop.orientation(), Math.random()*255, Math.random()*255, Math.random()*255);
+        newLaser.accY(LASER_SPEED*paddleTop.orientation());
     }
+
+}
+
+function assignPlayer(data){
+
+    player = data.player;
+    console.log("Player Assigned: " + player);
+
 }

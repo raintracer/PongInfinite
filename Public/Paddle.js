@@ -31,36 +31,36 @@ function Paddle(player, id, x,y, red = 255, green = 255, blue = 255){
 
     this.PaddleUpdate = function() {
 
-        // CONTROLS
-        if (this.player === 2) {
-
-            if (keyIsDown(LEFT_ARROW)) {
-                this.accX(-PADDLEACC);
-                // laserBottom.accX(-PADDLEACC);
-            }
-            else if (keyIsDown(RIGHT_ARROW)) {
-                this.accX(PADDLEACC);
-                // laserBottom.accX(PADDLEACC);
-            }
-
-            if (keyIsDown(UP_ARROW)) {
-                let newLaser = objectFactory.createObject("Laser", this.x, this.y + this.h*this.orientation(), Math.random()*255, Math.random()*255, Math.random()*255);
-                newLaser.accY(LASER_SPEED*this.orientation());
-                // laserBottom.accX(PADDLEACC);
-            }
-
-        }
-        else if (this.player === 1) {
-
-            if (keyIsDown(65)) {
-                this.accX(-PADDLEACC);
-                // laserTop.accX(-PADDLEACC);
-            }
-            else if (keyIsDown(68)) {
-                this.accX(PADDLEACC);
-                // laserTop.accX(PADDLEACC);
-            }
-        }
+        // // CONTROLS
+        // if (this.player === 2) {
+        //
+        //     if (keyIsDown(LEFT_ARROW)) {
+        //         this.accX(-PADDLEACC);
+        //         // laserBottom.accX(-PADDLEACC);
+        //     }
+        //     else if (keyIsDown(RIGHT_ARROW)) {
+        //         this.accX(PADDLEACC);
+        //         // laserBottom.accX(PADDLEACC);
+        //     }
+        //
+        //     if (keyIsDown(UP_ARROW)) {
+        //         let newLaser = objectFactory.createObject("Laser", this.x, this.y + this.h*this.orientation(), Math.random()*255, Math.random()*255, Math.random()*255);
+        //         newLaser.accY(LASER_SPEED*this.orientation());
+        //         // laserBottom.accX(PADDLEACC);
+        //     }
+        //
+        // }
+        // else if (this.player === 1) {
+        //
+        //     if (keyIsDown(65)) {
+        //         this.accX(-PADDLEACC);
+        //         // laserTop.accX(-PADDLEACC);
+        //     }
+        //     else if (keyIsDown(68)) {
+        //         this.accX(PADDLEACC);
+        //         // laserTop.accX(PADDLEACC);
+        //     }
+        // }
 
         this.update();
 
