@@ -40,6 +40,12 @@ function ProcessConnection(socket){
         socket.emit('AssignPlayer',{player:players});
     });
 
+    socket.on('PushClientUpdate', function(data){
+
+        socket.broadcast.emit('PushServerUpdate', data);
+
+    });
+
 }
 
 function ProcessDisconnection(socket){

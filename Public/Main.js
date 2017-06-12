@@ -19,6 +19,14 @@ function preload(){
     ballCollide = loadSound('Sound Effects/Ball_Collide.mp3');
     pointAwarded = loadSound('Sound Effects/Light_Fapping.mp3');
     paddleCollide = loadSound('Sound Effects/Soft_Ding.mp3');
+
+    // CONNECT TO THE SERVER
+    // socket = io.connect("http://localhost:3000");
+    socket = io.connect("http://44caf9fc.ngrok.io");
+    socket.once("AssignPlayer", assignPlayer);
+    socket.emit("RequestPlayer");
+    socket.on('serverKeyPress', serverKeyPress);
+    socket.once('PushServerUpdate', loadUpdate)
 }
 
 // setup function --> deployed during page load
@@ -44,21 +52,14 @@ function setup(){
 
     // INITIALIZE THE SOUND EFFECTS
 
-    // CONNECT TO THE SERVER
-    // socket = io.connect("http://localhost:3000");
-    socket = io.connect("http://44caf9fc.ngrok.io");
-    socket.once("AssignPlayer", assignPlayer);
-    socket.emit("RequestPlayer");
-    socket.on('serverKeyPress', serverKeyPress);
-
-    console.log(objectFactory);
-
 }
 
 // center the canvas
 function centerCanvas(){
+
     let x = (windowWidth - width) / 2, y = (windowHeight - height) / 2;
     canvas.position(x,y);
+
 }
 
 // center on window resize (responsive design)
@@ -73,9 +74,19 @@ function draw(){
 
 
     // UPDATES
-    paddleTop.PaddleUpdate();
-    paddleBottom.PaddleUpdate();
-    objectFactory.update();
+    if (player === 1) {
+
+        paddleTop.PaddleUpdate();
+        paddleBottom.PaddleUpdate();
+        objectFactory.update();
+
+        let updatePackage = {
+            paddleTop: paddleTop,
+            paddleBottom: paddleBottom,
+            objectFactory: objectFactory
+        };
+        socket.emit("PushClientUpdate", updatePackage);
+    }
 
     // SCORE DETECTION
     // for(let i=0;i<BALL_QUANTITY;i++) {
@@ -142,4 +153,13 @@ function assignPlayer(data){
     player = data.player;
     console.log("Player Assigned: " + player);
 
+}
+
+function loadUpdate(data){
+    if (player!==1) {
+        console.log(data);
+
+
+
+    }
 }
