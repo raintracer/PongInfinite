@@ -26,7 +26,7 @@ function preload(){
     socket.once("AssignPlayer", assignPlayer);
     socket.emit("RequestPlayer");
     socket.on('serverKeyPress', serverKeyPress);
-    socket.once('PushServerUpdate', loadUpdate)
+    socket.on('PushServerUpdate', loadUpdate)
 }
 
 // setup function --> deployed during page load
@@ -86,21 +86,22 @@ function draw(){
             objectFactory: objectFactory
         };
         socket.emit("PushClientUpdate", updatePackage);
+
+
+        // SCORE DETECTION
+        // for(let i=0;i<BALL_QUANTITY;i++) {
+        //     score.scorePoint(Balls[i]);
+        // }
+
+
+        // SHOW
+        background(0);
+        objectFactory.show();
+        paddleTop.show();
+        // laserTop.show();
+        paddleBottom.show();
+        // laserBottom.show();
     }
-
-    // SCORE DETECTION
-    // for(let i=0;i<BALL_QUANTITY;i++) {
-    //     score.scorePoint(Balls[i]);
-    // }
-
-
-    // SHOW
-    background(0);
-    objectFactory.show();
-    paddleTop.show();
-    // laserTop.show();
-    paddleBottom.show();
-    // laserBottom.show();
 
 }
 
@@ -144,6 +145,7 @@ function serverKeyPress(data){
         console.log('top shoot');
         let newLaser = objectFactory.createObject("Laser", paddleTop.x, paddleTop.y + paddleTop.h*paddleTop.orientation(), Math.random()*255, Math.random()*255, Math.random()*255);
         newLaser.accY(LASER_SPEED*paddleTop.orientation());
+        paddleTop.xvel+=100;
     }
 
 }
@@ -159,7 +161,20 @@ function loadUpdate(data){
     if (player!==1) {
         console.log(data);
 
+        // data.paddleTop.draw();
+        // data.paddleBottom.draw();
 
+        background(0);
+        data.objectFactory.show();
+        data.paddleTop.show();
+        // laserTop.show();
+        data.paddleBottom.show();
+
+        // let objectArray = data.objectFactory.gameObjects;
+        // objectFactory.gameObjects = [];
+        // for (let i in data.objectFactory.gameObjects){
+        //     objectFactory.create
+        // }
 
     }
 }
