@@ -2,6 +2,11 @@
  * Created by Richard Tyler on 5/21/2017.
  */
 
+module.exports = Ball;
+
+const GameObject = require('./GameObject');
+const Constants = require('./ServerMain').Constants;
+
 function Ball(id,x,y, red=255, green=255, blue=255){
 
     GameObject.call(this,id,x,y, red, green, blue);
@@ -13,7 +18,7 @@ function Ball(id,x,y, red=255, green=255, blue=255){
     this.w = BallSize;
     this.h = BallSize;
 
-    this.randomize = function(x = Math.random()*width, y = Math.random()*height, xvel = Math.random()*CHAOS, yvel = Math.random()*CHAOS){
+    this.randomize = function(x = Math.random()*Constants.STAGE_WIDTH, y = Math.random()*Constants.STAGE_HEIGHT, xvel = Math.random()*Constants.CHAOS, yvel = Math.random()*Constants.CHAOS){
         this.x = x;
         this.y = y;
         this.xvel = xvel;
@@ -249,8 +254,8 @@ function Ball(id,x,y, red=255, green=255, blue=255){
         // }
         //
         // // bottom edge boundary crossing prevention
-        // else if (this.y + (this.h / 2) > height) {
-        //     this.y = height - (this.h / 2);
+        // else if (this.y + (this.h / 2) > Constants.STAGE_HEIGHT) {
+        //     this.y = Constants.STAGE_HEIGHT - (this.h / 2);
         //     this.reflectY();
         // }
 

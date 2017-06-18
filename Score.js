@@ -2,12 +2,15 @@
  * Created by Vampiire on 5/22/17.
  */
 
+module.exports = Score;
+const Constants = require('./ServerMain').Constants;
+
 function Score(){
 
 // determines if a point has been scored by the top or bottom player
 // awards point and updates respective DOM element
     this.scorePoint = function(ball){
-        if(ball.y >= STAGE_HEIGHT){
+        if(ball.y >= Constants.STAGE_HEIGHT){
             topScore++;
             this.showScore('topScore', topScore);
             ball.randomize(width/2,height/2);

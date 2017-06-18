@@ -2,6 +2,10 @@
  * Created by Vampiire on 5/26/17.
  */
 
+module.exports = Laser;
+const GameObject = require('./GameObject');
+const Constants = require('./ServerMain').Constants;
+
 function Laser(id, x, y, red=255, green=255, blue=255){
 
     GameObject.call(this, id, x, y, red, green, blue);
@@ -15,6 +19,6 @@ function Laser(id, x, y, red=255, green=255, blue=255){
         fill(0,0, 255);
         rect(this.x, this.y, 10, 10);
 
-    }
+    };
 
 }

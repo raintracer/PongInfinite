@@ -2,6 +2,8 @@
  * Created by Vampiire on 5/22/17.
  */
 
+// const Controller = require('./Controller');
+
 let express = require('express'), app = express();
 let players = 0;
 
@@ -12,7 +14,7 @@ let server = app.listen(port, function(){
 });
 
 app.use(express.static('Public'));
-
+// app.use('/', Controller);
 
 // let gameStateController = require('./Unused/controllers/gameStateController');
 
@@ -51,3 +53,7 @@ function ProcessConnection(socket){
 function ProcessDisconnection(socket){
     console.log("Error");
 }
+
+const Main = require('./ServerMain');
+
+Main.Main();

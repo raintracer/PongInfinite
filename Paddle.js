@@ -2,6 +2,10 @@
  * Created by Richard Tyler on 5/21/2017.
  */
 
+module.exports = Paddle;
+const GameObject = require('./GameObject');
+const Constants = require('./ServerMain').Constants;
+
 // paddle object, inherits gameobject properties
 // color can be passed or defaults to white (255, 255, 255)
 function Paddle(player, id, x,y, red = 255, green = 255, blue = 255){

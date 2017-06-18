@@ -2,6 +2,13 @@
  * Created by Richard Tyler on 5/26/2017.
  */
 
+module.exports = ObjectFactory;
+
+const Ball = require('./Ball');
+const Paddle = require('./Paddle');
+const Laser = require('./Laser');
+const Constants = require('./ServerMain').Constants;
+
 function ObjectFactory(){
 
     this.objectQuantity = 0;

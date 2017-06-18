@@ -2,6 +2,10 @@
  * Created by Richard Tyler on 5/21/2017.
  */
 
+
+module.exports = GameObject;
+const Constants = require('./ServerMain').Constants;
+
 function GameObject(id,x,y, red=255, green=255, blue=255) {
 
 // x,y position of the game object [ball(s), paddles]
@@ -18,7 +22,7 @@ function GameObject(id,x,y, red=255, green=255, blue=255) {
     this.oldx = x;
     this.oldy = y;
 
-// width and height of the game object
+// Constants.STAGE_WIDTH and Constants.STAGE_HEIGHT of the game object
     this.w = 0;
     this.h = 0;
 
@@ -71,8 +75,8 @@ function GameObject(id,x,y, red=255, green=255, blue=255) {
         }
 
         // right edge boundary crossing prevention
-        else if (this.x + (this.w / 2) > width) {
-            this.x = width - (this.w / 2);
+        else if (this.x + (this.w / 2) > Constants.STAGE_WIDTH) {
+            this.x = Constants.STAGE_WIDTH - (this.w / 2);
             this.xvel *= -1;
         }
 
