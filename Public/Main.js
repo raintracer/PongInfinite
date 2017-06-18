@@ -5,6 +5,8 @@ let socket;
 let canvas, objectFactory, Balls = [], paddleTop, laserTop, shotsTop = [], paddleBottom, laserBottom, shotsBottom = [], score, topScore = 0, bottomScore = 0, start = false,
     ballCollide = '', pointAwarded = '', paddleCollide = '', mute = true;
 
+let GameGraphics = [];
+
 let player;
 
 
@@ -16,13 +18,31 @@ const LASER_SPEED = 2;
 
 // PRELOAD THE SOUND EFFECTS TO BE READY FOR USE
 function preload(){
+
+    // LOAD SOUNDS
     ballCollide = loadSound('Sound Effects/Ball_Collide.mp3');
     pointAwarded = loadSound('Sound Effects/Light_Fapping.mp3');
     paddleCollide = loadSound('Sound Effects/Soft_Ding.mp3');
 
+    // LOAD GRAPHICS
+    GameGraphics.push(createGraphics(50, 50));
+    GameGraphics[0].fill(255);
+    GameGraphics[0].noStroke();
+    GameGraphics[0].ellipse(25,25,25);
+
+    GameGraphics.push(createGraphics(75, 15));
+    GameGraphics[1].fill(255,0,0);
+    GameGraphics[1].noStroke();
+    GameGraphics[1].rect(0,0,75,15);
+
+    GameGraphics.push(createGraphics(10, 10));
+    GameGraphics[2].fill(0,0,255);
+    GameGraphics[2].noStroke();
+    GameGraphics[2].rect(0,0,10,10);
+
     // CONNECT TO THE SERVER
     // socket = io.connect("http://localhost:3000");
-    socket = io.connect("http://44caf9fc.ngrok.io");
+    socket = io.connect("https://1aca00b3.ngrok.io/");
     socket.once("AssignPlayer", assignPlayer);
     socket.emit("RequestPlayer");
     socket.on('serverKeyPress', serverKeyPress);
