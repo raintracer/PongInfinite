@@ -21,12 +21,12 @@ function ObjectFactory(){
 
         if (objectType === "Ball"){
 
-            object = new Ball(this.objectsMade, x, y, red, green, blue);
+            object = new Ball(this, this.objectsMade, x, y, red, green, blue);
 
         }
         else if (objectType === "Laser"){
 
-            object = new Laser(this.objectsMade, x, y, red, green, blue);
+            object = new Laser(this, this.objectsMade, x, y, red, green, blue);
 
         }
         else {

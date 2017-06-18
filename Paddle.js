@@ -8,9 +8,10 @@ const Constants = require('./ServerMain').Constants;
 
 // paddle object, inherits gameobject properties
 // color can be passed or defaults to white (255, 255, 255)
-function Paddle(player, id, x,y, red = 255, green = 255, blue = 255){
+function Paddle(parent, player, id, x,y, red = 255, green = 255, blue = 255){
 
-    GameObject.call(this,id,x,y,red, green, blue);
+    GameObject.call(this,parent,id,x,y,red, green, blue);
+    this.parent = parent;
     this.type = "Paddle";
     this.player = player;
     const LASER_SPEED = 2;

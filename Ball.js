@@ -6,11 +6,13 @@ module.exports = Ball;
 
 const GameObject = require('./GameObject');
 const Constants = require('./ServerMain').Constants;
+const Score = require('./Score');
 
-function Ball(id,x,y, red=255, green=255, blue=255){
+function Ball(parent, id, x,y, red=255, green=255, blue=255){
 
     GameObject.call(this,id,x,y, red, green, blue);
     this.type = "Ball";
+    this.parent = parent;
 
 // ball diameter
 
@@ -47,7 +49,7 @@ function Ball(id,x,y, red=255, green=255, blue=255){
     this.moveX = function(){
 
         this.x += this.xvel;
-        let HitObjects = objectFactory.getObjectTypes("Ball");
+        let HitObjects = parent.getObjectTypes("Ball");
 
         // DETECT COLLISION WITH OTHER BALLS
         for (let i = 0; i < HitObjects.length; i++) {
@@ -131,8 +133,8 @@ function Ball(id,x,y, red=255, green=255, blue=255){
         }
 
         // right edge boundary crossing prevention
-        else if (this.x + (this.w / 2) > width) {
-            this.x = width - (this.w / 2);
+        else if (this.x + (this.w / 2) > Constants.STAGE_WIDTH) {
+            this.x = Constants.STAGE_WIDTH - (this.w / 2);
             this.reflectX();
         }
 
@@ -143,8 +145,7 @@ function Ball(id,x,y, red=255, green=255, blue=255){
     this.moveY = function(){
 
         this.y += this.yvel;
-        score.scorePoint(this);
-        let HitObjects = objectFactory.getObjectTypes("Ball");
+        let HitObjects = parent.getObjectTypes("Ball");
 
         // DETECT COLLISION WITH OTHER BALLS
         for (let i = 0; i < HitObjects.length; i++) {

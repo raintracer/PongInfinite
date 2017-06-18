@@ -6,10 +6,11 @@ module.exports = Laser;
 const GameObject = require('./GameObject');
 const Constants = require('./ServerMain').Constants;
 
-function Laser(id, x, y, red=255, green=255, blue=255){
+function Laser(parent, id, x, y, red=255, green=255, blue=255){
 
-    GameObject.call(this, id, x, y, red, green, blue);
+    GameObject.call(this, parent, id, x, y, red, green, blue);
 
+    this.parent = parent;
     // This player don't care bout no friction
     this.friction = 1;
     this.staticFriction = 0;

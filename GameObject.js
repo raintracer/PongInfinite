@@ -6,9 +6,10 @@
 module.exports = GameObject;
 const Constants = require('./ServerMain').Constants;
 
-function GameObject(id,x,y, red=255, green=255, blue=255) {
+function GameObject(parent, id,x,y, red=255, green=255, blue=255) {
 
 // x,y position of the game object [ball(s), paddles]
+    this.parent = parent;
     this.x = x;
     this.y = y;
     this.id = id;
