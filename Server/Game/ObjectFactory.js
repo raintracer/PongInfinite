@@ -8,6 +8,9 @@ const Ball = require('./Ball');
 const Paddle = require('./Paddle');
 const Laser = require('./Laser');
 const Constants = require('./ServerMain').Constants;
+const Score = require('./Score');
+
+const score = new Score();
 
 let paddleTop;
 let paddleBottom;
@@ -25,11 +28,7 @@ function ObjectFactory(){
 
         if (objectType === "Ball"){
 
-            console.log('x and y passed into createObject: ', x, y);
-
             object = new Ball(this, this.objectsMade, x, y, red, green, blue);
-
-            console.log('object x and y in createObject: ', object.x, object.y);
 
         }
         else if (objectType === "Laser"){
@@ -85,18 +84,20 @@ function ObjectFactory(){
     };
 
     this.randomizeBalls = function(){
+
         let Balls = this.getObjectTypes("Ball");
-        // console.log(Balls);
-        for(i in Balls){
-            // console.log(Balls[i].id);
-            Balls[i].randomize();
-        }
+
+        Balls.forEach( e => e.randomize());
     };
 
     this.update = function(){
 
         for (i in this.gameObjects){
             this.gameObjects[i].update();
+
+            if(this.gameObjects[i].type === "Ball"){
+                score.scorePoint(this.gameObjects[i])
+            }
         }
 
     };

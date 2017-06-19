@@ -4,7 +4,9 @@
 
 
 module.exports = GameObject;
-const Constants = require('./ServerMain').Constants;
+// const Main = require('./ServerMain');
+
+const Constants = { STAGE_WIDTH: 400, STAGE_HEIGHT: 500, CHAOS : 1, TRANSFER_COEFFICIENT : 0.4};
 
 function GameObject(parent, id,x,y, red=255, green=255, blue=255) {
 
@@ -23,7 +25,7 @@ function GameObject(parent, id,x,y, red=255, green=255, blue=255) {
     this.oldx = x;
     this.oldy = y;
 
-// Constants().STAGE_WIDTH and Constants().STAGE_HEIGHT of the game object
+// Constants.STAGE_WIDTH and Constants.STAGE_HEIGHT of the game object
     this.w = 0;
     this.h = 0;
 
@@ -76,8 +78,8 @@ function GameObject(parent, id,x,y, red=255, green=255, blue=255) {
         }
 
         // right edge boundary crossing prevention
-        else if (this.x + (this.w / 2) > Constants().STAGE_WIDTH) {
-            this.x = Constants().STAGE_WIDTH - (this.w / 2);
+        else if (this.x + (this.w / 2) > Constants.STAGE_WIDTH) {
+            this.x = Constants.STAGE_WIDTH - (this.w / 2);
             this.xvel *= -1;
         }
 
@@ -196,7 +198,7 @@ function GameObject(parent, id,x,y, red=255, green=255, blue=255) {
 
         // Transfer some velocity between active and target objects
         let MomentumDifference = Math.abs(Math.abs(this.xvel) - Math.abs(TargetObject.xvel));
-        let MomentumTransfer = MomentumDifference*Constants().TRANSFER_COEFFICIENT/2;
+        let MomentumTransfer = MomentumDifference*Constants.TRANSFER_COEFFICIENT/2;
 
         if (Math.abs(this.xvel) > TargetObject.xvel){
             this.xvel -= MomentumTransfer*this.xDir();
@@ -213,7 +215,7 @@ function GameObject(parent, id,x,y, red=255, green=255, blue=255) {
 
         // Transfer some velocity between active and target objects
         let MomentumDifference = Math.abs(Math.abs(this.yvel) - Math.abs(TargetObject.yvel));
-        let MomentumTransfer = MomentumDifference*Constants().TRANSFER_COEFFICIENT;
+        let MomentumTransfer = MomentumDifference*Constants.TRANSFER_COEFFICIENT;
 
         if (Math.abs(this.yvel) > TargetObject.yvel){
             this.yvel -= MomentumTransfer*this.yDir();

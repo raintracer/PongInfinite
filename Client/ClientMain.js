@@ -42,12 +42,10 @@ function preload(){
 
     // // // CONNECT TO THE SERVER
     // socket = io.connect("http://localhost:3000");
-    socket = io.connect("https://4ac8acda.ngrok.io");
+    socket = io.connect("https://fb11fb60.ngrok.io");
     socket.once("AssignPlayer", assignPlayer);
     socket.emit("RequestPlayer");
-    // socket.on('serverKeyPress', serverKeyPress);
-    // socket.on('PushServerUpdate', loadUpdate);
-    socket.on('gameShow', updateShow);
+    socket.on('gameShow', Update);
 }
 
 function setup(){
@@ -72,26 +70,48 @@ function draw(){
     noLoop();
 }
 
-// KEY PRESS TO SHEET
+// single press of a key
 function keyPressed(){
-    socket.emit("shootKey", {keyCode:keyCode});
+
+    let key;
+
+    // single press of key
+    switch(keyCode){
+        case 38:
+            key = 'up';
+            break;
+    }
+
+    if(key){
+        socket.emit('keyPress', { player : player, key : key });
+    }
+
 }
 
-function serverKeyPress(data){
-}
 
 function assignPlayer(data){
     player = data.player;
     console.log("Player Assigned: " + player);
 }
 
-function updateShow(data) {
+function Update(data) {
 
-    if (keyIsDown(65)) {
-        console.log(data);
+    let key;
+
+    if(keyIsDown(LEFT_ARROW)){
+        key = 'left';
+    }
+
+    if(keyIsDown(RIGHT_ARROW)){
+        key = 'right';
+    }
+
+    if(keyIsDown(LEFT_ARROW) || keyIsDown(RIGHT_ARROW)){
+        socket.emit('keyPress', { player : player, key : key} );
     }
 
     background(0);
+
     data.DrawArray.forEach(function(e){
         image(GameGraphics[e.type], e.x, e.y)
     });

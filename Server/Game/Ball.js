@@ -5,10 +5,22 @@
 module.exports = Ball;
 
 const GameObject = require('./GameObject');
-const Constants = require('./ServerMain').Constants;
+// const GO = new GameObject();
+// const Constants = require('./ServerMain').Constants;
 const Score = require('./Score');
 
+
+// console.log('ball call', Constants.STAGE_WIDTH);
+//
+// let ball = new Ball(this, 1, 1, 1);
+//
+// ball.test();
+
+const Constants = { STAGE_WIDTH: 400, STAGE_HEIGHT: 500, CHAOS : 10, TRANSFER_COEFFICIENT : 0.4};
+
 function Ball(parent, id, x,y, red=255, green=255, blue=255){
+
+    // this.test = () => console.log(Constants.STAGE_WIDTH);
 
     GameObject.call(this,parent,id,x,y, red, green, blue);
     this.type = "Ball";
@@ -20,7 +32,7 @@ function Ball(parent, id, x,y, red=255, green=255, blue=255){
     this.w = BallSize;
     this.h = BallSize;
 
-    this.randomize = function(x = Math.random()*Constants().STAGE_WIDTH, y = Math.random()*Constants().STAGE_HEIGHT, xvel = Math.random()*Constants().CHAOS, yvel = Math.random()*Constants().CHAOS){
+    this.randomize = function(x = Math.random()*Constants.STAGE_WIDTH, y = Math.random()*Constants.STAGE_HEIGHT, xvel = Math.random()*Constants.CHAOS, yvel = Math.random()*Constants.CHAOS){
         this.x = x;
         this.y = y;
         this.xvel = xvel;
@@ -41,6 +53,8 @@ function Ball(parent, id, x,y, red=255, green=255, blue=255){
     // moves the game object in the x direction, assigns the old x position to the previous x position before movement
 // sets bounds in the x direction to contain the game object within the canvas
     this.moveX = function(){
+
+        // console.log('moving in the x');
 
         this.x += this.xvel;
         let HitObjects = parent.getObjectTypes("Ball");
@@ -116,8 +130,8 @@ function Ball(parent, id, x,y, red=255, green=255, blue=255){
         }
 
         // right edge boundary crossing prevention
-        else if (this.x + (this.w / 2) > Constants().STAGE_WIDTH) {
-            this.x = Constants().STAGE_WIDTH - (this.w / 2);
+        else if (this.x + (this.w / 2) > Constants.STAGE_WIDTH) {
+            this.x = Constants.STAGE_WIDTH - (this.w / 2);
             this.reflectX();
         }
 
@@ -215,8 +229,8 @@ function Ball(parent, id, x,y, red=255, green=255, blue=255){
         // }
         //
         // // bottom edge boundary crossing prevention
-        // else if (this.y + (this.h / 2) > Constants().STAGE_HEIGHT) {
-        //     this.y = Constants().STAGE_HEIGHT - (this.h / 2);
+        // else if (this.y + (this.h / 2) > Constants.STAGE_HEIGHT) {
+        //     this.y = Constants.STAGE_HEIGHT - (this.h / 2);
         //     this.reflectY();
         // }
 
