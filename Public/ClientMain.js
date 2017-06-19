@@ -21,10 +21,10 @@ function preload(){
     paddleCollide = loadSound('Sound Effects/Soft_Ding.mp3');
 
     // LOAD GRAPHICS
-    GameGraphics["Ball"] = createGraphics(50, 50);
+    GameGraphics["Ball"] = createGraphics(20, 20);
     GameGraphics["Ball"].fill(255);
     GameGraphics["Ball"].noStroke();
-    GameGraphics["Ball"].ellipse(25,25,25);
+    GameGraphics["Ball"].ellipse(10,10,20);
 
     GameGraphics["Paddle"] = createGraphics(75, 15);
     GameGraphics["Paddle"].fill(255,0,0);
@@ -92,4 +92,8 @@ function updateShow(data) {
     }
 
     background(0);
+    data.DrawArray.forEach(function(e){
+        image(GameGraphics[e.type], e.x, e.y)
+    });
+
 }

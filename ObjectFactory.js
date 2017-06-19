@@ -107,8 +107,8 @@ function ObjectFactory(){
         this.gameObjects.forEach(function(e){
 
             DrawArray.push({
-                x:e.x,
-                y:e.y,
+                x:e.leftEdge(),
+                y:e.topEdge(),
                 type:e.type});
 
         });
