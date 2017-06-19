@@ -26,17 +26,8 @@ function Laser(parent, id, x, y, red=255, green=255, blue=255){
     this.pewPew = function(){
 
         if(this.topEdge() <= 0 || this.bottomEdge() >= Constants.STAGE_HEIGHT ){
-            // factory.deleteObject(this.id);
-            // console.log('deleted laser across top');
-
             return true;
-
         }
-
-        // if(this.bottomEdge() >= Constants.STAGE_HEIGHT){
-        //     factory.deleteObject(this.id);
-        //     // console.log('deleted laser across bottom');
-        // }
 
     }
 

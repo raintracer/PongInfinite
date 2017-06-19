@@ -11,6 +11,7 @@ const ejs = require('ejs');
 const app = express();
 
 let players = 0;
+let score;
 
 let port = process.env.PORT || 3000;
 
@@ -21,7 +22,7 @@ let server = app.listen(port, function(){
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended : false}));
 app.set('view engine', 'ejs');
-app.use('/Client', express.static('Client'));
+app.use(express.static('Client'));
 
 const Main = require('./Server/Game/ServerMain');
 
@@ -46,6 +47,14 @@ function ProcessConnection(socket) {
 
     });
 
+    socket.on('score', data => {
+
+        score = data;
+
+        // console.log(score);
+
+    });
+
 }
 
 function ProcessDisconnection(socket){
@@ -55,7 +64,14 @@ function ProcessDisconnection(socket){
 
 // this will server our index.html file (formerly our index.html)
 // using EJS so we can live update the score...once i figure out how to get the score from ServerMain back over here...
-app.get('/', (req, res) => res.render('index'));
+// app.get('/', (req, res) => {
+//
+//
+//     // res.render('index', { score : score });
+//     console.log('get: ', score);
+//     res.render('index');
+//
+// });
 
 Main.Main();
 

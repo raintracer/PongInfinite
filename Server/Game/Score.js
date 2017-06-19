@@ -31,7 +31,7 @@ function Score() {
 
     this.sendScore = function(){
 
-        return { topScore : topScore, bottomScore : bottomScore};
+        return { top : topScore, bottom : bottomScore};
 
     }
 

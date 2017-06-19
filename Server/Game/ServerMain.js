@@ -37,6 +37,7 @@ function playerMove(data){
 
     let paddle;
 
+    // assign the paddle based on player
     player === 1 ? paddle = factory.paddleBottom : paddle = factory.paddleTop;
 
     switch(key){
@@ -55,6 +56,7 @@ function playerMove(data){
 
 function GameUpdate(){
     factory.update();
+    io.sockets.emit('updateScore', score.sendScore());
     io.sockets.emit('gameShow', { DrawArray : factory.show() })
 }
 
