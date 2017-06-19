@@ -25,7 +25,11 @@ function ObjectFactory(){
 
         if (objectType === "Ball"){
 
+            console.log('x and y passed into createObject: ', x, y);
+
             object = new Ball(this, this.objectsMade, x, y, red, green, blue);
+
+            console.log('object x and y in createObject: ', object.x, object.y);
 
         }
         else if (objectType === "Laser"){

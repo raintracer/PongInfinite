@@ -56,7 +56,11 @@ function ProcessDisconnection(socket){
 
 const Main = require('./ServerMain');
 
-Main.Main(io);
+Main.setIO(io);
+
+setInterval(function(){
+    Main.GameUpdate(io);
+}, 16.6);
 
 // module.exports = {
 //

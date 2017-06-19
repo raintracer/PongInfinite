@@ -85,9 +85,11 @@ function assignPlayer(data){
     console.log("Player Assigned: " + player);
 }
 
-function updateShow(data){
+function updateShow(data) {
 
-    console.log(data);
+    if (keyIsDown(65)) {
+        console.log(data);
+    }
 
     background(0);
 }

@@ -20,7 +20,7 @@ function Ball(parent, id, x,y, red=255, green=255, blue=255){
     this.w = BallSize;
     this.h = BallSize;
 
-    this.randomize = function(x = Math.random()*Constants.STAGE_WIDTH, y = Math.random()*Constants.STAGE_HEIGHT, xvel = Math.random()*Constants.CHAOS, yvel = Math.random()*Constants.CHAOS){
+    this.randomize = function(x = Math.random()*Constants().STAGE_WIDTH, y = Math.random()*Constants().STAGE_HEIGHT, xvel = Math.random()*Constants().CHAOS, yvel = Math.random()*Constants().CHAOS){
         this.x = x;
         this.y = y;
         this.xvel = xvel;
@@ -74,11 +74,6 @@ function Ball(parent, id, x,y, red=255, green=255, blue=255){
 
                         // console.log("Right Collision");
 
-                        // play ball collision sound if mute is off
-                        if(!mute){
-                            ballCollide.playMode('restart');
-                            ballCollide.play();
-                        }
                     }
 
                 }
@@ -105,12 +100,6 @@ function Ball(parent, id, x,y, red=255, green=255, blue=255){
 
                         // console.log("Left Collision");
 
-                        // play ball collision sound if mute is off
-                        if(!mute){
-                            ballCollide.playMode('restart');
-                            ballCollide.play();
-                        }
-
                     }
 
 
@@ -127,8 +116,8 @@ function Ball(parent, id, x,y, red=255, green=255, blue=255){
         }
 
         // right edge boundary crossing prevention
-        else if (this.x + (this.w / 2) > Constants.STAGE_WIDTH) {
-            this.x = Constants.STAGE_WIDTH - (this.w / 2);
+        else if (this.x + (this.w / 2) > Constants().STAGE_WIDTH) {
+            this.x = Constants().STAGE_WIDTH - (this.w / 2);
             this.reflectX();
         }
 
@@ -169,11 +158,6 @@ function Ball(parent, id, x,y, red=255, green=255, blue=255){
 
                         // console.log("Bottom Collision");
 
-                        // play ball collision sound if mute is off
-                        if(!mute){
-                            ballCollide.playMode('restart');
-                            ballCollide.play();
-                        }
                     }
 
                 }
@@ -198,12 +182,6 @@ function Ball(parent, id, x,y, red=255, green=255, blue=255){
                         this.reflectY();
 
                         // console.log("Top Collision");
-
-                        // play ball collision sound if mute is off
-                        if(!mute){
-                            ballCollide.playMode('restart');
-                            ballCollide.play();
-                        }
                     }
 
                 }
@@ -217,13 +195,6 @@ function Ball(parent, id, x,y, red=255, green=255, blue=255){
             this.yvel *= 1.1;
             this.xvel += parent.paddleTop.xvel/10;
 
-            // play paddle collision sound if mute is off
-            if(!mute){
-                paddleCollide.playMode('restart');
-                paddleCollide.play();
-            }
-
-
         }
 
         if (this.collidesAny(parent.paddleBottom)){
@@ -232,11 +203,6 @@ function Ball(parent, id, x,y, red=255, green=255, blue=255){
             this.yvel *= 1.1;
             this.xvel += parent.paddleTop.xvel/10;
 
-            // play paddle collision sound if mute is off
-            if(!mute){
-                paddleCollide.playMode('restart');
-                paddleCollide.play();
-            }
         }
 
 
@@ -249,8 +215,8 @@ function Ball(parent, id, x,y, red=255, green=255, blue=255){
         // }
         //
         // // bottom edge boundary crossing prevention
-        // else if (this.y + (this.h / 2) > Constants.STAGE_HEIGHT) {
-        //     this.y = Constants.STAGE_HEIGHT - (this.h / 2);
+        // else if (this.y + (this.h / 2) > Constants().STAGE_HEIGHT) {
+        //     this.y = Constants().STAGE_HEIGHT - (this.h / 2);
         //     this.reflectY();
         // }
 
