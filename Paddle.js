@@ -23,53 +23,6 @@ function Paddle(parent, player, id, x,y, red = 255, green = 255, blue = 255){
 // dampening coefficient used when imparting the velocity of the paddle to the ball during collision
     this.dampen = .4;
 
-// show method of the paddle, draws the paddle object as a rectangle of specified color, width, height, and position
-    this.show = function(){
-
-
-
-        fill(this.red, this.green, this.blue);
-        rect(this.x-this.w/2, this.y-this.h/2, this.w, this.h);
-        fill(255,0,0);
-        triangle(this.x-10, this.y+(this.orientation()*10), this.x, this.y+(this.orientation()*30), this.x+10, this.y+(this.orientation()*10));
-    };
-
-    this.PaddleUpdate = function() {
-
-        // // CONTROLS
-        // if (this.player === 2) {
-        //
-        //     if (keyIsDown(LEFT_ARROW)) {
-        //         this.accX(-PADDLEACC);
-        //         // laserBottom.accX(-PADDLEACC);
-        //     }
-        //     else if (keyIsDown(RIGHT_ARROW)) {
-        //         this.accX(PADDLEACC);
-        //         // laserBottom.accX(PADDLEACC);
-        //     }
-        //
-        //     if (keyIsDown(UP_ARROW)) {
-        //         let newLaser = objectFactory.createObject("Laser", this.x, this.y + this.h*this.orientation(), Math.random()*255, Math.random()*255, Math.random()*255);
-        //         newLaser.accY(LASER_SPEED*this.orientation());
-        //         // laserBottom.accX(PADDLEACC);
-        //     }
-        //
-        // }
-        // else if (this.player === 1) {
-        //
-        //     if (keyIsDown(65)) {
-        //         this.accX(-PADDLEACC);
-        //         // laserTop.accX(-PADDLEACC);
-        //     }
-        //     else if (keyIsDown(68)) {
-        //         this.accX(PADDLEACC);
-        //         // laserTop.accX(PADDLEACC);
-        //     }
-        // }
-
-        this.update();
-
-    };
 
     this.orientation = function(){
         if (this.player===1){

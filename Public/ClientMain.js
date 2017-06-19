@@ -36,21 +36,23 @@ function preload(){
     GameGraphics["Laser"].noStroke();
     GameGraphics["Laser"].rect(0,0,10,10);
 
-    // CONNECT TO THE SERVER
+    // THE SACRED TRIANGLE (STUPID)
+    // fill(255,0,0);
+    // triangle(this.x-10, this.y+(this.orientation()*10), this.x, this.y+(this.orientation()*30), this.x+10, this.y+(this.orientation()*10));
+
+    // // // CONNECT TO THE SERVER
     // socket = io.connect("http://localhost:3000");
-    socket = io.connect("https://1aca00b3.ngrok.io/");
+    socket = io.connect("https://4ac8acda.ngrok.io");
     socket.once("AssignPlayer", assignPlayer);
     socket.emit("RequestPlayer");
-    socket.on('serverKeyPress', serverKeyPress);
-    socket.on('PushServerUpdate', loadUpdate);
+    // socket.on('serverKeyPress', serverKeyPress);
+    // socket.on('PushServerUpdate', loadUpdate);
+    socket.on('gameShow', updateShow);
 }
 
-// setup function --> deployed during page load
 function setup(){
-
-    canvas = createCanvas(STAGE_WIDTH,STAGE_HEIGHT);
+    canvas = createCanvas(STAGE_WIDTH, STAGE_HEIGHT);
     centerCanvas();
-
 }
 
 // center the canvas
@@ -83,7 +85,9 @@ function assignPlayer(data){
     console.log("Player Assigned: " + player);
 }
 
-function loadUpdate(data){
+function updateShow(data){
+
     console.log(data);
+
     background(0);
 }

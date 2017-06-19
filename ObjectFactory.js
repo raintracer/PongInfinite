@@ -9,10 +9,14 @@ const Paddle = require('./Paddle');
 const Laser = require('./Laser');
 const Constants = require('./ServerMain').Constants;
 
+let paddleTop;
+let paddleBottom;
+let DrawArray = [];
+
 function ObjectFactory(){
 
     this.objectQuantity = 0;
-    this.objectsMade = 2;
+    this.objectsMade = 0;
     this.gameObjects = [];
 
     this.createObject = function(objectType,x,y,red,green,blue){
@@ -27,6 +31,11 @@ function ObjectFactory(){
         else if (objectType === "Laser"){
 
             object = new Laser(this, this.objectsMade, x, y, red, green, blue);
+
+        }
+        else if (objectType === "Paddle"){
+
+            object = new Paddle(this, this.getObjectTypes("Paddle").length+1, this.objectsMade, x, y, red, green, blue);
 
         }
         else {
@@ -73,8 +82,9 @@ function ObjectFactory(){
 
     this.randomizeBalls = function(){
         let Balls = this.getObjectTypes("Ball");
+        // console.log(Balls);
         for(i in Balls){
-            console.log(Balls[i].id);
+            // console.log(Balls[i].id);
             Balls[i].randomize();
         }
     };
@@ -89,9 +99,17 @@ function ObjectFactory(){
 
     this.show = function(){
 
-        for (i in this.gameObjects){
-            this.gameObjects[i].show();
-        }
+        DrawArray = [];
+        this.gameObjects.forEach(function(e){
+
+            DrawArray.push({
+                x:e.x,
+                y:e.y,
+                type:e.type});
+
+        });
+
+        return DrawArray;
 
     };
 

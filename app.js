@@ -56,4 +56,9 @@ function ProcessDisconnection(socket){
 
 const Main = require('./ServerMain');
 
-Main.Main();
+Main.Main(io);
+
+// module.exports = {
+//
+//     server : server
+// };

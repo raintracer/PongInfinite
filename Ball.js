@@ -10,7 +10,7 @@ const Score = require('./Score');
 
 function Ball(parent, id, x,y, red=255, green=255, blue=255){
 
-    GameObject.call(this,id,x,y, red, green, blue);
+    GameObject.call(this,parent,id,x,y, red, green, blue);
     this.type = "Ball";
     this.parent = parent;
 
@@ -37,12 +37,6 @@ function Ball(parent, id, x,y, red=255, green=255, blue=255){
 // negates GameObject dynamic friction
     this.friction = 1;
     this.staticFriction = 0;
-
-// draws the ball object
-    this.show = function(){
-        fill(red, green, blue);
-        ellipse(this.x,this.y,BallSize,BallSize);
-    };
 
     // moves the game object in the x direction, assigns the old x position to the previous x position before movement
 // sets bounds in the x direction to contain the game object within the canvas
@@ -217,11 +211,11 @@ function Ball(parent, id, x,y, red=255, green=255, blue=255){
         }
 
         // DETECT COLLISION WITH PADDLES AT ANY OF THE BALLS CORNERS OR SIDES
-        if (this.collidesAny(paddleTop)){
-            this.setPosition(this.x, paddleTop.bottomEdge() + this.h/2);
+        if (this.collidesAny(parent.paddleTop)){
+            this.setPosition(this.x, parent.paddleTop.bottomEdge() + this.h/2);
             this.yvel = Math.abs(this.yvel);
             this.yvel *= 1.1;
-            this.xvel += paddleTop.xvel/10;
+            this.xvel += parent.paddleTop.xvel/10;
 
             // play paddle collision sound if mute is off
             if(!mute){
@@ -232,11 +226,11 @@ function Ball(parent, id, x,y, red=255, green=255, blue=255){
 
         }
 
-        if (this.collidesAny(paddleBottom)){
-            this.setPosition(this.x, paddleBottom.topEdge() - this.h/2);
+        if (this.collidesAny(parent.paddleBottom)){
+            this.setPosition(this.x, parent.paddleBottom.topEdge() - this.h/2);
             this.yvel = -Math.abs(this.yvel);
             this.yvel *= 1.1;
-            this.xvel += paddleTop.xvel/10;
+            this.xvel += parent.paddleTop.xvel/10;
 
             // play paddle collision sound if mute is off
             if(!mute){
