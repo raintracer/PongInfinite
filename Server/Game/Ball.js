@@ -16,7 +16,7 @@ const Score = require('./Score');
 //
 // ball.test();
 
-const Constants = { STAGE_WIDTH: 400, STAGE_HEIGHT: 500, CHAOS : 10, TRANSFER_COEFFICIENT : 0.4};
+const Constants = { STAGE_WIDTH: 400, STAGE_HEIGHT: 500, CHAOS : 5, TRANSFER_COEFFICIENT : 0.4};
 
 function Ball(parent, id, x,y, red=255, green=255, blue=255){
 

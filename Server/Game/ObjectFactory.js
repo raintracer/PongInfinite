@@ -54,30 +54,30 @@ function ObjectFactory(){
 
     };
 
-    this.deleteObject = function(id){
 
-        for (let i = 0; i < this.objectQuantity; i++){
-
-            if (this.gameObjects[i].id === id){
-
-                this.gameObjects.splice(i,1);
-                this.objectQuantity--;
-
-            }
-
-        }
-
-    };
+// I DONT THINK THIS WORKS ANYMORE. IT WAS FAILING WHEN TRYING TO DELETE LASERS THAT PASSED THE Y BOUNDS
+// CONSOLE LOGGED INSIDE AND IT SAID GAMEOBJECTS WAS EMPTY....
+    // this.deleteObject = function(id){
+    //
+    //     this.gameObjects.forEach((e, i, a) => {
+    //
+    //         console.log('loop');
+    //
+    //         if(e.id === id){
+    //             a.splice(i, 1);
+    //             this.objectQuantity--;
+    //         }
+    //
+    //     });
+    //
+    // };
 
     // RETURNS A LIST OF ALL THE OBJECTS MATCHING THE SPECIFIED TYPE
     this.getObjectTypes = function(type){
 
         let objects = [];
-        for (let i = 0; i<this.objectQuantity; i++){
-            if (this.gameObjects[i].type === type){
-                objects.push(this.gameObjects[i]);
-            }
-        }
+
+        this.gameObjects.forEach( e => e.type === type ? objects.push(e) : false);
 
         return objects;
 
@@ -92,13 +92,25 @@ function ObjectFactory(){
 
     this.update = function(){
 
-        for (i in this.gameObjects){
-            this.gameObjects[i].update();
+        this.gameObjects.forEach( (e, i, a) => {
 
-            if(this.gameObjects[i].type === "Ball"){
-                score.scorePoint(this.gameObjects[i])
+            e.update();
+
+        // checks if a ball has crossed either Y bound and awards the respective point
+            if( e.type === 'Ball'){
+                score.scorePoint(e)
             }
-        }
+
+            if( e.type === 'Laser'){
+
+            // checks if a laser has crossed either Y bound and deletes the object if so to reduce memory usage
+                if(e.pewPew()){
+                    console.log('deleted');
+                    a.splice(i, 1);
+                }
+            }
+
+        });
 
     };
 

@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/raintracer/PongInfinite#readme",
   "dependencies": {
+    "body-parser": "^1.17.2",
     "ejs": "^2.5.6",
     "express": "^4.15.3",
     "socket.io": "^2.0.2"

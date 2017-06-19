@@ -16,9 +16,9 @@ const STAGE_WIDTH = 400, STAGE_HEIGHT = 500;
 function preload(){
 
     // LOAD SOUNDS
-    ballCollide = loadSound('Sound Effects/Ball_Collide.mp3');
-    pointAwarded = loadSound('Sound Effects/Light_Fapping.mp3');
-    paddleCollide = loadSound('Sound Effects/Soft_Ding.mp3');
+    ballCollide = loadSound('Client/Sound Effects/Ball_Collide.mp3');
+    pointAwarded = loadSound('Client/Sound Effects/Light_Fapping.mp3');
+    paddleCollide = loadSound('Client/Sound Effects/Soft_Ding.mp3');
 
     // LOAD GRAPHICS
     GameGraphics["Ball"] = createGraphics(20, 20);

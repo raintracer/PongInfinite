@@ -3,8 +3,8 @@
  */
 
 
-const Factory = require('./ObjectFactory');
+let arr = [1, 2, 3, 4];
 
-const Constants = require('./ServerMain').Constants;
+arr.splice(3, 1);
 
-console.log(Constants().STAGE_HEIGHT);
+console.log(arr);

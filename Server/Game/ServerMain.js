@@ -9,6 +9,9 @@ const numBalls = 1;
 const ObjectFactory = require('./ObjectFactory');
 const factory = new ObjectFactory();
 
+const Score = require('./Score');
+const score = new Score();
+
 function setIO(appIO){
     io = appIO;
 }
@@ -43,6 +46,9 @@ function playerMove(data){
         case 'right':
             paddle.accX(Constants().PADDLE_FORCE);
             break;
+        case 'up':
+            let laser = factory.createObject('Laser', paddle.x, paddle.topEdge(), 0, 255, 0);
+            laser.accY(paddle.orientation() * 5);
     }
 
 }

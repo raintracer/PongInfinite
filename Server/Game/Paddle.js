@@ -26,10 +26,10 @@ function Paddle(parent, player, id, x,y, red = 255, green = 255, blue = 255){
 
     this.orientation = function(){
         if (this.player===1){
-            return 1;
+            return -1;
         }
         else if (this.player===2){
-            return -1;
+            return 1;
         }
     }
 
