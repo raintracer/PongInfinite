@@ -104,18 +104,12 @@ function ObjectFactory(){
             if( e.type === 'Laser'){
 
             // checks if a laser has crossed either Y bound and deletes the object if so to reduce memory usage
-                if(e.pewPew()){
+                if(e.boundaryCheck()){
                     console.log('deleted');
                     a.splice(i, 1);
                 }
 
                 e.laserHit();
-            }
-
-            if( e. type === 'Paddle'){
-
-                e.paddleHit();
-
             }
 
         });

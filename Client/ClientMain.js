@@ -15,6 +15,14 @@ const STAGE_WIDTH = 400, STAGE_HEIGHT = 500;
 // PRELOAD THE SOUND EFFECTS TO BE READY FOR USE
 function preload(){
 
+    socket.on('Preload', data => {
+
+
+
+        socket.emit('ClientReady', { player : player, ready : true })
+
+    });
+
     // LOAD SOUNDS
     // ballCollide = loadSound('Sound Effects/Ball_Collide.mp3');
     // pointAwarded = loadSound('Sound Effects/Light_Fapping.mp3');

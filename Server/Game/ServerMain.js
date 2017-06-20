@@ -3,7 +3,7 @@
  */
 
 let io;
-const numBalls = 10;
+const numBalls = 0;
 
 // const socket = require('socket.io');
 const ObjectFactory = require('./ObjectFactory');
@@ -14,6 +14,11 @@ const score = new Score();
 
 function setIO(appIO){
     io = appIO;
+}
+
+function syncGame(){
+
+
 }
 
 function Main(){

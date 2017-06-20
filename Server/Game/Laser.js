@@ -19,11 +19,15 @@ function Laser(parent, id, x, y, red=255, green=255, blue=255){
     this.parent = parent;
     this.type = "Laser";
 
+    const size = 20;
+    this.w = size;
+    this.h = size;
+
     // This player don't care bout no friction
     this.friction = 1;
     this.staticFriction = 0;
 
-    this.pewPew = function(){
+    this.boundaryCheck = function(){
 
         if(this.topEdge() <= 0 || this.bottomEdge() >= Constants.STAGE_HEIGHT ){
             return true;
@@ -38,6 +42,11 @@ function Laser(parent, id, x, y, red=255, green=255, blue=255){
             if(e.id !== this.id){
 
                 if(this.collidesAny(e)){
+
+                    if(e.type === "Paddle"){
+
+                        this.xvel += 5;
+                    }
 
                     // console.log(`collision with ${e.type} id: ${e.id}`);
 
