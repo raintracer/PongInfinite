@@ -53,7 +53,7 @@ function preload(){
     socket.once("AssignPlayer", assignPlayer);
     socket.emit("RequestPlayer");
 
-    socket.once('preLoad', data => {
+    socket.on('preLoad', data => {
 
         const preLoadData = data.preLoadData;
 
@@ -138,7 +138,7 @@ function assignPlayer(data){
     player = data.player;
     console.log("Player Assigned: " + player);
 
-    socket.emit('requestPreload', { player: player, request : true });
+    // socket.emit('requestPreload', { player: player, request : true });
 }
 
 function Update(data) {
@@ -160,6 +160,8 @@ function Update(data) {
     background(0);
 
     data.DrawArray.forEach(function(e){
+
+        // pass in width, height
         image(GameGraphics[e.type], e.x, e.y)
     });
 

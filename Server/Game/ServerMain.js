@@ -65,7 +65,7 @@ function Main() {
 
     factory.randomizeBalls();
 
-    setInterval(() => GameUpdate(), 16.6);
+    // setInterval(() => GameUpdate(), 16.6);
 
 }
 

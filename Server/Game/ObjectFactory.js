@@ -122,9 +122,13 @@ function ObjectFactory(){
         this.gameObjects.forEach(function(e){
 
             DrawArray.push({
-                x:e.leftEdge(),
-                y:e.topEdge(),
-                type:e.type});
+
+                type : e.type,
+                w : e.w,
+                h: e.h,
+                fill : { red: e.red, green: e.green, blue: e.blue},
+                x : e.x,
+                y: e.y
 
         });
 
