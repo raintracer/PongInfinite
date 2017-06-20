@@ -29,7 +29,7 @@ function Score() {
 
     };
 
-    this.sendScore = function(){
+    this.getScore = function(){
 
         return { top : topScore, bottom : bottomScore};
 

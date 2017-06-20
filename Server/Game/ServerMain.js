@@ -2,28 +2,41 @@
  * Created by Vampiire on 6/19/17.
  */
 
-let io;
-const numBalls = 0;
-
-// const socket = require('socket.io');
 const ObjectFactory = require('./ObjectFactory');
 const factory = new ObjectFactory();
 
 const Score = require('./Score');
 const score = new Score();
 
+// set global (ServerMain scope) socket IO
+let io;
 function setIO(appIO){
     io = appIO;
 }
 
-function preLoad(){
+function Create(){
 
+    // set number of balls
+    const numBalls = 0;
+
+    factory.paddleBottom = factory.createObject('Paddle', Constants().STAGE_WIDTH / 2, Constants().STAGE_HEIGHT - 20, 255, 255, 255);
+    factory.paddleTop = factory.createObject('Paddle', Constants().STAGE_WIDTH / 2, 20, 255, 255, 255);
+
+    for (let i = 0; i < numBalls; i++) {
+        factory.createObject('Ball', Constants().STAGE_WIDTH / 2, Constants().STAGE_HEIGHT / 2, Math.random() * 255, Math.random() * 255, 0);
+    }
+
+}
+
+function PreLoad(){
+
+// set the initial graphic attributes here for each object type to be shown client side
     const ballGraphic = {
         type : "Ball",
         shape : 'ellipse',
         width : 20,
         height: 20,
-        fill : { R: 255, G: 0, B: 0},
+        fill : { red: 255, green: 0, blue: 0},
         x : 10,
         y: 10
     };
@@ -33,7 +46,7 @@ function preLoad(){
         shape : 'rect',
         width : 75,
         height: 15,
-        fill : { R: 0, G: 255, B: 0},
+        fill : { red: 0, green: 255, blue: 0},
         x : 0,
         y: 0
     };
@@ -43,7 +56,7 @@ function preLoad(){
         shape : 'ellipse',
         width : 20,
         height: 20,
-        fill : { R: 0, G: 0, B: 255},
+        fill : { red: 0, green: 0, blue: 255},
         x : 10,
         y: 10
     };
@@ -53,25 +66,19 @@ function preLoad(){
     io.sockets.emit('preLoad', { preLoadData : preLoadData });
 }
 
-function Main() {
-
-
-    factory.paddleBottom = factory.createObject('Paddle', Constants().STAGE_WIDTH / 2, Constants().STAGE_HEIGHT - 20, 255, 255, 255);
-    factory.paddleTop = factory.createObject('Paddle', Constants().STAGE_WIDTH / 2, 20, 255, 255, 255);
-
-    for (let i = 0; i < numBalls; i++) {
-        factory.createObject('Ball', Constants().STAGE_WIDTH / 2, Constants().STAGE_HEIGHT / 2, Math.random() * 255, Math.random() * 255, 0);
-    }
-
+function Start() {
+    setInterval(() => Update(), 16.6);
     factory.randomizeBalls();
-
-    // setInterval(() => GameUpdate(), 16.6);
-
 }
 
+// called every frame
+function Update(){
+    factory.update();
+    io.sockets.emit('updateScore', score.getScore());
+    io.sockets.emit('gameShow', { DrawArray : factory.show() })
+}
 
-function playerMove(data){
-
+function Move(data){
 
     let player = data.player,
         key = data.key;
@@ -95,23 +102,16 @@ function playerMove(data){
 
 }
 
-function GameUpdate(){
-    factory.update();
-    io.sockets.emit('updateScore', score.sendScore());
-    io.sockets.emit('gameShow', { DrawArray : factory.show() })
-}
-
 function Constants(){
     return { STAGE_WIDTH: 400, STAGE_HEIGHT: 500, CHAOS : 3, TRANSFER_COEFFICIENT : 0.4, PADDLE_FORCE: 6};
 }
 
 module.exports = {
 
-    Main: Main,
-    Constants : Constants,
-    GameUpdate : GameUpdate,
+    Start: Start,
     setIO : setIO,
-    playerMove : playerMove,
-    preLoad : preLoad
+    PreLoad : PreLoad,
+    Move : Move,
+    Constants : Constants
 
 };

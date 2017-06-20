@@ -30,104 +30,53 @@ const Main = require('./Server/Game/ServerMain');
 let socket = require('socket.io');
 let io = socket(server);
 
+// pass IO to ServerMain
+Main.setIO(io);
+
 io.sockets.on('connection', ProcessConnection);
 io.sockets.on('connect_error', ProcessDisconnection);
 
 function ProcessConnection(socket) {
 
-    console.log("Connected");
-
-    // Main.preLoad();
+    console.log(`Connected to Player [${players + 1}]`);
 
     socket.once('RequestPlayer', function (data) {
-
-        console.log(JSON.stringify(data));
-        console.log('player', players);
 
         players++;
 
         socket.emit('AssignPlayer', {player: players});
 
-        Main.preLoad();
-
-
-
-    });
-
-    // socket.on('requestPreload', data => {
-    //
-    //     console.log('requesting preload', data.player);
-    //
-    //
-    //     while(players--){
-    //         Main.preLoad();
-    //     }
-    //
-    //
-    //
-    // });
-
-    socket.on('clientReady', data => {
-
-        // if(data.ready){
-
-            Main.Main();
-
-        // }
-
+        if(plaers === 2){
+            Main.Start();
+        }
 
 
     });
 
     socket.on('keyPress', function (data) {
-
-        Main.playerMove(data);
-
-    });
-
-    socket.on('score', data => {
-
-        score = data;
-
-        // console.log(score);
-
+        Main.Move(data);
     });
 
 }
 
 function ProcessDisconnection(socket){
-    console.log("Error");
+    console.log("Player Disconnected");
 }
-
-
-
-// Main.Main();
-
-Main.setIO(io);
-setInterval(() => Main.GameUpdate(), 16.6);
-
-// Main.preLoad();
-
-
-
-// setInterval( () => Main.GameUpdate(), 16.6);
-
-
-// [server] preload emit --> [client] preload graphics, emit ready -->
-// [server] call Main() --> [server] Main() calls setInterval(GameUpdate()) -->
-// game begins
 
 /*
 
+// ---------- ASSIGN PLAYERS
+1) [client] emit RequestPlayer --> send a request to the server to be assigned as a player
+2) [server] once, each connection, RequestPlayer --> increment player count and emit the player number assignment
+   when playerCount === 2 call Start() and move to STARTUP
+3) [client] once AssignPlayer --> call assignPlayer() client side and assign the player number to the player variable
+
 // ---------- STARTUP
 
-1) [server] create objects Create() --> create paddles and ball(s)
+1) [server] create objects executing Start() --> create paddles and ball(s)
 2) [server] emit preLoad --> send preLoad data about paddle and ball(s)
-3) [client] on preLoad --> pre load the GameGraphics
-4) [client] emit clientReady --> send clientReady data { player, ready }
-5) [server] on clientReady --> check if both clients have declared ready
-6) [server] both clientReady --> call Main()
-7) [server] execute Main() --> setInterval for GameUpdate THEN call randomizeBalls()
+3) [client] on preLoad --> pre load the GameGraphics and call Main()
+4) [server] execute Main() --> setInterval for Update THEN call randomizeBalls()
 
 // --------- GAMEPLAY
 

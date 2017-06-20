@@ -20,40 +20,13 @@ function preload(){
     // pointAwarded = loadSound('Sound Effects/Light_Fapping.mp3');
     // paddleCollide = loadSound('Sound Effects/Soft_Ding.mp3');
 
-    // // LOAD GRAPHICS
-    // GameGraphics["Ball"] = createGraphics(20, 20);
-    // GameGraphics["Ball"].fill(255);
-    // GameGraphics["Ball"].noStroke();
-    // GameGraphics["Ball"].ellipse(10,10,20);
-    //
-    // GameGraphics["Paddle"] = createGraphics(75, 15);
-    // GameGraphics["Paddle"].fill(255,0,0);
-    // GameGraphics["Paddle"].noStroke();
-    // GameGraphics["Paddle"].rect(0,0,75,15);
-    //
-    // // GameGraphics["Laser"] = createGraphics(10, 10);
-    // // GameGraphics["Laser"].fill(0,0,255);
-    // // GameGraphics["Laser"].noStroke();
-    // // GameGraphics["Laser"].rect(0,0,10,10);
-    //
-    // GameGraphics["Laser"] = createGraphics(20, 20);
-    // GameGraphics["Laser"].fill(0, 255, 0);
-    // GameGraphics["Laser"].noStroke();
-    // GameGraphics["Laser"].ellipse(10,10,20);
-
-
-
-    // THE SACRED TRIANGLE (STUPID)
-    // fill(255,0,0);
-    // triangle(this.x-10, this.y+(this.orientation()*10), this.x, this.y+(this.orientation()*30), this.x+10, this.y+(this.orientation()*10));
-
-    // // // CONNECT TO THE SERVER
-    // socket = io.connect("http://localhost:3000");
     socket = io.connect("https://453d425c.ngrok.io");
     socket.once("AssignPlayer", assignPlayer);
     socket.emit("RequestPlayer");
 
     socket.on('preLoad', data => {
+
+
 
         const preLoadData = data.preLoadData;
 
@@ -137,8 +110,6 @@ function keyPressed(){
 function assignPlayer(data){
     player = data.player;
     console.log("Player Assigned: " + player);
-
-    // socket.emit('requestPreload', { player: player, request : true });
 }
 
 function Update(data) {
