@@ -16,21 +16,57 @@ function setIO(appIO){
     io = appIO;
 }
 
-function syncGame(){
+function preLoad(){
 
+    const ballGraphic = {
+        type : "Ball",
+        shape : 'ellipse',
+        width : 20,
+        height: 20,
+        fill : { R: 255, G: 0, B: 0},
+        x : 10,
+        y: 10
+    };
 
+    const paddleGraphic = {
+        type : "Paddle",
+        shape : 'rect',
+        width : 75,
+        height: 15,
+        fill : { R: 0, G: 255, B: 0},
+        x : 0,
+        y: 0
+    };
+
+    const laserGraphic = {
+        type : "Laser",
+        shape : 'ellipse',
+        width : 20,
+        height: 20,
+        fill : { R: 0, G: 0, B: 255},
+        x : 10,
+        y: 10
+    };
+
+    const preLoadData = { ball : ballGraphic, paddle: paddleGraphic, laser : laserGraphic };
+
+    io.sockets.emit('preLoad', { preLoadData : preLoadData });
 }
 
-function Main(){
+function Main() {
 
-    factory.paddleBottom = factory.createObject('Paddle', Constants().STAGE_WIDTH/2, Constants().STAGE_HEIGHT-20, 255, 255, 255);
-    factory.paddleTop = factory.createObject('Paddle', Constants().STAGE_WIDTH/2, 20, 255, 255, 255);
 
-    for(let i = 0; i < numBalls; i++){
-        factory.createObject('Ball', Constants().STAGE_WIDTH/2, Constants().STAGE_HEIGHT/2, Math.random()*255, Math.random()*255, 0);
+    factory.paddleBottom = factory.createObject('Paddle', Constants().STAGE_WIDTH / 2, Constants().STAGE_HEIGHT - 20, 255, 255, 255);
+    factory.paddleTop = factory.createObject('Paddle', Constants().STAGE_WIDTH / 2, 20, 255, 255, 255);
+
+    for (let i = 0; i < numBalls; i++) {
+        factory.createObject('Ball', Constants().STAGE_WIDTH / 2, Constants().STAGE_HEIGHT / 2, Math.random() * 255, Math.random() * 255, 0);
     }
 
     factory.randomizeBalls();
+
+    setInterval(() => GameUpdate(), 16.6);
+
 }
 
 
@@ -75,6 +111,7 @@ module.exports = {
     Constants : Constants,
     GameUpdate : GameUpdate,
     setIO : setIO,
-    playerMove : playerMove
+    playerMove : playerMove,
+    preLoad : preLoad
 
 };

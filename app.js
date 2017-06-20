@@ -12,6 +12,7 @@ const app = express();
 
 let players = 0;
 let score;
+let clientCount = 0;
 
 let port = process.env.PORT || 3000;
 
@@ -36,9 +37,46 @@ function ProcessConnection(socket) {
 
     console.log("Connected");
 
+    // Main.preLoad();
+
     socket.once('RequestPlayer', function (data) {
+
+        console.log(JSON.stringify(data));
+        console.log('player', players);
+
         players++;
+
         socket.emit('AssignPlayer', {player: players});
+
+
+    });
+
+    socket.once('requestPreload', data => {
+
+        console.log('requesting preload', data.player);
+
+
+        // while(players--){
+            Main.preLoad();
+        // }
+
+
+
+    });
+
+    socket.on('clientReady', data => {
+
+        // console.log(`client read ${data.ready}`);
+        console.log(clientCount);
+
+        if(data.ready){
+
+            Main.Main();
+
+        }
+
+
+
     });
 
     socket.on('keyPress', function (data) {
@@ -63,11 +101,20 @@ function ProcessDisconnection(socket){
 
 
 
-Main.Main();
+// Main.Main();
 
 Main.setIO(io);
 
-setInterval( () => Main.GameUpdate(), 16.6);
+// Main.preLoad();
+
+
+
+// setInterval( () => Main.GameUpdate(), 16.6);
+
+
+// [server] preload emit --> [client] preload graphics, emit ready -->
+// [server] call Main() --> [server] Main() calls setInterval(GameUpdate()) -->
+// game begins
 
 
 

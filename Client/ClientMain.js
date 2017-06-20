@@ -15,39 +15,31 @@ const STAGE_WIDTH = 400, STAGE_HEIGHT = 500;
 // PRELOAD THE SOUND EFFECTS TO BE READY FOR USE
 function preload(){
 
-    socket.on('Preload', data => {
-
-
-
-        socket.emit('ClientReady', { player : player, ready : true })
-
-    });
-
     // LOAD SOUNDS
     // ballCollide = loadSound('Sound Effects/Ball_Collide.mp3');
     // pointAwarded = loadSound('Sound Effects/Light_Fapping.mp3');
     // paddleCollide = loadSound('Sound Effects/Soft_Ding.mp3');
 
-    // LOAD GRAPHICS
-    GameGraphics["Ball"] = createGraphics(20, 20);
-    GameGraphics["Ball"].fill(255);
-    GameGraphics["Ball"].noStroke();
-    GameGraphics["Ball"].ellipse(10,10,20);
-
-    GameGraphics["Paddle"] = createGraphics(75, 15);
-    GameGraphics["Paddle"].fill(255,0,0);
-    GameGraphics["Paddle"].noStroke();
-    GameGraphics["Paddle"].rect(0,0,75,15);
-
-    // GameGraphics["Laser"] = createGraphics(10, 10);
-    // GameGraphics["Laser"].fill(0,0,255);
+    // // LOAD GRAPHICS
+    // GameGraphics["Ball"] = createGraphics(20, 20);
+    // GameGraphics["Ball"].fill(255);
+    // GameGraphics["Ball"].noStroke();
+    // GameGraphics["Ball"].ellipse(10,10,20);
+    //
+    // GameGraphics["Paddle"] = createGraphics(75, 15);
+    // GameGraphics["Paddle"].fill(255,0,0);
+    // GameGraphics["Paddle"].noStroke();
+    // GameGraphics["Paddle"].rect(0,0,75,15);
+    //
+    // // GameGraphics["Laser"] = createGraphics(10, 10);
+    // // GameGraphics["Laser"].fill(0,0,255);
+    // // GameGraphics["Laser"].noStroke();
+    // // GameGraphics["Laser"].rect(0,0,10,10);
+    //
+    // GameGraphics["Laser"] = createGraphics(20, 20);
+    // GameGraphics["Laser"].fill(0, 255, 0);
     // GameGraphics["Laser"].noStroke();
-    // GameGraphics["Laser"].rect(0,0,10,10);
-
-    GameGraphics["Laser"] = createGraphics(20, 20);
-    GameGraphics["Laser"].fill(0, 255, 0);
-    GameGraphics["Laser"].noStroke();
-    GameGraphics["Laser"].ellipse(10,10,20);
+    // GameGraphics["Laser"].ellipse(10,10,20);
 
 
 
@@ -60,6 +52,37 @@ function preload(){
     socket = io.connect("https://453d425c.ngrok.io");
     socket.once("AssignPlayer", assignPlayer);
     socket.emit("RequestPlayer");
+
+    socket.once('preLoad', data => {
+
+        const preLoadData = data.preLoadData;
+
+        const preLoadGraphics = [preLoadData.ball, preLoadData.paddle, preLoadData.laser];
+
+        preLoadGraphics.forEach( e => {
+
+            console.log('forEach');
+
+            GameGraphics[e.type] = createGraphics(e.width, e.height);
+            GameGraphics[e.type].fill(e.fill.R, e.fill.G, e.fill.B);
+            GameGraphics[e.type].noStroke();
+
+            switch(e.shape){
+                case 'rect':
+                    shape = GameGraphics[e.type].rect(e.x, e.y, e.width, e.height);
+                    break;
+                case 'ellipse':
+                    GameGraphics[e.type].ellipse(e.x, e.y, e.width, e.height);
+                    break;
+            }
+
+        });
+
+
+        socket.emit('clientReady', { player : player, ready : true })
+
+    });
+
     socket.on('gameShow', Update);
 
     socket.on('updateScore', score => {
@@ -114,6 +137,8 @@ function keyPressed(){
 function assignPlayer(data){
     player = data.player;
     console.log("Player Assigned: " + player);
+
+    socket.emit('requestPreload', { player: player, request : true });
 }
 
 function Update(data) {
