@@ -3,7 +3,7 @@
  */
 
 let io;
-const numBalls = 1;
+const numBalls = 10;
 
 // const socket = require('socket.io');
 const ObjectFactory = require('./ObjectFactory');
@@ -48,7 +48,7 @@ function playerMove(data){
             paddle.accX(Constants().PADDLE_FORCE);
             break;
         case 'up':
-            let laser = factory.createObject('Laser', paddle.x, paddle.topEdge(), 0, 255, 0);
+            let laser = factory.createObject('Laser', paddle.x, paddle.topEdge() + (paddle.orientation()*20), 0, 255, 0);
             laser.accY(paddle.orientation() * 5);
     }
 
@@ -61,7 +61,7 @@ function GameUpdate(){
 }
 
 function Constants(){
-    return { STAGE_WIDTH: 400, STAGE_HEIGHT: 500, CHAOS : 3, TRANSFER_COEFFICIENT : 0.4, PADDLE_FORCE: 7};
+    return { STAGE_WIDTH: 400, STAGE_HEIGHT: 500, CHAOS : 3, TRANSFER_COEFFICIENT : 0.4, PADDLE_FORCE: 6};
 }
 
 module.exports = {

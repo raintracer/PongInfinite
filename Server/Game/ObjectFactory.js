@@ -108,6 +108,14 @@ function ObjectFactory(){
                     console.log('deleted');
                     a.splice(i, 1);
                 }
+
+                e.laserHit();
+            }
+
+            if( e. type === 'Paddle'){
+
+                e.paddleHit();
+
             }
 
         });

@@ -29,6 +29,32 @@ function Laser(parent, id, x, y, red=255, green=255, blue=255){
             return true;
         }
 
+    };
+
+    this.laserHit = function(){
+
+        parent.gameObjects.forEach( e => {
+
+            if(e.id !== this.id){
+
+                if(this.collidesAny(e)){
+
+                    // console.log(`collision with ${e.type} id: ${e.id}`);
+
+                    this.yvel *= -1;
+
+                    this.xvel += -e.xvel;
+
+                    // e.TransferMomentumX(this);
+                    // e.TransferMomentumY(this);
+
+                }
+            }
+
+
+
+        });
+
     }
 
 

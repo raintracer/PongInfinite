@@ -31,6 +31,25 @@ function Paddle(parent, player, id, x,y, red = 255, green = 255, blue = 255){
         else if (this.player===2){
             return 1;
         }
+    };
+
+
+    this.paddleHit = function(){
+
+      parent.gameObjects.forEach( e => {
+
+          if(e.type === 'Laser'){
+
+              if(e.laserHit(this)){
+
+                  console.log('struck by laser');
+
+              }
+
+          }
+
+      });
+
     }
 
 }

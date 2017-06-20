@@ -2,7 +2,7 @@
 
 let socket;
 
-let canvas, score, topScore = 0, bottomScore = 0;
+let canvas;
 let ballCollide = '', pointAwarded = '', paddleCollide = '', mute = true;
 
 let GameGraphics = [];
@@ -16,9 +16,9 @@ const STAGE_WIDTH = 400, STAGE_HEIGHT = 500;
 function preload(){
 
     // LOAD SOUNDS
-    ballCollide = loadSound('Sound Effects/Ball_Collide.mp3');
-    pointAwarded = loadSound('Sound Effects/Light_Fapping.mp3');
-    paddleCollide = loadSound('Sound Effects/Soft_Ding.mp3');
+    // ballCollide = loadSound('Sound Effects/Ball_Collide.mp3');
+    // pointAwarded = loadSound('Sound Effects/Light_Fapping.mp3');
+    // paddleCollide = loadSound('Sound Effects/Soft_Ding.mp3');
 
     // LOAD GRAPHICS
     GameGraphics["Ball"] = createGraphics(20, 20);
@@ -31,10 +31,17 @@ function preload(){
     GameGraphics["Paddle"].noStroke();
     GameGraphics["Paddle"].rect(0,0,75,15);
 
-    GameGraphics["Laser"] = createGraphics(10, 10);
-    GameGraphics["Laser"].fill(0,0,255);
+    // GameGraphics["Laser"] = createGraphics(10, 10);
+    // GameGraphics["Laser"].fill(0,0,255);
+    // GameGraphics["Laser"].noStroke();
+    // GameGraphics["Laser"].rect(0,0,10,10);
+
+    GameGraphics["Laser"] = createGraphics(20, 20);
+    GameGraphics["Laser"].fill(0, 255, 0);
     GameGraphics["Laser"].noStroke();
-    GameGraphics["Laser"].rect(0,0,10,10);
+    GameGraphics["Laser"].ellipse(10,10,20);
+
+
 
     // THE SACRED TRIANGLE (STUPID)
     // fill(255,0,0);
@@ -42,7 +49,7 @@ function preload(){
 
     // // // CONNECT TO THE SERVER
     // socket = io.connect("http://localhost:3000");
-    socket = io.connect("https://fb11fb60.ngrok.io");
+    socket = io.connect("https://453d425c.ngrok.io");
     socket.once("AssignPlayer", assignPlayer);
     socket.emit("RequestPlayer");
     socket.on('gameShow', Update);

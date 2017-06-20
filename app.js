@@ -62,16 +62,6 @@ function ProcessDisconnection(socket){
 }
 
 
-// this will server our index.html file (formerly our index.html)
-// using EJS so we can live update the score...once i figure out how to get the score from ServerMain back over here...
-// app.get('/', (req, res) => {
-//
-//
-//     // res.render('index', { score : score });
-//     console.log('get: ', score);
-//     res.render('index');
-//
-// });
 
 Main.Main();
 
