@@ -14,6 +14,7 @@ function setIO(appIO){
     io = appIO;
 }
 
+// STARTUP STEP 1)
 function Create(){
 
     // set number of balls
@@ -26,16 +27,21 @@ function Create(){
         factory.createObject('Ball', Constants().STAGE_WIDTH / 2, Constants().STAGE_HEIGHT / 2, Math.random() * 255, Math.random() * 255, 0);
     }
 
+    // STARTUP STEP 2)
+    PreLoad();
+
 }
 
 function PreLoad(){
+
+// **************  THIS CAN BE REFACTORED TO PULL ALL DATA FROM GAME OBJECTS THEN EMIT
 
 // set the initial graphic attributes here for each object type to be shown client side
     const ballGraphic = {
         type : "Ball",
         shape : 'ellipse',
-        width : 20,
-        height: 20,
+        w : 20,
+        h : 20,
         fill : { red: 255, green: 0, blue: 0},
         x : 10,
         y: 10
@@ -44,8 +50,8 @@ function PreLoad(){
     const paddleGraphic = {
         type : "Paddle",
         shape : 'rect',
-        width : 75,
-        height: 15,
+        w : 75,
+        h : 15,
         fill : { red: 0, green: 255, blue: 0},
         x : 0,
         y: 0
@@ -54,8 +60,8 @@ function PreLoad(){
     const laserGraphic = {
         type : "Laser",
         shape : 'ellipse',
-        width : 20,
-        height: 20,
+        w : 20,
+        h : 20,
         fill : { red: 0, green: 0, blue: 255},
         x : 10,
         y: 10
@@ -63,11 +69,17 @@ function PreLoad(){
 
     const preLoadData = { ball : ballGraphic, paddle: paddleGraphic, laser : laserGraphic };
 
+    console.log('preload data', preLoadData);
     io.sockets.emit('preLoad', { preLoadData : preLoadData });
+
+    // STARTUP STEP 4)
+    Start();
 }
 
 function Start() {
-    setInterval(() => Update(), 16.6);
+
+    console.log('start called');
+    setInterval(() => Update(), 1000);
     factory.randomizeBalls();
 }
 
@@ -75,6 +87,9 @@ function Start() {
 function Update(){
     factory.update();
     io.sockets.emit('updateScore', score.getScore());
+
+    console.log('Draw Array in Update', factory.show().length);
+
     io.sockets.emit('gameShow', { DrawArray : factory.show() })
 }
 
@@ -108,9 +123,10 @@ function Constants(){
 
 module.exports = {
 
-    Start: Start,
     setIO : setIO,
+    Create : Create,
     PreLoad : PreLoad,
+    Start : Start,
     Move : Move,
     Constants : Constants
 

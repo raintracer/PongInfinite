@@ -1,22 +1,23 @@
 # PongInfinite
 
-/*
+// ---------- ASSIGN PLAYERS
+1) [client] emit RequestPlayer --> send a request to the server to be assigned as a player
+2) [server] once, each connection, RequestPlayer --> increment player count and emit the player number assignment
+   when playerCount === 2 call Create() and move to STARTUP
+3) [client] once AssignPlayer --> call assignPlayer() client side and assign the player number to the player variable
 
 // ---------- STARTUP
 
-1) [server] create objects Create() --> create paddles and ball(s)
-2) [server] emit preLoad --> send preLoad data about paddle and ball(s)
+1) [server] create objects executing Create() --> create paddles and ball(s) and call Preload()
+2) [server] emit preLoad --> send preLoad data of all objects created in Create()
 3) [client] on preLoad --> pre load the GameGraphics
-4) [client] emit clientReady --> send clientReady data { player, ready }
-5) [server] on clientReady --> check if both clients have declared ready
-6) [server] both clientReady --> call Start()
-7) [server] execute Start() --> setInterval for GameUpdate THEN call randomizeBalls()
+4) [server] call Start() --> setInterval for Update THEN call randomizeBalls()
 
 // --------- GAMEPLAY
 
 Update (continuous setInterval, 60fps aka every 16.6ms)
-1) [server] setInterval loop --> executes Update() every 60frames (1000/60 ~ 16.6ms)
-2) [server] Update() --> iterates through gameObjects and gathers new object data points
+1) [server] setInterval loop --> executes GameUpdate every 60frames (1000/60 ~ 16.6ms)
+2) [server] GameUpdate() --> iterates through gameObjects and gathers new object data points
 3) [server] emit GameShow() --> passes updated gameObjects data array back to client
 4) [client] on GameShow() --> iterates through gameObjects array data and updates the clients' graphics
 
@@ -32,5 +33,4 @@ Score
 
 Keypresses
 1) [client] emit keyPress --> send keyPress data { player, key }
-2) [server] on keyPress --> register keyPress movement and proceed back to Update()
- */
+2) [server] on keyPress --> register keyPress movement and proceed back to GameUpdate

@@ -116,24 +116,25 @@ function ObjectFactory(){
 
     };
 
-    this.show = function(){
+    this.show = function() {
 
         DrawArray = [];
-        this.gameObjects.forEach(function(e){
+
+        this.gameObjects.forEach(function (e) {
 
             DrawArray.push({
-
-                type : e.type,
-                w : e.w,
+                type: e.type,
+                w: e.w,
                 h: e.h,
-                fill : { red: e.red, green: e.green, blue: e.blue},
-                x : e.x,
+                fill: {red: e.red, green: e.green, blue: e.blue},
+                x: e.x,
                 y: e.y
-
+            });
         });
 
-        return DrawArray;
+            // console.log('Draw Array length', DrawArray.length);
 
-    };
+        return DrawArray;
+    }
 
 }

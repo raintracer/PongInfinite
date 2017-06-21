@@ -12,7 +12,7 @@ let player;
 // ALL YOUR CONSTANTS ARE BELONG TO US. I DON'T KNOW WHAT WERE YELLING ABOUT
 const STAGE_WIDTH = 400, STAGE_HEIGHT = 500;
 
-// PRELOAD THE SOUND EFFECTS TO BE READY FOR USE
+// Preload the game and socket listeners / emitters
 function preload(){
 
     // LOAD SOUNDS
@@ -20,44 +20,19 @@ function preload(){
     // pointAwarded = loadSound('Sound Effects/Light_Fapping.mp3');
     // paddleCollide = loadSound('Sound Effects/Soft_Ding.mp3');
 
-    socket = io.connect("https://453d425c.ngrok.io");
+    // UPDATE SOCKET SERVER ON TESTING
+    socket = io.connect("https://01c1969c.ngrok.io");
+
+    // initiate the AssignPlayer listener before emitting the request for assignment
     socket.once("AssignPlayer", assignPlayer);
+
+    // request player assignment
     socket.emit("RequestPlayer");
 
-    socket.on('preLoad', data => {
-
-
-
-        const preLoadData = data.preLoadData;
-
-        const preLoadGraphics = [preLoadData.ball, preLoadData.paddle, preLoadData.laser];
-
-        preLoadGraphics.forEach( e => {
-
-            console.log('forEach');
-
-            GameGraphics[e.type] = createGraphics(e.width, e.height);
-            GameGraphics[e.type].fill(e.fill.R, e.fill.G, e.fill.B);
-            GameGraphics[e.type].noStroke();
-
-            switch(e.shape){
-                case 'rect':
-                    shape = GameGraphics[e.type].rect(e.x, e.y, e.width, e.height);
-                    break;
-                case 'ellipse':
-                    GameGraphics[e.type].ellipse(e.x, e.y, e.width, e.height);
-                    break;
-            }
-
-        });
-
-
-        socket.emit('clientReady', { player : player, ready : true })
-
-    });
-
+    // initialize gameShow listener and call Update() on data reception
     socket.on('gameShow', Update);
 
+    // initialize updateScore listener and update score divs on data reception
     socket.on('updateScore', score => {
 
         document.getElementById('topScore').innerHTML = score.top;
@@ -71,45 +46,58 @@ function setup(){
     centerCanvas();
 }
 
+
 // center the canvas
 function centerCanvas(){
     let x = (windowWidth - width) / 2, y = (windowHeight - height) / 2;
     canvas.position(x,y);
 }
-
 // center on window resize (responsive design)
 function windowResized(){
     centerCanvas();
 }
 
-
-// draw function performs actions in control --> update --> detect collision --> show order
+// no draw loop required, draw data / rate controlled by server
 function draw(){
     noLoop();
 }
 
-// single press of a key
-function keyPressed(){
-
-    let key;
-
-    // single press of key
-    switch(keyCode){
-        case 38:
-            key = 'up';
-            break;
-    }
-
-    if(key){
-        socket.emit('keyPress', { player : player, key : key });
-    }
-
-}
-
+// ----------- CLIENT / SERVER INTERACTIONS ----------- //
 
 function assignPlayer(data){
     player = data.player;
     console.log("Player Assigned: " + player);
+
+    // initialize the preLoad listener AFTER player assignment
+    socket.on('preLoad', data => {
+
+        console.log('data in preload', data);
+
+        const preLoadData = data.preLoadData;
+
+        const preLoadGraphics = [preLoadData.ball, preLoadData.paddle, preLoadData.laser];
+
+        preLoadGraphics.forEach( e => {
+
+            console.log('forEach');
+
+            GameGraphics[e.type] = createGraphics(e.w, e.h);
+            GameGraphics[e.type].fill(e.fill.R, e.fill.G, e.fill.B);
+            GameGraphics[e.type].noStroke();
+
+            switch(e.shape){
+                case 'rect':
+                    shape = GameGraphics[e.type].rect(e.x, e.y, e.w, e.h);
+                    break;
+                case 'ellipse':
+                    GameGraphics[e.type].ellipse(e.x, e.y, e.w, e.h);
+                    break;
+            }
+
+        });
+
+    });
+
 }
 
 function Update(data) {
@@ -130,10 +118,33 @@ function Update(data) {
 
     background(0);
 
-    data.DrawArray.forEach(function(e){
+    if(data){
 
-        // pass in width, height
-        image(GameGraphics[e.type], e.x, e.y)
-    });
+        data.DrawArray.forEach(function(e){
+            // pass in width, height
+            image(GameGraphics[e.type], e.x, e.y, e.w, e.h);
+
+        });
+    }
+
+
+
+}
+
+// single press of a key, p5 listener
+function keyPressed(){
+
+    let key;
+
+    // single press of key
+    switch(keyCode){
+        case 38:
+            key = 'up';
+            break;
+    }
+
+    if(key){
+        socket.emit('keyPress', { player : player, key : key });
+    }
 
 }

@@ -36,6 +36,7 @@ Main.setIO(io);
 io.sockets.on('connection', ProcessConnection);
 io.sockets.on('connect_error', ProcessDisconnection);
 
+// ASSIGN PLAYERS STEP 1)
 function ProcessConnection(socket) {
 
     console.log(`Connected to Player [${players + 1}]`);
@@ -46,10 +47,11 @@ function ProcessConnection(socket) {
 
         socket.emit('AssignPlayer', {player: players});
 
-        if(plaers === 2){
-            Main.Start();
+    // once two players have connected call ServerMain --> Create()
+        // ASSIGN PLAYERS STEP 2)
+        if(players === 2){
+            Main.Create();
         }
-
 
     });
 
@@ -68,15 +70,15 @@ function ProcessDisconnection(socket){
 // ---------- ASSIGN PLAYERS
 1) [client] emit RequestPlayer --> send a request to the server to be assigned as a player
 2) [server] once, each connection, RequestPlayer --> increment player count and emit the player number assignment
-   when playerCount === 2 call Start() and move to STARTUP
+   when playerCount === 2 call Create() and move to STARTUP
 3) [client] once AssignPlayer --> call assignPlayer() client side and assign the player number to the player variable
 
 // ---------- STARTUP
 
-1) [server] create objects executing Start() --> create paddles and ball(s)
-2) [server] emit preLoad --> send preLoad data about paddle and ball(s)
-3) [client] on preLoad --> pre load the GameGraphics and call Main()
-4) [server] execute Main() --> setInterval for Update THEN call randomizeBalls()
+1) [server] create objects executing Create() --> create paddles and ball(s) and call Preload()
+2) [server] emit preLoad --> send preLoad data of all objects created in Create()
+3) [client] on preLoad --> pre load the GameGraphics
+4) [server] call Start() --> setInterval for Update THEN call randomizeBalls()
 
 // --------- GAMEPLAY
 
