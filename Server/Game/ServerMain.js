@@ -109,7 +109,7 @@ function Move(data){
             paddle.accX(Constants().PADDLE_FORCE);
             break;
         case 'up':
-            let laser = factory.createObject('Laser', paddle.x, paddle.topEdge() + (paddle.orientation()*20), 0, 255, 0);
+            let laser = factory.createObject('Laser', paddle.x+paddle.w/2-10, paddle.topEdge() + (paddle.orientation()*20), 0, 0, 255);
             laser.accY(paddle.orientation() * 5);
     }
 

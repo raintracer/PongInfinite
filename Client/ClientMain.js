@@ -21,7 +21,7 @@ function preload(){
     // paddleCollide = loadSound('Sound Effects/Soft_Ding.mp3');
 
     // UPDATE SOCKET SERVER ON TESTING
-    socket = io.connect("https://60361204.ngrok.io");
+    socket = io.connect("127.0.0.1:3000");
 
     // initiate the AssignPlayer listener before emitting the request for assignment
     socket.once("AssignPlayer", assignPlayer);
@@ -82,7 +82,7 @@ function assignPlayer(data){
             console.log('forEach');
 
             GameGraphics[e.type] = createGraphics(e.w, e.h);
-            GameGraphics[e.type].fill(e.fill.R, e.fill.G, e.fill.B);
+            GameGraphics[e.type].fill(e.fill.red, e.fill.green, e.fill.blue);
             GameGraphics[e.type].noStroke();
 
             switch(e.shape){
