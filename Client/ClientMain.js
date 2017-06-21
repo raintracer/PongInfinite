@@ -21,7 +21,7 @@ function preload(){
     // paddleCollide = loadSound('Sound Effects/Soft_Ding.mp3');
 
     // UPDATE SOCKET SERVER ON TESTING
-    socket = io.connect("https://01c1969c.ngrok.io");
+    socket = io.connect("https://60361204.ngrok.io");
 
     // initiate the AssignPlayer listener before emitting the request for assignment
     socket.once("AssignPlayer", assignPlayer);
@@ -113,6 +113,7 @@ function Update(data) {
     }
 
     if(keyIsDown(LEFT_ARROW) || keyIsDown(RIGHT_ARROW)){
+        console.log(key);
         socket.emit('keyPress', { player : player, key : key} );
     }
 
@@ -126,8 +127,6 @@ function Update(data) {
 
         });
     }
-
-
 
 }
 

@@ -1,6 +1,7 @@
 # PongInfinite
 
 // ---------- ASSIGN PLAYERS
+
 1) [client] emit RequestPlayer --> send a request to the server to be assigned as a player
 2) [server] once, each connection, RequestPlayer --> increment player count and emit the player number assignment
    when playerCount === 2 call Create() and move to STARTUP

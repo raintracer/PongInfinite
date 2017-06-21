@@ -16,7 +16,7 @@ function Score() {
     this.scorePoint = function (ball) {
         if (ball.y >= Constants.STAGE_HEIGHT) {
             topScore++;
-            // IDEA _________>
+            // IDEA ____________>
             // turn the client index into an ejs to serve score and player information
             ball.randomize();
         }
@@ -26,13 +26,10 @@ function Score() {
             ball.randomize();
 
         }
-
     };
 
     this.getScore = function(){
-
         return { top : topScore, bottom : bottomScore};
-
     }
 
 }

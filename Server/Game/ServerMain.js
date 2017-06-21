@@ -18,7 +18,7 @@ function setIO(appIO){
 function Create(){
 
     // set number of balls
-    const numBalls = 0;
+    const numBalls = 5;
 
     factory.paddleBottom = factory.createObject('Paddle', Constants().STAGE_WIDTH / 2, Constants().STAGE_HEIGHT - 20, 255, 255, 255);
     factory.paddleTop = factory.createObject('Paddle', Constants().STAGE_WIDTH / 2, 20, 255, 255, 255);
@@ -77,9 +77,8 @@ function PreLoad(){
 }
 
 function Start() {
-
     console.log('start called');
-    setInterval(() => Update(), 1000);
+    setInterval(() => Update(), 16.6);
     factory.randomizeBalls();
 }
 
@@ -87,13 +86,12 @@ function Start() {
 function Update(){
     factory.update();
     io.sockets.emit('updateScore', score.getScore());
-
-    console.log('Draw Array in Update', factory.show().length);
-
     io.sockets.emit('gameShow', { DrawArray : factory.show() })
 }
 
 function Move(data){
+
+    console.log('Move called', data);
 
     let player = data.player,
         key = data.key;
