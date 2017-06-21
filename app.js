@@ -62,7 +62,8 @@ function ProcessConnection(socket) {
 }
 
 function ProcessDisconnection(socket){
-    console.log("Player Disconnected");
+    console.log(`Player ${players} disconnected`);
+    players--;
 }
 
 
