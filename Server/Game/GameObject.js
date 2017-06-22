@@ -17,6 +17,8 @@ function GameObject(parent, id, x, y, red=255, green=255, blue=255) {
     this.id = id;
     this.type = "General";
 
+    this.shape = 'General';
+
     this.red = red;
     this.green = green;
     this.blue = blue;

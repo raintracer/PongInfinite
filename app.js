@@ -43,9 +43,9 @@ function ProcessConnection(socket) {
 
     socket.once('RequestPlayer', function (data) {
 
-        players++;
+            players++;
 
-        socket.emit('AssignPlayer', {player: players});
+            socket.emit('AssignPlayer', {player: players});
 
     // once two players have connected call ServerMain --> Create()
         // ASSIGN PLAYERS STEP 2)
@@ -65,6 +65,22 @@ function ProcessDisconnection(socket){
     console.log(`Player ${players} disconnected`);
     players--;
 }
+
+
+
+/*
+
+Issues:
+io.sockets.on('disconnect') is not working. does not correctly declare the disconnections
+
+on server reset the game is locked up becuase it instantly assigns both players as player 1 when they try to reconnect
+to the server
+
+Next:
+add a collision detection exporter than can send object collision info and trigger sound
+
+
+ */
 
 
 

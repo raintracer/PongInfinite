@@ -18,12 +18,13 @@ const Score = require('./Score');
 
 const Constants = { STAGE_WIDTH: 400, STAGE_HEIGHT: 500, CHAOS : 10, TRANSFER_COEFFICIENT : 0.4};
 
-function Ball(parent, id, x,y, red=255, green=255, blue=255){
+function Ball(parent, id, x, y, red=255, green=255, blue=255){
 
     // this.test = () => console.log(Constants.STAGE_WIDTH);
 
     GameObject.call(this,parent,id,x,y, red, green, blue);
     this.type = "Ball";
+    this.shape = 'ellipse';
     this.parent = parent;
 
 // ball diameter

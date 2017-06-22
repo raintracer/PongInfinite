@@ -18,13 +18,13 @@ function setIO(appIO){
 function Create(){
 
     // set number of balls
-    const numBalls = 10;
+    const numBalls = 2;
 
     factory.paddleBottom = factory.createObject('Paddle', Constants().STAGE_WIDTH / 2, Constants().STAGE_HEIGHT - 20, 255, 255, 255);
     factory.paddleTop = factory.createObject('Paddle', Constants().STAGE_WIDTH / 2, 20, 255, 255, 255);
 
     for (let i = 0; i < numBalls; i++) {
-        factory.createObject('Ball', Constants().STAGE_WIDTH / 2, Constants().STAGE_HEIGHT / 2, Math.random() * 255, Math.random() * 255, 0);
+        factory.createObject('Ball', Constants().STAGE_WIDTH / 2, Constants().STAGE_HEIGHT / 2, 0, 0, 255);
     }
 
     // STARTUP STEP 2)
@@ -34,42 +34,27 @@ function Create(){
 
 function PreLoad(){
 
-// **************  THIS CAN BE REFACTORED TO PULL ALL DATA FROM GAME OBJECTS THEN EMIT
+    // HERE
 
-// set the initial graphic attributes here for each object type to be shown client side
-    const ballGraphic = {
-        type : "Ball",
-        shape : 'ellipse',
-        w : 20,
-        h : 20,
-        fill : { red: 255, green: 0, blue: 0},
-        x : 10,
-        y: 10
+    console.log('Preload called');
+
+    // since lasers dont exist at game start but need to be preloaded create and pass a generic laser graphic here
+    let laser = {
+
+        type: "Laser",
+        shape : "ellipse",
+        w: 20,
+        h: 20,
+        fill: {red: 255, green: 0, blue: 0},
+        x: 50,
+        y: 50
+
     };
 
-    const paddleGraphic = {
-        type : "Paddle",
-        shape : 'rect',
-        w : 75,
-        h : 15,
-        fill : { red: 0, green: 255, blue: 0},
-        x : 0,
-        y: 0
-    };
+    // get all the currently created objects (paddles, ball(s)) and add the laser object to it then emit
+    let preLoadData = factory.show();
+    preLoadData.push(laser);
 
-    const laserGraphic = {
-        type : "Laser",
-        shape : 'ellipse',
-        w : 20,
-        h : 20,
-        fill : { red: 0, green: 0, blue: 255},
-        x : 10,
-        y: 10
-    };
-
-    const preLoadData = { ball : ballGraphic, paddle: paddleGraphic, laser : laserGraphic };
-
-    console.log('preload data', preLoadData);
     io.sockets.emit('preLoad', { preLoadData : preLoadData });
 
     // STARTUP STEP 4)
@@ -77,7 +62,6 @@ function PreLoad(){
 }
 
 function Start() {
-    console.log('start called');
     setInterval(() => Update(), 16.6);
     factory.randomizeBalls();
 }
@@ -90,8 +74,6 @@ function Update(){
 }
 
 function Move(data){
-
-    console.log('Move called', data);
 
     let player = data.player,
         key = data.key;
@@ -109,7 +91,7 @@ function Move(data){
             paddle.accX(Constants().PADDLE_FORCE);
             break;
         case 'up':
-            let laser = factory.createObject('Laser', paddle.x+paddle.w/2-10, paddle.topEdge() + (paddle.orientation()*20), 0, 0, 255);
+            let laser = factory.createObject('Laser', paddle.x, paddle.topEdge() + (paddle.orientation()*20), 255, 0, 0);
             laser.accY(paddle.orientation() * 5);
     }
 

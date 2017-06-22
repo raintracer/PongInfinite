@@ -13,6 +13,7 @@ function Paddle(parent, player, id, x,y, red = 255, green = 255, blue = 255){
     GameObject.call(this,parent,id,x,y,red, green, blue);
     this.parent = parent;
     this.type = "Paddle";
+    this.shape = 'rect';
     this.player = player;
     const LASER_SPEED = 2;
 

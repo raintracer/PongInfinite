@@ -1,12 +1,8 @@
 // global variables and constants
-
 let socket;
-
 let canvas;
-let ballCollide = '', pointAwarded = '', paddleCollide = '', mute = true;
-
-let GameGraphics = [];
-
+let ballCollide, pointAwarded, paddleCollide, mute = true;
+let GameGraphics = {};
 let player;
 
 // ALL YOUR CONSTANTS ARE BELONG TO US. I DON'T KNOW WHAT WERE YELLING ABOUT
@@ -22,6 +18,7 @@ function preload(){
 
     // UPDATE SOCKET SERVER ON TESTING
     socket = io.connect("127.0.0.1:3000");
+    // socket = io.connect('https://58d4f45d.ngrok.io');
 
     // initiate the AssignPlayer listener before emitting the request for assignment
     socket.once("AssignPlayer", assignPlayer);
@@ -70,32 +67,12 @@ function assignPlayer(data){
 
     // initialize the preLoad listener AFTER player assignment
     socket.on('preLoad', data => {
-
-        console.log('data in preload', data);
-
-        const preLoadData = data.preLoadData;
-
-        const preLoadGraphics = [preLoadData.ball, preLoadData.paddle, preLoadData.laser];
-
-        preLoadGraphics.forEach( e => {
-
-            console.log('forEach');
+        data.preLoadData.forEach(e => {
 
             GameGraphics[e.type] = createGraphics(e.w, e.h);
             GameGraphics[e.type].fill(e.fill.red, e.fill.green, e.fill.blue);
-            GameGraphics[e.type].noStroke();
-
-            switch(e.shape){
-                case 'rect':
-                    shape = GameGraphics[e.type].rect(e.x, e.y, e.w, e.h);
-                    break;
-                case 'ellipse':
-                    GameGraphics[e.type].ellipse(e.x, e.y, e.w, e.h);
-                    break;
-            }
 
         });
-
     });
 
 }
@@ -113,19 +90,26 @@ function Update(data) {
     }
 
     if(keyIsDown(LEFT_ARROW) || keyIsDown(RIGHT_ARROW)){
-        console.log(key);
         socket.emit('keyPress', { player : player, key : key} );
     }
 
     background(0);
 
+    // prevents crash if data is not available for the loop due to server hangup
     if(data){
 
         data.DrawArray.forEach(function(e){
-            // pass in width, height
+
+            GameGraphics[e.type].background(e.fill.red, e.fill.green, e.fill.blue);
+            GameGraphics[e.type].noStroke();
+
+        // draw from center to match server side draw method
+            imageMode(CENTER);
             image(GameGraphics[e.type], e.x, e.y, e.w, e.h);
 
         });
+
+
     }
 
 }

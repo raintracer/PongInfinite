@@ -24,6 +24,8 @@ function ObjectFactory(){
 
     this.createObject = function(objectType,x,y,red,green,blue){
 
+        console.log(`factory create ${objectType} with colors red: ${red} green: ${green} blue: ${blue}`);
+
         let object;
 
         if (objectType === "Ball"){
@@ -124,6 +126,7 @@ function ObjectFactory(){
 
             DrawArray.push({
                 type: e.type,
+                shape : e.shape,
                 w: e.w,
                 h: e.h,
                 fill: {red: e.red, green: e.green, blue: e.blue},

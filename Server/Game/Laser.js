@@ -18,6 +18,7 @@ function Laser(parent, id, x, y, red=255, green=255, blue=255){
 
     this.parent = parent;
     this.type = "Laser";
+    this.shape = 'ellipse';
 
     const size = 20;
     this.w = size;
