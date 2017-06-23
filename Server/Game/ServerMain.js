@@ -18,7 +18,7 @@ function setIO(appIO){
 function Create(){
 
     // set number of balls
-    const numBalls = 2;
+    const numBalls = 1;
 
     factory.paddleBottom = factory.createObject('Paddle', Constants().STAGE_WIDTH / 2, Constants().STAGE_HEIGHT - 20, 255, 255, 255);
     factory.paddleTop = factory.createObject('Paddle', Constants().STAGE_WIDTH / 2, 20, 255, 255, 255);

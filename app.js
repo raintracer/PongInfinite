@@ -41,19 +41,15 @@ function ProcessConnection(socket) {
 
     console.log(`Connected to Player [${players + 1}]`);
 
-    socket.once('RequestPlayer', function (data) {
+    players++;
 
-            players++;
+    socket.emit('AssignPlayer', {player: players});
 
-            socket.emit('AssignPlayer', {player: players});
-
-    // once two players have connected call ServerMain --> Create()
-        // ASSIGN PLAYERS STEP 2)
-        if(players === 2){
-            Main.Create();
-        }
-
-    });
+// once two players have connected call ServerMain --> Create()
+    // ASSIGN PLAYERS STEP 2)
+    if(players === 2){
+        Main.Create();
+    }
 
     socket.on('keyPress', function (data) {
         Main.Move(data);

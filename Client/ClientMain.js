@@ -21,10 +21,7 @@ function preload(){
     // socket = io.connect('https://58d4f45d.ngrok.io');
 
     // initiate the AssignPlayer listener before emitting the request for assignment
-    socket.once("AssignPlayer", assignPlayer);
-
-    // request player assignment
-    socket.emit("RequestPlayer");
+    socket.on("AssignPlayer", assignPlayer);
 
     // initialize gameShow listener and call Update() on data reception
     socket.on('gameShow', Update);
