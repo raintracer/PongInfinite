@@ -13,7 +13,7 @@ function Laser(parent, id, x, y, red=255, green=255, blue=255){
 
     GameObject.call(this, parent, id, x, y, red, green, blue);
 
-    this.AnimationArray = [.1,.2,.3,.4,.5,.6,.7,.8,.9,1,1,.9,.8,.7,.6,.5,.4,.3,.2,.1];
+    this.AnimationArray = [.2,.4,.6,.8,1,1,.8,.6,.4, 0.2];
     this.frame = 0;
 
 
@@ -57,14 +57,16 @@ function Laser(parent, id, x, y, red=255, green=255, blue=255){
                     let splitBall = parent.createObject('Ball', Constants.STAGE_WIDTH/2, Constants.STAGE_HEIGHT/2, 255, 255, 255);
                     splitBall.w *= 0.7;
                     splitBall.h *= 0.7;
-                    splitBall.xvel = Math.random()*5;
-                    splitBall.yvel = Math.random()*5;
+                    splitBall.randomize();
                 }
                 parent.deleteObject(object.id);
                 break;
             case "Paddle":
                 object.w *= 0.95;
                 break;
+            case "Laser":
+                parent.deleteObject(object.id);
+                parent.deleteObject(this.id);
         }
         parent.deleteObject(this.id);
     };

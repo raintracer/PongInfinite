@@ -26,10 +26,10 @@ function preload(){
     GameGraphics["Paddle"].noStroke();
     GameGraphics["Paddle"].rect(0,0,75,15);
 
-    GameGraphics["Laser"] = createGraphics(10, 10);
-    GameGraphics["Laser"].fill(255,0,0);
+    GameGraphics["Laser"] = createGraphics(20, 20);
+    GameGraphics["Laser"].fill(0,255,0);
     GameGraphics["Laser"].noStroke();
-    GameGraphics["Laser"].ellipse(0,0,10,10);
+    GameGraphics["Laser"].ellipse(10,10,20);
 
     // UPDATE SOCKET SERVER ON TESTING
     socket = io.connect("127.0.0.1:3000");

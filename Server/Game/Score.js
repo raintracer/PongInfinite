@@ -2,8 +2,6 @@
  * Created by Vampiire on 5/22/17.
  */
 
-module.exports = Score;
-
 const Factory = require('./ObjectFactory');
 const factory = new Factory();
 
@@ -18,21 +16,12 @@ function Score() {
     this.scorePoint = function (ball) {
         if (ball.y >= Constants.STAGE_HEIGHT) {
             topScore++;
-            // IDEA ____________>
-            // turn the client index into an ejs to serve score and player information
-            let newBall = factory.createObject("Ball", Constants.STAGE_WIDTH/2, Constants.STAGE_HEIGHT/2, ball.red, ball.green, ball.blue);
-            // ball.randomize();
-            factory.deleteObject(ball.id);
-            // newBall.randomize();
+            return true;
         }
 
         if (ball.y <= 0) {
             bottomScore++;
-            let newBall = factory.createObject("Ball", Constants.STAGE_WIDTH/2, Constants.STAGE_HEIGHT/2, ball.red, ball.green, ball.blue);
-            // ball.randomize();
-            factory.deleteObject(ball.id);
-            // ball.randomize();
-
+            return true;
         }
     };
 
@@ -41,4 +30,6 @@ function Score() {
     }
 
 }
+
+module.exports = Score;
 

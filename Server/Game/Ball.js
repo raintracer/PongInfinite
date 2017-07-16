@@ -5,22 +5,10 @@
 module.exports = Ball;
 
 const GameObject = require('./GameObject');
-// const GO = new GameObject();
-// const Constants = require('./ServerMain').Constants;
-const Score = require('./Score');
-
-
-// console.log('ball call', Constants.STAGE_WIDTH);
-//
-// let ball = new Ball(this, 1, 1, 1);
-//
-// ball.test();
 
 const Constants = { STAGE_WIDTH: 400, STAGE_HEIGHT: 500, CHAOS : 10, TRANSFER_COEFFICIENT : 0.4};
 
 function Ball(parent, id, x, y, red=255, green=255, blue=255){
-
-    // this.test = () => console.log(Constants.STAGE_WIDTH);
 
     GameObject.call(this,parent,id,x,y, red, green, blue);
     this.type = "Ball";

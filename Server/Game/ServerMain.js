@@ -20,11 +20,11 @@ function Create(){
     // set number of balls
     const numBalls = 1;
 
-    factory.paddleBottom = factory.createObject('Paddle', Constants().STAGE_WIDTH / 2, Constants().STAGE_HEIGHT - 20, 255, 255, 255);
-    factory.paddleTop = factory.createObject('Paddle', Constants().STAGE_WIDTH / 2, 20, 255, 255, 255);
+    factory.paddleBottom = factory.createObject('Paddle', Constants.stageWidth / 2, Constants.stageHeight - 20, 255, 255, 255);
+    factory.paddleTop = factory.createObject('Paddle', Constants.stageWidth / 2, 20, 255, 255, 255);
 
     for (let i = 0; i < numBalls; i++) {
-        factory.createObject('Ball', Constants().STAGE_WIDTH / 2, Constants().STAGE_HEIGHT / 2, 0, 0, 255);
+        factory.createObject('Ball', Constants.stageWidth / 2, Constants.stageHeight / 2, 0, 0, 255);
     }
 
     Start();
@@ -56,28 +56,31 @@ function Move(data){
 
     switch(key){
         case 'left':
-            paddle.accX(-Constants().PADDLE_FORCE);
+            paddle.accX(-Constants.paddleForce);
             break;
         case 'right':
-            paddle.accX(Constants().PADDLE_FORCE);
+            paddle.accX(Constants.paddleForce);
             break;
         case 'up':
             let laser = factory.createObject('Laser', paddle.x, paddle.topEdge() + (paddle.orientation()*20), 255, 0, 0);
-            laser.accY(paddle.orientation() * 5);
+            laser.accY(paddle.orientation() * 10);
     }
 
 }
 
-function Constants(){
-    return { STAGE_WIDTH: 400, STAGE_HEIGHT: 500, CHAOS : 3, TRANSFER_COEFFICIENT : 0.4, PADDLE_FORCE: 6};
-}
+const Constants = {
+    // return { STAGE_WIDTH: 400, STAGE_HEIGHT: 500, CHAOS : 3, TRANSFER_COEFFICIENT : 0.4, PADDLE_FORCE: 6};
+    stageWidth: 400,
+    stageHeight: 500,
+    chaos: 3,
+    transferCoefficient: 0.4,
+    paddleForce: 6
+};
 
 module.exports = {
-
     setIO : setIO,
     Create : Create,
     Start : Start,
     Move : Move,
     Constants : Constants
-
 };
