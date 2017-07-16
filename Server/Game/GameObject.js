@@ -10,26 +10,21 @@ const Constants = { STAGE_WIDTH: 400, STAGE_HEIGHT: 500, CHAOS : 1, TRANSFER_COE
 
 function GameObject(parent, id, x, y, red=255, green=255, blue=255) {
 
-// x,y position of the game object [ball(s), paddles]
+// position coordinates
     this.parent = parent;
     this.x = x;
     this.y = y;
+    this.w = 0;
+    this.h = 0;
+
+// identifiers
     this.id = id;
     this.type = "General";
-
     this.shape = 'General';
 
     this.red = red;
     this.green = green;
     this.blue = blue;
-
-// previous x,y position of the game object [ball(s)]
-    this.oldx = x;
-    this.oldy = y;
-
-// Constants.STAGE_WIDTH and Constants.STAGE_HEIGHT of the game object
-    this.w = 0;
-    this.h = 0;
 
 // x,y velocities of the game object
     this.xvel = 0;
@@ -196,7 +191,7 @@ function GameObject(parent, id, x, y, red=255, green=255, blue=255) {
         }
     };
 
-    this.TransferMomentumX = function(TargetObject){
+    this.transferMomentumX = function(TargetObject){
 
         // Transfer some velocity between active and target objects
         let MomentumDifference = Math.abs(Math.abs(this.xvel) - Math.abs(TargetObject.xvel));
@@ -213,7 +208,7 @@ function GameObject(parent, id, x, y, red=255, green=255, blue=255) {
 
     };
 
-    this.TransferMomentumY = function(TargetObject){
+    this.transferMomentumY = function(TargetObject){
 
         // Transfer some velocity between active and target objects
         let MomentumDifference = Math.abs(Math.abs(this.yvel) - Math.abs(TargetObject.yvel));

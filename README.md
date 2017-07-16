@@ -10,9 +10,7 @@
 // ---------- STARTUP
 
 1) [server] create objects executing Create() --> create paddles and ball(s) and call Preload()
-2) [server] emit preLoad --> send preLoad data of all objects created in Create()
-3) [client] on preLoad --> pre load the GameGraphics
-4) [server] call Start() --> setInterval for Update THEN call randomizeBalls()
+2) [server] call Start() --> setInterval for Update THEN call randomizeBalls()
 
 // --------- GAMEPLAY
 

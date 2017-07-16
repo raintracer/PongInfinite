@@ -16,9 +16,24 @@ function preload(){
     // pointAwarded = loadSound('Sound Effects/Light_Fapping.mp3');
     // paddleCollide = loadSound('Sound Effects/Soft_Ding.mp3');
 
+    GameGraphics["Ball"] = createGraphics(20, 20);
+    GameGraphics["Ball"].fill(255);
+    GameGraphics["Ball"].noStroke();
+    GameGraphics["Ball"].ellipse(10,10,20);
+
+    GameGraphics["Paddle"] = createGraphics(75, 15);
+    GameGraphics["Paddle"].fill(255,0,0);
+    GameGraphics["Paddle"].noStroke();
+    GameGraphics["Paddle"].rect(0,0,75,15);
+
+    GameGraphics["Laser"] = createGraphics(10, 10);
+    GameGraphics["Laser"].fill(255,0,0);
+    GameGraphics["Laser"].noStroke();
+    GameGraphics["Laser"].ellipse(0,0,10,10);
+
     // UPDATE SOCKET SERVER ON TESTING
     socket = io.connect("127.0.0.1:3000");
-    // socket = io.connect('https://58d4f45d.ngrok.io');
+    // socket = io.connect('https://1651a3db.ngrok.io');
 
     // initiate the AssignPlayer listener before emitting the request for assignment
     socket.on("AssignPlayer", assignPlayer);
@@ -29,10 +44,17 @@ function preload(){
     // initialize updateScore listener and update score divs on data reception
     socket.on('updateScore', score => {
 
-        document.getElementById('topScore').innerHTML = score.top;
-        document.getElementById('bottomScore').innerHTML = score.bottom;
+        let topScore =  document.getElementById('topScore'),
+            bottomScore = document.getElementById('bottomScore');
+
+        topScore.innerHTML = score.top;
+        bottomScore.innerHTML = score.bottom;
+
+        // trying to set the bottom score to scale with canvas height...not working but worth exploring later
+        // console.log('canvas', document.getElementById('defaultCanvas0').height+20);
 
     });
+
 }
 
 function setup(){
@@ -60,18 +82,7 @@ function draw(){
 
 function assignPlayer(data){
     player = data.player;
-    console.log("Player Assigned: " + player);
-
-    // initialize the preLoad listener AFTER player assignment
-    socket.on('preLoad', data => {
-        data.preLoadData.forEach(e => {
-
-            GameGraphics[e.type] = createGraphics(e.w, e.h);
-            GameGraphics[e.type].fill(e.fill.red, e.fill.green, e.fill.blue);
-
-        });
-    });
-
+    console.log(`You are player ${player}. ${player === 1 ? "Bottom Paddle" : "Top Paddle"}`);
 }
 
 function Update(data) {
@@ -97,10 +108,25 @@ function Update(data) {
 
         data.DrawArray.forEach(function(e){
 
-            GameGraphics[e.type].background(e.fill.red, e.fill.green, e.fill.blue);
-            GameGraphics[e.type].noStroke();
+            GameGraphics[e.type].fill(e.fill.red, e.fill.green, e.fill.blue);
+            // GameGraphics[e.type].noStroke();
+            //
+            //
+            // console.log(`preload ${e.type} of shape ${e.shape}`);
+            //
+            // switch(e.shape){
+            //     case 'rect':
+            //         console.log('rect called');
+            //         GameGraphics[e.type].rect(e.x, e.y, e.w, e.h);
+            //         break;
+            //     case 'ellipse':
+            //         GameGraphics[e.type].ellipse(e.x, e.y, e.w, e.h);
+            //         break;
+            // }
 
         // draw from center to match server side draw method
+
+
             imageMode(CENTER);
             image(GameGraphics[e.type], e.x, e.y, e.w, e.h);
 

@@ -74,8 +74,8 @@ function Ball(parent, id, x, y, red=255, green=255, blue=255){
                         // Set the active object against the left side of the target object
                         this.setPosition(HitObjects[i].leftEdge() - this.w / 2, this.y);
 
-                        // Transfer Momentum
-                        this.TransferMomentumX(HitObjects[i]);
+                        // transfer Momentum
+                        this.transferMomentumX(HitObjects[i]);
 
                         // If the active object and the target object are moving in opposite, reflect the target object
                         if(this.xDir() === -HitObjects[i].xDir()){
@@ -100,8 +100,8 @@ function Ball(parent, id, x, y, red=255, green=255, blue=255){
                         // Set the active object against the left side of the target object
                         this.setPosition(HitObjects[i].rightEdge() + this.w / 2, this.y);
 
-                        // Transfer Momentum
-                        this.TransferMomentumX(HitObjects[i]);
+                        // transfer Momentum
+                        this.transferMomentumX(HitObjects[i]);
 
                         // If the active object and the target object are moving in opposite, reflect the target object
                         if(this.xDir() === -HitObjects[i].xDir()){
@@ -158,8 +158,8 @@ function Ball(parent, id, x, y, red=255, green=255, blue=255){
 
                         this.setPosition(this.x, HitObjects[i].topEdge() - this.h / 2);
 
-                        // Transfer Momentum
-                        this.TransferMomentumY(HitObjects[i]);
+                        // transfer Momentum
+                        this.transferMomentumY(HitObjects[i]);
 
                         // If the active object and the target object are moving in opposite, reflect the target object
                         if(this.yDir() === -HitObjects[i].yDir()){
@@ -183,8 +183,8 @@ function Ball(parent, id, x, y, red=255, green=255, blue=255){
                     if (this.collidesTopLeft(HitObjects[i]) || this.collidesTop(HitObjects[i]) || this.collidesTopRight(HitObjects[i])) {
                         this.setPosition(this.x, HitObjects[i].bottomEdge() + this.h / 2);
 
-                        // Transfer Momentum
-                        this.TransferMomentumY(HitObjects[i]);
+                        // transfer Momentum
+                        this.transferMomentumY(HitObjects[i]);
 
                         // If the active object and the target object are moving in opposite, reflect the target object
                         if(this.yDir() === -HitObjects[i].yDir()){

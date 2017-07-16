@@ -27,39 +27,10 @@ function Create(){
         factory.createObject('Ball', Constants().STAGE_WIDTH / 2, Constants().STAGE_HEIGHT / 2, 0, 0, 255);
     }
 
-    // STARTUP STEP 2)
-    PreLoad();
-
-}
-
-function PreLoad(){
-
-    // HERE
-
-    console.log('Preload called');
-
-    // since lasers dont exist at game start but need to be preloaded create and pass a generic laser graphic here
-    let laser = {
-
-        type: "Laser",
-        shape : "ellipse",
-        w: 20,
-        h: 20,
-        fill: {red: 255, green: 0, blue: 0},
-        x: 50,
-        y: 50
-
-    };
-
-    // get all the currently created objects (paddles, ball(s)) and add the laser object to it then emit
-    let preLoadData = factory.show();
-    preLoadData.push(laser);
-
-    io.sockets.emit('preLoad', { preLoadData : preLoadData });
-
-    // STARTUP STEP 4)
     Start();
+
 }
+
 
 function Start() {
     setInterval(() => Update(), 16.6);
@@ -105,7 +76,6 @@ module.exports = {
 
     setIO : setIO,
     Create : Create,
-    PreLoad : PreLoad,
     Start : Start,
     Move : Move,
     Constants : Constants

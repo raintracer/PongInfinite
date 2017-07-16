@@ -10,9 +10,7 @@ const ejs = require('ejs');
 
 const app = express();
 
-let players = 0;
-let score;
-let clientCount = 0;
+let players = [];
 
 let port = process.env.PORT || 3000;
 
@@ -34,32 +32,33 @@ let io = socket(server);
 Main.setIO(io);
 
 io.sockets.on('connection', ProcessConnection);
-io.sockets.on('connect_error', ProcessDisconnection);
 
 // ASSIGN PLAYERS STEP 1)
 function ProcessConnection(socket) {
 
-    console.log(`Connected to Player [${players + 1}]`);
+    players.push(socket.id);
 
-    players++;
-
-    socket.emit('AssignPlayer', {player: players});
+    socket.emit('AssignPlayer', {player: players.length});
 
 // once two players have connected call ServerMain --> Create()
     // ASSIGN PLAYERS STEP 2)
-    if(players === 2){
+    if(players.length === 2){
         Main.Create();
+        console.log(players);
     }
 
     socket.on('keyPress', function (data) {
         Main.Move(data);
     });
 
+
+    socket.on('disconnect', ProcessDisconnection);
+
 }
 
 function ProcessDisconnection(socket){
-    console.log(`Player ${players} disconnected`);
-    players--;
+    console.log(`Player ${players.length} disconnected`);
+    players.splice(players.indexOf(socket.id), 1);
 }
 
 

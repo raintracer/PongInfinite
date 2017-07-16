@@ -16,6 +16,12 @@ let paddleTop;
 let paddleBottom;
 let DrawArray = [];
 
+// let ObjectCatalogue = [];
+// ObjectCatalogue["Ball"].w = 20;
+// ObjectCatalogue["Ball"].h = 20;
+// ObjectCatalogue["Ball"].Graphic = createGraphic(20,20);
+
+
 function ObjectFactory(){
 
     this.objectQuantity = 0;
@@ -23,8 +29,6 @@ function ObjectFactory(){
     this.gameObjects = [];
 
     this.createObject = function(objectType,x,y,red,green,blue){
-
-        console.log(`factory create ${objectType} with colors red: ${red} green: ${green} blue: ${blue}`);
 
         let object;
 
@@ -56,23 +60,17 @@ function ObjectFactory(){
 
     };
 
+    this.deleteObject = function(id){
 
-// I DONT THINK THIS WORKS ANYMORE. IT WAS FAILING WHEN TRYING TO DELETE LASERS THAT PASSED THE Y BOUNDS
-// CONSOLE LOGGED INSIDE AND IT SAID GAMEOBJECTS WAS EMPTY....
-    // this.deleteObject = function(id){
-    //
-    //     this.gameObjects.forEach((e, i, a) => {
-    //
-    //         console.log('loop');
-    //
-    //         if(e.id === id){
-    //             a.splice(i, 1);
-    //             this.objectQuantity--;
-    //         }
-    //
-    //     });
-    //
-    // };
+        for (let i = 0; i < this.objectQuantity; i++){
+
+            if (this.gameObjects[i].id === id){
+                this.gameObjects.splice(i,1);
+                this.objectQuantity--;
+                break;
+            }
+        }
+    };
 
     // RETURNS A LIST OF ALL THE OBJECTS MATCHING THE SPECIFIED TYPE
     this.getObjectTypes = function(type){
@@ -104,14 +102,18 @@ function ObjectFactory(){
             }
 
             if( e.type === 'Laser'){
-
-            // checks if a laser has crossed either Y bound and deletes the object if so to reduce memory usage
+            // checks if a laser has crossed either Y boundary and deletes the object
                 if(e.boundaryCheck()){
-                    console.log('deleted');
-                    a.splice(i, 1);
+                    this.deleteObject(e.id);
+                }else{
+                    e.pulseEffect();
                 }
 
-                e.laserHit();
+                if(e.laserHit()){
+                    console.log('laser hit');
+                }
+
+                // e.laserHit();
             }
 
         });
@@ -135,9 +137,7 @@ function ObjectFactory(){
             });
         });
 
-            // console.log('Draw Array length', DrawArray.length);
-
         return DrawArray;
-    }
+    };
 
 }
