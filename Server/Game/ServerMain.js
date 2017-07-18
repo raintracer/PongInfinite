@@ -21,7 +21,9 @@ function Create(){
     const numBalls = 1;
 
     factory.paddleBottom = factory.createObject('Paddle', Constants.stageWidth / 2, Constants.stageHeight - 20, 255, 255, 255);
+    factory.paddleBottom.populateLasers();
     factory.paddleTop = factory.createObject('Paddle', Constants.stageWidth / 2, 20, 255, 255, 255);
+    factory.paddleTop.populateLasers();
 
     for (let i = 0; i < numBalls; i++) {
         factory.createObject('Ball', Constants.stageWidth / 2, Constants.stageHeight / 2, 0, 0, 255);
@@ -62,14 +64,14 @@ function Move(data){
             paddle.accX(Constants.paddleForce);
             break;
         case 'up':
-            let laser = factory.createObject('Laser', paddle.x, paddle.topEdge() + (paddle.orientation()*20), 255, 0, 0);
-            laser.accY(paddle.orientation() * 10);
+            // let laser = factory.createObject('Laser', paddle.x, paddle.topEdge() + (paddle.orientation()*20), 255, 0, 0);
+            // laser.accY(paddle.orientation() * 10);
+            paddle.fire();
     }
 
 }
 
 const Constants = {
-    // return { STAGE_WIDTH: 400, STAGE_HEIGHT: 500, CHAOS : 3, TRANSFER_COEFFICIENT : 0.4, PADDLE_FORCE: 6};
     stageWidth: 400,
     stageHeight: 500,
     chaos: 3,

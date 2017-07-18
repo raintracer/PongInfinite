@@ -88,7 +88,7 @@ function ObjectFactory(){
 
         this.gameObjects.forEach( (e, i, a) => {
 
-            e.update();
+
 
         // checks if a ball has crossed either Y bound and awards the respective point
             // deletes old ball(s) and creates a new one to be randomized
@@ -103,6 +103,10 @@ function ObjectFactory(){
                 }
             }
 
+            if(e.type === 'Paddle'){
+                e.arrangeLasers();
+            }
+
             if( e.type === 'Laser'){
             // checks if a laser has crossed either Y boundary and deletes the object
                 if(e.boundaryCheck()){
@@ -111,10 +115,14 @@ function ObjectFactory(){
                     e.pulseEffect();
                 }
 
-                if(e.laserHit()){
-                    console.log('laser hit');
+                if(e.shot){
+                    e.laserHit();
+                }else{
+
                 }
             }
+
+            e.update();
 
         });
 

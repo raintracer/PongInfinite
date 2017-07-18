@@ -29,6 +29,8 @@ function Laser(parent, id, x, y, red=255, green=255, blue=255){
     this.friction = 1;
     this.staticFriction = 0;
 
+    this.shot = false;
+
 
 // custom methods
 
