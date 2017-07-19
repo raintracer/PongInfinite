@@ -95,7 +95,7 @@ function ObjectFactory(){
             if( e.type === 'Ball'){
                 if(score.scorePoint(e)){
                     this.deleteObject(e.id);
-                    console.log(`ball deleted new length ${this.gameObjects.length}`);
+                    console.log(`${e.type} deleted new length ${this.gameObjects.length}`);
                     // if(this.getObjectTypes('Ball').length <= 1){
                         let newBall = this.createObject('Ball', Constants.STAGE_WIDTH/2, Constants.STAGE_HEIGHT/2);
                         newBall.randomize();

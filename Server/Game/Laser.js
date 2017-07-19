@@ -21,7 +21,7 @@ function Laser(parent, id, x, y, red=255, green=255, blue=255){
     this.type = "Laser";
     this.shape = 'ellipse';
 
-    const size = 20;
+    const size = 15;
     this.w = size;
     this.h = size;
 
@@ -30,6 +30,7 @@ function Laser(parent, id, x, y, red=255, green=255, blue=255){
     this.staticFriction = 0;
 
     this.shot = false;
+    this.direction = null;
 
 
 // custom methods
@@ -52,6 +53,9 @@ function Laser(parent, id, x, y, red=255, green=255, blue=255){
     };
 
     this.laserReact = (object) => {
+        let paddle;
+        this.direction === 1 ? paddle = parent.paddleTop : paddle = parent.paddleBottom;
+
         switch(object.type){
             case "Ball":
                 let n = 2;
@@ -61,16 +65,23 @@ function Laser(parent, id, x, y, red=255, green=255, blue=255){
                     splitBall.h *= 0.7;
                     splitBall.randomize();
                 }
-                parent.deleteObject(object.id);
+                // parent.deleteObject(object.id);
+                // paddle.resetLaser();
+                // paddle.arrangeLasers();
                 break;
             case "Paddle":
                 object.w *= 0.95;
+                // paddle.resetLaser();
+                // paddle.arrangeLasers();
                 break;
             case "Laser":
-                parent.deleteObject(object.id);
-                parent.deleteObject(this.id);
+                // parent.deleteObject(object.id);
+                // parent.deleteObject(this.id);
+                // paddle.resetLaser();
+                // paddle.arrangeLasers();
         }
-        parent.deleteObject(this.id);
+        // parent.deleteObject(this.id);
+        paddle.arrangeLasers();
     };
 
 }
