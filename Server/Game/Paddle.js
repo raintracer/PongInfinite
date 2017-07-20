@@ -39,26 +39,35 @@ function Paddle(parent, player, id, x,y, red = 255, green = 255, blue = 255){
     const LASER_ARRAY = [];
 
     this.populateLasers = () =>{
-        let numberOfLasers = 2;
+        let numberOfLasers = 3;
         while(numberOfLasers--){
-            let laser = parent.createObject('Laser', this.x, this.y, 255, 0, 0);
+            let laser = parent.createObject('Laser', this.x, this.y, 255, 0, 0, this);
+            // console.log(numberOfLasers);
+            this.paddleSlot = numberOfLasers;
             LASER_ARRAY.push(laser);
         }
 
+        this.arrangeLasers();
         return LASER_ARRAY
     };
 
     this.arrangeLasers = () => {
-        LASER_ARRAY.forEach( (e, i) => {
-            switch(i){
+
+        LASER_ARRAY.forEach( e => {
+
+            e.y = this.y;
+
+            console.log(e.paddleSlot);
+
+            switch(e.paddleSlot){
                 case 0:
-                    e.x = this.x - (e.w);
+                    e.x = this.x - (1.2*e.w);
                     break;
                 case 1:
                     e.x = this.x;
                     break;
                 case 2:
-                    e.x = this.x + (e.w);
+                    e.x = this.x + (1.2*e.w);
                     break;
             }
         });
@@ -66,7 +75,12 @@ function Paddle(parent, player, id, x,y, red = 255, green = 255, blue = 255){
 
     this.fire = () => {
         if(LASER_ARRAY.length > 0){
-            let firedLaser = LASER_ARRAY.pop();
+            let firedLaser;
+
+            LASER_ARRAY.forEach( e => {
+                !e.shot ? firedLaser = e : false;
+            });
+
             firedLaser.shot = true;
             firedLaser.direction = this.orientation();
 

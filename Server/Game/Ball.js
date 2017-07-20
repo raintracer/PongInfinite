@@ -15,6 +15,9 @@ function Ball(parent, id, x, y, red=255, green=255, blue=255){
     this.shape = 'ellipse';
     this.parent = parent;
 
+// boolean if the ball has been split by a laser collision
+    this.mini = false;
+
 // ball diameter
 
     const BallSize = 20;

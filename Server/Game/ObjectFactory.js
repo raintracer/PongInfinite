@@ -31,7 +31,7 @@ function ObjectFactory(){
     this.objectsMade = 0;
     this.gameObjects = [];
 
-    this.createObject = function(objectType,x,y,red,green,blue){
+    this.createObject = function(objectType,x,y,red,green,blue, option = null){
 
         let object;
 
@@ -39,7 +39,7 @@ function ObjectFactory(){
             object = new Ball(this, this.objectsMade, x, y, red, green, blue);
         }
         else if (objectType === "Laser"){
-            object = new Laser(this, this.objectsMade, x, y, red, green, blue);
+            object = new Laser(this, option, this.objectsMade, x, y, red, green, blue);
         }
         else if (objectType === "Paddle"){
             object = new Paddle(this, this.getObjectTypes("Paddle").length+1, this.objectsMade, x, y, red, green, blue);
@@ -51,7 +51,6 @@ function ObjectFactory(){
         this.gameObjects.push(object);
 
         this.objectsMade++;
-        // this.objectQuantity++;
 
         return this.gameObjects[this.gameObjects.length-1];
 
@@ -68,19 +67,13 @@ function ObjectFactory(){
 
     // RETURNS A LIST OF ALL THE OBJECTS MATCHING THE SPECIFIED TYPE
     this.getObjectTypes = function(type){
-
         let objects = [];
-
         this.gameObjects.forEach( e => e.type === type ? objects.push(e) : false);
-
         return objects;
-
     };
 
     this.randomizeBalls = function(){
-
         let Balls = this.getObjectTypes("Ball");
-
         Balls.forEach( e => e.randomize());
     };
 
@@ -88,42 +81,35 @@ function ObjectFactory(){
 
         this.gameObjects.forEach( (e, i, a) => {
 
-
-
         // checks if a ball has crossed either Y bound and awards the respective point
             // deletes old ball(s) and creates a new one to be randomized
             if( e.type === 'Ball'){
                 if(score.scorePoint(e)){
-                    this.deleteObject(e.id);
-                    console.log(`${e.type} deleted new length ${this.gameObjects.length}`);
-                    // if(this.getObjectTypes('Ball').length <= 1){
+                    if(!e.mini){
                         let newBall = this.createObject('Ball', Constants.STAGE_WIDTH/2, Constants.STAGE_HEIGHT/2);
                         newBall.randomize();
-                    // }
+                    }
+                    this.deleteObject(e.id);
                 }
             }
 
             if(e.type === 'Paddle'){
-                e.arrangeLasers();
+
             }
 
             if( e.type === 'Laser'){
-            // checks if a laser has crossed either Y boundary and deletes the object
-                if(e.boundaryCheck()){
-                    this.deleteObject(e.id);
-                }else{
-                    e.pulseEffect();
-                }
 
                 if(e.shot){
+                    e.boundaryCheck();
                     e.laserHit();
+                    e.pulseEffect();
                 }else{
-
+                    e.updateLaser();
                 }
             }
 
+        // after applying specific update methods call the GameObject update on the object
             e.update();
-
         });
 
     };
