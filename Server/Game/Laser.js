@@ -13,7 +13,7 @@ function Laser(parent, paddle, id, x, y, red=255, green=255, blue=255){
 
     GameObject.call(this, parent, id, x, y, red, green, blue);
 
-    this.AnimationArray = [.2,.4,.6,.8,1,1,.8,.6,.4, 0.2];
+    this.AnimationArray = [1,.8,.6,.4,.2,.4,.6,.8,1];
     this.frame = 0;
 
 
@@ -25,9 +25,8 @@ function Laser(parent, paddle, id, x, y, red=255, green=255, blue=255){
     this.paddle = paddle;
     this.paddleSlot = 0;
 
-    const size = 15;
-    this.w = size;
-    this.h = size;
+    this.w = 5;
+    this.h = 10;
 
     // This player don't care bout no friction
     this.friction = 1;
@@ -52,7 +51,7 @@ function Laser(parent, paddle, id, x, y, red=255, green=255, blue=255){
 
     this.pulseEffect = function() {
         this.frame++;
-        this.frame > this.AnimationArray.length ? this.frame = 0 : this.w = size * this.AnimationArray[this.frame];
+        this.frame > this.AnimationArray.length ? this.frame = 0 : this.w *= this.AnimationArray[this.frame];
     };
 
     this.boundaryCheck = function(){
@@ -88,15 +87,15 @@ function Laser(parent, paddle, id, x, y, red=255, green=255, blue=255){
                     splitBall.split = true;
                     splitBall.randomize();
                 }
-                this.paddle.arrangeLasers();
+                // this.paddle.arrangeLasers();
                 break;
             case "Paddle":
                 if(object !== this.paddle){
                     object.w *= 0.95;
-                    this.paddle.arrangeLasers();
                 }
                 break;
         }
+        this.paddle.arrangeLasers();
     };
 
 }

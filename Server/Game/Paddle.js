@@ -19,7 +19,7 @@ function Paddle(parent, player, id, x,y, red = 255, green = 255, blue = 255){
 
 // assigns the width and height of the paddle object
     this.w = 75;
-    this.h = 15;
+    this.h = 20;
 
 // dampening coefficient used when imparting the velocity of the paddle to the ball during collision
     this.dampen = .4;
@@ -42,8 +42,7 @@ function Paddle(parent, player, id, x,y, red = 255, green = 255, blue = 255){
         let numberOfLasers = 3;
         while(numberOfLasers--){
             let laser = parent.createObject('Laser', this.x, this.y, 255, 0, 0, this);
-            // console.log(numberOfLasers);
-            this.paddleSlot = numberOfLasers;
+            laser.paddleSlot = numberOfLasers;
             LASER_ARRAY.push(laser);
         }
 
@@ -56,8 +55,6 @@ function Paddle(parent, player, id, x,y, red = 255, green = 255, blue = 255){
         LASER_ARRAY.forEach( e => {
 
             e.y = this.y;
-
-            console.log(e.paddleSlot);
 
             switch(e.paddleSlot){
                 case 0:
@@ -74,6 +71,7 @@ function Paddle(parent, player, id, x,y, red = 255, green = 255, blue = 255){
     };
 
     this.fire = () => {
+
         if(LASER_ARRAY.length > 0){
             let firedLaser;
 
@@ -81,25 +79,25 @@ function Paddle(parent, player, id, x,y, red = 255, green = 255, blue = 255){
                 !e.shot ? firedLaser = e : false;
             });
 
-            firedLaser.shot = true;
-            firedLaser.direction = this.orientation();
+            if(firedLaser){
 
-        // direct the laser according to the orientation of the paddle from which it was shot
-            let position;
-            firedLaser.direction === 1 ? position = this.bottomEdge() : position = this.topEdge();
+                firedLaser.shot = true;
+                firedLaser.direction = this.orientation();
 
-            firedLaser.y = position + (firedLaser.direction*20);
-            firedLaser.accY(firedLaser.direction * 10);
+                // direct the laser according to the orientation of the paddle from which it was shot
+                let position;
+                firedLaser.direction === 1 ? position = this.bottomEdge() : position = this.topEdge();
+
+                firedLaser.y = position + (firedLaser.direction*20);
+                firedLaser.accY(firedLaser.direction * 10);
+            }
+
 
         }else{
             // empty gun click sound effect / signify lasers are all in use
                 // allow X number of lasers to each player
                 // only that many lasers can be fired at any given time
         }
-    };
-
-    this.resetLaser = (laser) => {
-
     };
 
 }
