@@ -13,7 +13,7 @@ function Laser(parent, paddle, id, x, y, red=255, green=255, blue=255){
 
     GameObject.call(this, parent, id, x, y, red, green, blue);
 
-    this.AnimationArray = [1,.8,.6,.4,.2,.4,.6,.8,1];
+    this.AnimationArray = [.2,.4,.6,.8,1,1,.8,.6,.4, 0.2];
     this.frame = 0;
 
 
@@ -25,8 +25,9 @@ function Laser(parent, paddle, id, x, y, red=255, green=255, blue=255){
     this.paddle = paddle;
     this.paddleSlot = 0;
 
-    this.w = 5;
-    this.h = 10;
+    const size = 15;
+    this.w = size;
+    this.h = size;
 
     // This player don't care bout no friction
     this.friction = 1;
@@ -45,23 +46,24 @@ function Laser(parent, paddle, id, x, y, red=255, green=255, blue=255){
     // };
 
     this.updateLaser = () => {
-        // let paddle = this.myPaddle();
-        this.x += this.paddle.xvel;
+        if(paddle.x !== 0 || paddle.x !== Constants.STAGE_WIDTH){
+            this.x += this.paddle.xvel;
+        }
     };
 
     this.pulseEffect = function() {
         this.frame++;
-        this.frame > this.AnimationArray.length ? this.frame = 0 : this.w *= this.AnimationArray[this.frame];
+        this.frame > this.AnimationArray.length ? this.frame = 0 : this.w = size * this.AnimationArray[this.frame];
     };
 
     this.boundaryCheck = function(){
         // let paddle = this.myPaddle();
-        this.topEdge() <= 0 || this.bottomEdge() >= Constants.STAGE_HEIGHT ? this.paddle.arrangeLasers() : false;
+        this.topEdge() <= 0 || this.bottomEdge() >= Constants.STAGE_HEIGHT ? this.paddle.resetLaser(this.id) : false;
     };
 
     this.laserHit = function(){
         parent.gameObjects.forEach( e => {
-            if(e.id !== this.id && this.collidesAny(e)) {
+            if(this.collidesAny(e)) {
                 // console.log(`this laser's paddle ${this.paddle.player} paddle collided with ${e.paddle.player}`);
                 this.laserReact(e);
             }
@@ -91,11 +93,13 @@ function Laser(parent, paddle, id, x, y, red=255, green=255, blue=255){
                 break;
             case "Paddle":
                 if(object !== this.paddle){
-                    object.w *= 0.95;
+                    // object.w *= 0.95;
+                    object.shrink();
                 }
                 break;
         }
-        this.paddle.arrangeLasers();
+
+        this.paddle.resetLaser(this.id);
     };
 
 }

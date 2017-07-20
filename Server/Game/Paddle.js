@@ -39,36 +39,34 @@ function Paddle(parent, player, id, x,y, red = 255, green = 255, blue = 255){
     const LASER_ARRAY = [];
 
     this.populateLasers = () =>{
-        let numberOfLasers = 3;
+        let numberOfLasers = 4;
         while(numberOfLasers--){
             let laser = parent.createObject('Laser', this.x, this.y, 255, 0, 0, this);
+            laser.x = this.leftEdge() + (numberOfLasers*laser.w) + laser.w;
             laser.paddleSlot = numberOfLasers;
             LASER_ARRAY.push(laser);
         }
-
-        this.arrangeLasers();
         return LASER_ARRAY
     };
 
-    this.arrangeLasers = () => {
-
-        LASER_ARRAY.forEach( e => {
-
-            e.y = this.y;
-
-            switch(e.paddleSlot){
-                case 0:
-                    e.x = this.x - (1.2*e.w);
-                    break;
-                case 1:
-                    e.x = this.x;
-                    break;
-                case 2:
-                    e.x = this.x + (1.2*e.w);
-                    break;
-            }
-        });
-    };
+    // this.arrangeLasers = () => {
+    //
+    //     LASER_ARRAY.forEach( e => {
+    //
+    //             e.y = this.y;
+    //             switch(e.paddleSlot){
+    //                 case 0:
+    //                     e.x = this.x - (1.2*e.w);
+    //                     break;
+    //                 case 1:
+    //                     e.x = this.x;
+    //                     break;
+    //                 case 2:
+    //                     e.x = this.x + (1.2*e.w);
+    //                     break;
+    //             }
+    //     });
+    // };
 
     this.fire = () => {
 
@@ -89,7 +87,7 @@ function Paddle(parent, player, id, x,y, red = 255, green = 255, blue = 255){
                 firedLaser.direction === 1 ? position = this.bottomEdge() : position = this.topEdge();
 
                 firedLaser.y = position + (firedLaser.direction*20);
-                firedLaser.accY(firedLaser.direction * 10);
+                firedLaser.accY(firedLaser.direction * 5);
             }
 
 
@@ -98,6 +96,28 @@ function Paddle(parent, player, id, x,y, red = 255, green = 255, blue = 255){
                 // allow X number of lasers to each player
                 // only that many lasers can be fired at any given time
         }
+    };
+
+    this.resetLaser = (laserID) =>{
+        LASER_ARRAY.forEach( e => {
+            if(e.id === laserID){
+                e.y = this.y;
+                e.x = this.leftEdge() + ( e.paddleSlot*e.w ) + e.w;
+            }
+        });
+    };
+
+    this.shrink = () => {
+
+        const paddleFactor = 0.95;
+        const laserFactor = 0.9;
+
+        this.w *= paddleFactor;
+        LASER_ARRAY.forEach( e => {
+            // assumes elliptical shape of laser
+            e.w *= laserFactor;
+            e.h *= laserFactor;
+        });
     };
 
 }

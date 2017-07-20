@@ -101,8 +101,9 @@ function ObjectFactory(){
 
                 if(e.shot){
                     e.boundaryCheck();
+                    // e.pulseEffect();
                     e.laserHit();
-                    e.pulseEffect();
+
                 }else{
                     e.updateLaser();
                 }
