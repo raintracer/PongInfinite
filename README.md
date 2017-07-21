@@ -33,3 +33,9 @@ Score
 Keypresses
 1) [client] emit keyPress --> send keyPress data { player, key }
 2) [server] on keyPress --> register keyPress movement and proceed back to GameUpdate
+
+
+1st client ->
+
+
+

@@ -29,14 +29,14 @@ function Create(){
         factory.createObject('Ball', Constants.stageWidth / 2, Constants.stageHeight / 2, 0, 0, 255);
     }
 
-    Start();
+    return Start();
 
 }
 
 
 function Start() {
-    setInterval(() => Update(), 16.6);
     factory.randomizeBalls();
+    return setInterval(() => Update(), 16.6);
 }
 
 // called every frame

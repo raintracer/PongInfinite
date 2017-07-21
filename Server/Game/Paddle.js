@@ -34,7 +34,7 @@ function Paddle(parent, player, id, x,y, red = 255, green = 255, blue = 255){
         }
     };
 
-// laser bits
+// LASERS!
 
     const LASER_ARRAY = [];
 
@@ -42,7 +42,17 @@ function Paddle(parent, player, id, x,y, red = 255, green = 255, blue = 255){
         let numberOfLasers = 4;
         while(numberOfLasers--){
             let laser = parent.createObject('Laser', this.x, this.y, 255, 0, 0, this);
+
+
+        /*
+            positions the lasers based on the left edge of the paddle and the width of the lasers
+            this is wonky and only works well for this specific case (number of lasers / widths)
+                need to consider options for placing the lasers. designate slots in the paddle?
+                    how would the number of lasers changing affect this?
+
+         */
             laser.x = this.leftEdge() + (numberOfLasers*laser.w) + laser.w;
+
             laser.paddleSlot = numberOfLasers;
             LASER_ARRAY.push(laser);
         }
