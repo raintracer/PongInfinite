@@ -41,12 +41,20 @@ function GameLobby(player){
 }
 
 addPlayer = (player) => {
+    let addedPlayer = false;
     LOBBY_ARRAY.forEach( e => {
         if(e.players.length === 1){
+            console.log(`adding a new player...${e.players}`);
             e.players.push(player);
+            addedPlayer = true;
             e.gameInstance = Main.Create();
         }
     });
+
+    if(!addedPlayer){
+        console.log('new game');
+        LOBBY_ARRAY.push(new GameLobby(player));
+    }
 };
 
 removePlayer = (playerID) => {
