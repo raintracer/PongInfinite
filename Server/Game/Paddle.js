@@ -4,7 +4,7 @@
 
 module.exports = Paddle;
 const GameObject = require('./GameObject');
-const Constants = require('./ServerMain').Constants;
+// const Constants = require('./ServerMain').Constants;
 
 // paddle object, inherits gameobject properties
 // color can be passed or defaults to white (255, 255, 255)

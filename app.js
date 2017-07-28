@@ -23,13 +23,11 @@ app.use(bodyParser.urlencoded({ extended : false}));
 app.set('view engine', 'ejs');
 app.use(express.static('Client'));
 
-const Main = require('./Server/Game/ServerMain');
-
 let socket = require('socket.io');
 let io = socket(server);
 
 // pass IO to ServerMain
-Main.setIO(io);
+// Main.setIO(io);
 
 const LOBBY_ARRAY = [];
 
@@ -41,16 +39,17 @@ addPlayer = (playerID) => {
             console.log(`adding a new player...${e.players}`);
 
             e.players.push(playerID);
-            e.lobbyID = a.length;
-            e.gameInstance = Main.Create();
-
             addedPlayer = true;
+
+            break;
         }
     });
 
     if(!addedPlayer){
         console.log('all lobbies are full, new lobby created');
-        LOBBY_ARRAY.push(new GameLobby(playerID));
+
+        // CREATE A NEW LOBBY USING THE ARRAY LENGTH AS THE LOBBY ID. CHANGE THIS LATER.
+        LOBBY_ARRAY.push(new Game(LOBBY_ARRAY, LOBBY_ARRAY.length, playerID));
     }
 };
 
