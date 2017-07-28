@@ -53,6 +53,9 @@ addPlayer = (playerID) => {
     }
 };
 
+createGame = (socket, playerID) => {
+    LOBBY_ARRAY.push(new Game(LOBBY_ARRAY, LOBBY_ARRAY.length, playerID));
+}
 
 removePlayer = (playerID) => {
     LOBBY_ARRAY.forEach( e => {
@@ -62,11 +65,6 @@ removePlayer = (playerID) => {
             resetGame(e);
         }
     });
-};
-
-resetGame = gameLobby => {
-    clearInterval(gameLobby.gameInstance);
-    gameLobby.gameInstance = Main.Create();
 };
 
 endGame = () => {
