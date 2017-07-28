@@ -5,6 +5,11 @@
 const Main = require('')
 const ObjectFactory = require('./Game/ObjectFactory');
 
+const stageWidth = 400;
+const stageHeight = 500;
+const chaos = 3;
+const transferCoefficient = 0.4;
+const paddleForce = 6;
 
 Lobby = (socket) => {
 
@@ -14,6 +19,7 @@ Lobby = (socket) => {
     this.socket = socket;
     this.players = [];
     this.gameInstance = null;
+    this.MaxPlayers = 4;
 
     this.Update = function(){
         this.factory.update();
