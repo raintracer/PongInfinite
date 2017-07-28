@@ -8,6 +8,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const ejs = require('ejs');
 
+const PLAYER_MAX = 2;
+
 const app = express();
 
 let players = [];
@@ -64,9 +66,26 @@ addPlayer = (playerID) => {
     }
 };
 
-// CREATE A NEW INSTANCE OF THE GAME
+// CREATE A NEW INSTANCE OF THE GAME AND RETURN A HANDLE TO IT
 createGame = (socket, playerID) => {
     GAME_ARRAY.push(new Game(GAME_ARRAY, GAME_ARRAY.length, playerID));
+    return GAME_ARRAY[GAME_ARRAY.length-1];
+}
+
+// RETURNS THE INDEX OF A GAME THAT IS NOT FULL OF PLAYERS, IF NONE ARE AVAILABLE RETURN -1
+getAvailableGameIndex = () =>{
+
+    // LOOK THROUGH AVAILABLE GAMES
+    for (let i = 0; i < GAME_ARRAY.length; i++){
+        
+        if (GAME_ARRAY[i].player.length < PLAYER_MAX) {
+            return i;
+        } 
+
+    }
+
+    return -1;
+
 }
 
 // SEARCH EACH GAME AND PROCESS A DISCONNECT FOR THE SPECIFIED PLAYER
@@ -100,7 +119,14 @@ io.sockets.on('connection', ProcessConnection);
 // ASSIGN PLAYERS STEP 1)
 function ProcessConnection(socket) {
 
-    GAME_ARRAY.length === 0 ? GAME_ARRAY.push(new GameLobby(socket.id)) : addPlayer(socket.id);
+    let AvailableGameIndex = getAvailableGameIndex();
+    if (AvailableGameIndex = -1){
+        let Game = createGame(GAME_ARRAY, socket);
+        Game.AddPlayer(socket.id);
+    } else{
+        Game.AddPlayer(socket.id);
+    }
+
     console.log('lobby array', GAME_ARRAY.length);
     console.log('players length: ', GAME_ARRAY[0].players.length);
 
