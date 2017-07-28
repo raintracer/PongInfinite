@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pong Infinite</title>
+    <!-- font awesome icons -->
+    <script src="https://use.fontawesome.com/c60112b331.js"></script>
+
+    <!--<link href="pongInfinite.css" rel="stylesheet" type="text/css">-->
+</head>
+
+<body>
+
+<div id="score">
+    <div id="topScoreDiv" class="score">Top Player: <%= score.top %></div>
+    <div id="bottomScoreDiv" class="score">Bottom Player: 4 </div>
+</div>
+
+<button id="mute"><i id="muteIcon" class="fa fa-volume-up fa-4x" aria-hidden="true"></i> </button>
+
+
+
+<!-- P5 Libraries: p5 main, p5 DOM, p5 sound -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.10/p5.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.10/addons/p5.dom.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.10/addons/p5.sound.js"></script>
+<!-- sound effects courtesy of www.soundbible.com -->
+
+<!-- Server Libraries: socket.io -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.2/socket.io.js"></script>
+
+<!-- Game files -->
+<script src="../Client/ClientMain.js"></script>
+
+</body>
+</html>

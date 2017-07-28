@@ -1,0 +1,20 @@
+body{
+    background-color: navajowhite;
+}
+
+
+#scores{
+    font-size: 2.5em;
+    text-align: center;
+    /*margin: 0 auto;*/
+}
+
+/*#bottomScoreDiv{*/
+    /*margin-top: 540px;*/
+/*}*/
+
+#mute{
+    position: absolute;
+    top: 20px;
+    left: 50px;
+}
