@@ -59,11 +59,12 @@ createGame = (socket, playerID) => {
 
 // SEARCH EACH GAME AND PROCESS A DISCONNECT FOR THE SPECIFIED PLAYER
 removePlayer = (playerID) => {
-    GAME_ARRAY.forEach( e => {
+    GAME_ARRAY.forEach( (e, index) => {
         let player = e.players.indexOf(playerID);
         if(player){
             e.players.splice(player, 1);
             resetGame(e);
+            return index;
         }
     });
 };
@@ -113,13 +114,16 @@ function ProcessConnection(socket) {
 function ProcessDisconnection(socket){
     // console.log(`Player ${players.length} disconnected`);
     // console.log(`before ${GAME_ARRAY.length}`);
-    removePlayer(socket);
+    let GameIndex = removePlayer(socket);
+    if (GameIndex){
+        endGame(GameIndex);
+    } else {
+        console.log("Player to be removed not found.");
+    }
     console.log(GAME_ARRAY[0].players.length);
-    endGame();
+    
     // console.log(`after ${GAME_ARRAY.length}`);
     // players.splice(players.indexOf(socket.id), 1);
-
-    // RTS - PROPOSED IMPROVEMENT
 }
 
 
