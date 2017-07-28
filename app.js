@@ -33,22 +33,14 @@ Main.setIO(io);
 
 const LOBBY_ARRAY = [];
 
-// Game constructor
-function GameLobby(player, lobbyID){
-    this.socket = socket;
-    this.lobbyID = lobbyID;
-    this.players = [player];
-    this.gameInstance = null;
-}
-
-addPlayer = (player) => {
+addPlayer = (playerID) => {
     let addedPlayer = false;
 
     LOBBY_ARRAY.forEach( (e, i, a) => {
         if(e.players.length === 1){
             console.log(`adding a new player...${e.players}`);
 
-            e.players.push(player);
+            e.players.push(playerID);
             e.lobbyID = a.length;
             e.gameInstance = Main.Create();
 
@@ -58,7 +50,7 @@ addPlayer = (player) => {
 
     if(!addedPlayer){
         console.log('all lobbies are full, new lobby created');
-        LOBBY_ARRAY.push(new GameLobby(player));
+        LOBBY_ARRAY.push(new GameLobby(playerID));
     }
 };
 
