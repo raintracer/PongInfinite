@@ -45,13 +45,16 @@ createGame = (socket, playerID) => {
 // RETURNS THE INDEX OF A GAME THAT IS NOT FULL OF PLAYERS, IF NONE ARE AVAILABLE RETURN -1
 getAvailableGameIndex = () => {
 
+    console.log (`Checking available games. Number of games: ${GAME_ARRAY.length}`)
     // CHECK IF NO GAMES EXIST
-    if (GAME_ARRAY.length = 0) {
+    if (GAME_ARRAY.length === 0) {
+        console.log ("No games found.");
         return -1;
     } 
 
     // LOOK THROUGH AVAILABLE GAMES FOR AN OPEN SLOT
     for (let i = 0; i < GAME_ARRAY.length; i++){
+        console.log(`Checking player length of Game ${i}: ${GAME_ARRAY[i].players.length} players.`)
         if (GAME_ARRAY[i].players.length < PLAYER_MAX) {
             return i;
         } 
@@ -94,7 +97,7 @@ function ProcessConnection(socket) {
 
     let Game;
     let AvailableGameIndex = getAvailableGameIndex();
-    if (AvailableGameIndex = -1){
+    if (AvailableGameIndex === -1){
         console.log ("No available game found: Create new game.");
         Game = createGame(GAME_ARRAY, socket);
         Game.AddPlayer(socket.id);
