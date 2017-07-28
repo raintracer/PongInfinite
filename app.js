@@ -116,7 +116,7 @@ function ProcessConnection(socket) {
     // }
 
     socket.on('keyPress', function (data) {
-        // Main.Move(data); OBSOLETE, REPLACE WITH PROPER FUNCTIONALITY
+        // Main.Move(data); OBSOLETE, REPLACE WITH PROPER FUNCTIONALITY.
     });
 
     socket.on('disconnect', ProcessDisconnection);
