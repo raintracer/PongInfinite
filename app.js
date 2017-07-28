@@ -35,7 +35,19 @@ addPlayer = (playerID) => {
 
     let addedPlayer = false;
 
-    GAME_ARRAY.forEach( (e, i, a) => {
+    // GAME_ARRAY.forEach( (e, i, a) => {
+    //     if(e.players.length === 1){
+    //         console.log(`adding a new player...${e.players}`);
+
+    //         e.players.push(playerID);
+    //         addedPlayer = true;
+
+    //         break;
+    //     }
+    // });
+
+    for (let i = 0; i < GAME_ARRAY.length; i++){
+        let e = GAME_ARRAY[i];
         if(e.players.length === 1){
             console.log(`adding a new player...${e.players}`);
 
@@ -44,7 +56,7 @@ addPlayer = (playerID) => {
 
             break;
         }
-    });
+    }
 
     if(!addedPlayer){
         console.log('all lobbies are full, new lobby created');
