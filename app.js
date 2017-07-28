@@ -68,14 +68,18 @@ removePlayer = (playerID) => {
     });
 };
 
-// SEARCH ALL GAMES FOR AN EMPTY ONE TO DISBAND
-endGame = () => {
-    GAME_ARRAY.forEach( (e, i, a) => {
-        if(e.players.length === 0){
-            clearInterval(e.gameInstance);
-            a.splice(i, 1);
-        }
-    });
+// END THE GAME IN THE SPECIFIED INDEX
+endGame = (GameIndex) => {
+
+    GAME_ARRAY[GameIndex].Quit;
+    GAME_ARRAY.splice(GameIndex, 1);
+
+    // GAME_ARRAY.forEach( (e, i, a) => {
+    //     if(e.players.length === 0){
+    //         clearInterval(e.gameInstance);
+    //         a.splice(i, 1);
+    //     }
+    // });
 };
 
 io.sockets.on('connection', ProcessConnection);
