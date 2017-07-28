@@ -50,10 +50,30 @@ function Paddle(parent, player, id, x,y, red = 255, green = 255, blue = 255){
                 need to consider options for placing the lasers. designate slots in the paddle?
                     how would the number of lasers changing affect this?
 
+
+            width of the paddle / ( number of lasers + 1 ) = slot
+                1st:
+                    NoL = 3 + 1 = 4
+                    paddle.w = 75
+                    paddle.w / NoL = slot = 75/4 = 19
+                    slot / 2 = laser.x = 19/2 = 8.5
+                 2nd:
+                     NoL = 2 + 1 = 3
+                     paddle.w = 75
+                     paddle.w / NoL = slot = 75/3 = 25
+                     slot / 2 = laser.x = 25/2 = 12.5
+                 4th:
+                    NoL = 0 + 1 = 1
+                    paddle.w = 75
+                    paddle.w / NoL = 75
+                    slot = 75 / 2 = 37.5
+
          */
+            laser.paddleSlot = numberOfLasers;
+
             laser.x = this.leftEdge() + (numberOfLasers*laser.w) + laser.w;
 
-            laser.paddleSlot = numberOfLasers;
+
             LASER_ARRAY.push(laser);
         }
         return LASER_ARRAY

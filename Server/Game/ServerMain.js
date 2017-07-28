@@ -3,7 +3,6 @@
  */
 
 const ObjectFactory = require('./ObjectFactory');
-const factory = new ObjectFactory();
 
 const Score = require('./Score');
 const score = new Score();
@@ -17,6 +16,7 @@ function setIO(appIO){
 // STARTUP STEP 1)
 function Create(){
 
+    this.factory = new ObjectFactory();
     // set number of balls
     const numBalls = 1;
 

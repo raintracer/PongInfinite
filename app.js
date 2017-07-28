@@ -34,37 +34,48 @@ Main.setIO(io);
 const LOBBY_ARRAY = [];
 
 // Game constructor
-function GameLobby(player){
-    console.log('called');
+function GameLobby(player, lobbyID){
+    this.socket = socket;
+    this.lobbyID = lobbyID;
     this.players = [player];
     this.gameInstance = null;
 }
 
 addPlayer = (player) => {
     let addedPlayer = false;
-    LOBBY_ARRAY.forEach( e => {
+
+    LOBBY_ARRAY.forEach( (e, i, a) => {
         if(e.players.length === 1){
             console.log(`adding a new player...${e.players}`);
+
             e.players.push(player);
-            addedPlayer = true;
+            e.lobbyID = a.length;
             e.gameInstance = Main.Create();
+
+            addedPlayer = true;
         }
     });
 
     if(!addedPlayer){
-        console.log('new game');
+        console.log('all lobbies are full, new lobby created');
         LOBBY_ARRAY.push(new GameLobby(player));
     }
 };
 
+
 removePlayer = (playerID) => {
     LOBBY_ARRAY.forEach( e => {
         let player = e.players.indexOf(playerID);
-
         if(player){
             e.players.splice(player, 1);
+            resetGame(e);
         }
     });
+};
+
+resetGame = gameLobby => {
+    clearInterval(gameLobby.gameInstance);
+    gameLobby.gameInstance = Main.Create();
 };
 
 endGame = () => {
@@ -80,8 +91,6 @@ io.sockets.on('connection', ProcessConnection);
 
 // ASSIGN PLAYERS STEP 1)
 function ProcessConnection(socket) {
-
-
 
     LOBBY_ARRAY.length === 0 ? LOBBY_ARRAY.push(new GameLobby(socket.id)) : addPlayer(socket.id);
     console.log('lobby array', LOBBY_ARRAY.length);
