@@ -4,11 +4,11 @@
 
 module.exports = Game;
 
-const stageWidth = 400;
-const stageHeight = 500;
-const chaos = 3;
-const transferCoefficient = 0.4;
-const paddleForce = 6;
+const STAGE_WIDTH = 400;
+const STAGE_HEIGHT = 500;
+const CHAOS = 3;
+const TRANSFER_COEFFICIENT = 0.4;
+const PADDLE_FORCE = 6;
 
 const ObjectFactory = require('./Game/ObjectFactory');
 const Score = require('./Game/Score');
@@ -23,10 +23,23 @@ function Game (GAME_ARRAY, id, socket) {
     this.socket = socket;
     this.players = [];
     this.gameInstance = null;
-    this.MaxPlayers = 4;
+    this.MaxPlayers = 2;
     this.score = new Score();
+    this.lobby = true;
 
     this.Update = function(){
+        if (this.lobby===true){
+            this.LobbyUpdate;
+        } else{
+            this.GameUpdate;
+        }
+    };
+
+    this.LobbyUpdate = function(){
+        // For now, wait patiently.
+    };
+
+    this.GameUpdate = function(){
         this.factory.update();
     };
     
@@ -36,34 +49,38 @@ function Game (GAME_ARRAY, id, socket) {
         // set number of balls
         const numBalls = 10;
 
-        factory.paddleBottom = factory.createObject('Paddle', Constants.stageWidth / 2, Constants.stageHeight - 20, 255, 255, 255);
-        factory.paddleBottom.populateLasers();
-        factory.paddleTop = factory.createObject('Paddle', Constants.stageWidth / 2, 20, 255, 255, 255);
-        factory.paddleTop.populateLasers();
+        this.factory.paddleBottom = factory.createObject('Paddle', stageWidth / 2, stageHeight - 20, 255, 255, 255);
+        this.factory.paddleBottom.populateLasers();
+        this.factory.paddleTop = this.factory.createObject('Paddle', stageWidth / 2, 20, 255, 255, 255);
+        this.factory.paddleTop.populateLasers();
 
         for (let i = 0; i < numBalls; i++) {
-            factory.createObject('Ball', Constants.stageWidth / 2, Constants.stageHeight / 2, 0, 0, 255);
+            this.factory.createObject('Ball', stageWidth / 2, stageHeight / 2, 0, 0, 255);
         }
 
-        factory.randomizeBalls();
+        this.factory.randomizeBalls();
+        this.lobby = false;
 
     };
 
     // CLEAR UPDATE INTERVAL AND DELETE SELF
     this.Quit = function(){
-        clearInterval(interval);
+        clearInterval(this.interval);
         this.close = true;
     };
     
     this.GetPlayerCount = function(){
-        return players.length;
+        return this.players.length;
     };
 
     this.AddPlayer = function(playerID){
-        players.push(playerID);
+        this.players.push(playerID);
+        if (this.players.length === this.MaxPlayers){
+            this.StartGame;
+        }
     };
 
-    this.interval = setInterval(function(){this.Update;}, 16.6);
+    this.interval = setInterval(this.Update, 16.6);
 
 };
 

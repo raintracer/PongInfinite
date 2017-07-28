@@ -32,24 +32,29 @@ let io = socket(server);
 // pass IO to ServerMain
 // Main.setIO(io);
 
-const GAME_ARRAY = [];
+let GAME_ARRAY = [];
 
 // CREATE A NEW INSTANCE OF THE GAME AND RETURN A HANDLE TO IT
 createGame = (socket, playerID) => {
-    GAME_ARRAY.push(new Game(GAME_ARRAY, GAME_ARRAY.length, playerID));
+    GAME_ARRAY.push( new Game(GAME_ARRAY, GAME_ARRAY.length, playerID) );
+    console.log("Game created:");
+    console.log(`Number of games: ${GAME_ARRAY.length}`);
     return GAME_ARRAY[GAME_ARRAY.length-1];
 }
 
 // RETURNS THE INDEX OF A GAME THAT IS NOT FULL OF PLAYERS, IF NONE ARE AVAILABLE RETURN -1
-getAvailableGameIndex = () =>{
+getAvailableGameIndex = () => {
+
+    // CHECK IF NO GAMES EXIST
+    if (GAME_ARRAY.length = 0) {
+        return -1;
+    } 
 
     // LOOK THROUGH AVAILABLE GAMES FOR AN OPEN SLOT
     for (let i = 0; i < GAME_ARRAY.length; i++){
-        
-        if (GAME_ARRAY[i].player.length < PLAYER_MAX) {
+        if (GAME_ARRAY[i].players.length < PLAYER_MAX) {
             return i;
         } 
-
     }
 
     // IF NO MATCH IS FOUND, RETURN -1
@@ -58,13 +63,12 @@ getAvailableGameIndex = () =>{
 }
 
 // SEARCH EACH GAME AND PROCESS A DISCONNECT FOR THE SPECIFIED PLAYER
-removePlayer = (playerID) => {
+removePlayer = (socket) => {
     GAME_ARRAY.forEach( (e, index) => {
-        let player = e.players.indexOf(playerID);
+        let player = e.players.indexOf(socket.id);
         if(player){
             e.players.splice(player, 1);
-            resetGame(e);
-            return index;
+            return GAME_ARRAY[index];
         }
     });
 };
@@ -88,16 +92,17 @@ io.sockets.on('connection', ProcessConnection);
 // ASSIGN PLAYERS STEP 1)
 function ProcessConnection(socket) {
 
+    let Game;
     let AvailableGameIndex = getAvailableGameIndex();
     if (AvailableGameIndex = -1){
-        let Game = createGame(GAME_ARRAY, socket);
+        console.log ("No available game found: Create new game.");
+        Game = createGame(GAME_ARRAY, socket);
         Game.AddPlayer(socket.id);
     } else{
+        console.log ("Add player to existing game.");
+        Game = GAME_ARRAY[AvailableGameIndex];
         Game.AddPlayer(socket.id);
     }
-
-    console.log('lobby array', GAME_ARRAY.length);
-    console.log('players length: ', GAME_ARRAY[0].players.length);
 
     socket.on('keyPress', function (data) {
         // Main.Move(data); OBSOLETE, REPLACE WITH PROPER FUNCTIONALITY.
@@ -110,9 +115,13 @@ function ProcessConnection(socket) {
 function ProcessDisconnection(socket){
     // console.log(`Player ${players.length} disconnected`);
     // console.log(`before ${GAME_ARRAY.length}`);
-    let GameIndex = removePlayer(socket);
-    if (GameIndex){
-        endGame(GameIndex);
+    console.log ("Disconnect detected.");
+
+    let Game = removePlayer(socket);
+    if (Game){
+        if (Game.players.length===0){
+            endGame(Game.id);
+        }
     } else {
         console.log("Player to be removed not found.");
     }
