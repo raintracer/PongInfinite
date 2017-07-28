@@ -20,7 +20,7 @@ function Game (GAME_ARRAY, id, io) {
     this.id = id;
     this.close = false;
     this.factory = new ObjectFactory();
-    this.socket = io;
+    this.io = io;
     this.players = [];
 
     this.gameInstance = null;
@@ -30,9 +30,11 @@ function Game (GAME_ARRAY, id, io) {
 
     this.Update = function(){
         if (this.lobby===true){
-            this.LobbyUpdate;
+            console.log("Lobby update");
+            this.LobbyUpdate();
         } else{
-            this.GameUpdate;
+            console.log("Game update");
+            this.GameUpdate();
         }
     };
 
@@ -42,6 +44,11 @@ function Game (GAME_ARRAY, id, io) {
 
     this.GameUpdate = function(){
         this.factory.update();
+        this.GameShow();
+    };
+
+    this.GameShow = function(){
+        io.emit('gameShow', this.factory.show());
     };
     
     // SETUP THE GAME
