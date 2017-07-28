@@ -35,8 +35,8 @@ let io = socket(server);
 let GAME_ARRAY = [];
 
 // CREATE A NEW INSTANCE OF THE GAME AND RETURN A HANDLE TO IT
-createGame = (socket, playerID) => {
-    GAME_ARRAY.push( new Game(GAME_ARRAY, GAME_ARRAY.length, playerID) );
+createGame = (io) => {
+    GAME_ARRAY.push( new Game(GAME_ARRAY, GAME_ARRAY.length, io) );
     console.log("Game created:");
     console.log(`Number of games: ${GAME_ARRAY.length}`);
     return GAME_ARRAY[GAME_ARRAY.length-1];
@@ -68,7 +68,7 @@ getAvailableGameIndex = () => {
 // SEARCH EACH GAME AND PROCESS A DISCONNECT FOR THE SPECIFIED PLAYER
 removePlayer = (socket) => {
     GAME_ARRAY.forEach( (e, index) => {
-        let player = e.players.indexOf(socket.id);
+        let player = e.players.indexOf(socket);
         if(player){
             e.players.splice(player, 1);
             return GAME_ARRAY[index];
@@ -100,11 +100,11 @@ function ProcessConnection(socket) {
     if (AvailableGameIndex === -1){
         console.log ("No available game found: Create new game.");
         Game = createGame(GAME_ARRAY, socket);
-        Game.AddPlayer(socket.id);
+        Game.AddPlayer(socket);
     } else{
         console.log ("Add player to existing game.");
         Game = GAME_ARRAY[AvailableGameIndex];
-        Game.AddPlayer(socket.id);
+        Game.AddPlayer(socket);
     }
 
     socket.on('keyPress', function (data) {

@@ -13,15 +13,16 @@ const PADDLE_FORCE = 6;
 const ObjectFactory = require('./Game/ObjectFactory');
 const Score = require('./Game/Score');
 
-function Game (GAME_ARRAY, id, socket) {
+function Game (GAME_ARRAY, id, io) {
 
     // this.route = name of dynamic lobby route given by player
     this.GAME_ARRAY = GAME_ARRAY;
     this.id = id;
     this.close = false;
     this.factory = new ObjectFactory();
-    this.socket = socket;
+    this.socket = io;
     this.players = [];
+
     this.gameInstance = null;
     this.MaxPlayers = 2;
     this.score = new Score();
@@ -73,8 +74,8 @@ function Game (GAME_ARRAY, id, socket) {
         return this.players.length;
     };
 
-    this.AddPlayer = function(playerID){
-        this.players.push(playerID);
+    this.AddPlayer = function(socket){
+        this.players.push(socket);
         if (this.players.length === this.MaxPlayers){
             this.StartGame;
         }
