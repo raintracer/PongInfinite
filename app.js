@@ -29,12 +29,13 @@ let io = socket(server);
 // pass IO to ServerMain
 // Main.setIO(io);
 
-const LOBBY_ARRAY = [];
+const GAME_ARRAY = [];
 
 addPlayer = (playerID) => {
+
     let addedPlayer = false;
 
-    LOBBY_ARRAY.forEach( (e, i, a) => {
+    GAME_ARRAY.forEach( (e, i, a) => {
         if(e.players.length === 1){
             console.log(`adding a new player...${e.players}`);
 
@@ -47,18 +48,18 @@ addPlayer = (playerID) => {
 
     if(!addedPlayer){
         console.log('all lobbies are full, new lobby created');
-
-        // CREATE A NEW LOBBY USING THE ARRAY LENGTH AS THE LOBBY ID. CHANGE THIS LATER.
-        LOBBY_ARRAY.push(new Game(LOBBY_ARRAY, LOBBY_ARRAY.length, playerID));
+        createGame(playerID);
     }
 };
 
+// CREATE A NEW INSTANCE OF THE GAME
 createGame = (socket, playerID) => {
-    LOBBY_ARRAY.push(new Game(LOBBY_ARRAY, LOBBY_ARRAY.length, playerID));
+    GAME_ARRAY.push(new Game(GAME_ARRAY, GAME_ARRAY.length, playerID));
 }
 
+// SEARCH EACH GAME AND PROCESS A DISCONNECT FOR THE SPECIFIED PLAYER
 removePlayer = (playerID) => {
-    LOBBY_ARRAY.forEach( e => {
+    GAME_ARRAY.forEach( e => {
         let player = e.players.indexOf(playerID);
         if(player){
             e.players.splice(player, 1);
@@ -67,9 +68,10 @@ removePlayer = (playerID) => {
     });
 };
 
+// SEARCH ALL GAMES FOR AN EMPTY ONE TO DISBAND
 endGame = () => {
-    LOBBY_ARRAY.forEach( (e, i, a) => {
-        if(e.gameInstance !== null && e.players.length === 0){
+    GAME_ARRAY.forEach( (e, i, a) => {
+        if(e.players.length === 0){
             clearInterval(e.gameInstance);
             a.splice(i, 1);
         }
@@ -81,9 +83,9 @@ io.sockets.on('connection', ProcessConnection);
 // ASSIGN PLAYERS STEP 1)
 function ProcessConnection(socket) {
 
-    LOBBY_ARRAY.length === 0 ? LOBBY_ARRAY.push(new GameLobby(socket.id)) : addPlayer(socket.id);
-    console.log('lobby array', LOBBY_ARRAY.length);
-    console.log('players length: ', LOBBY_ARRAY[0].players.length);
+    GAME_ARRAY.length === 0 ? GAME_ARRAY.push(new GameLobby(socket.id)) : addPlayer(socket.id);
+    console.log('lobby array', GAME_ARRAY.length);
+    console.log('players length: ', GAME_ARRAY[0].players.length);
 
     // players.push(socket.id);
 
@@ -97,7 +99,7 @@ function ProcessConnection(socket) {
     // }
 
     socket.on('keyPress', function (data) {
-        Main.Move(data);
+        // Main.Move(data); OBSOLETE, REPLACE WITH PROPER FUNCTIONALITY
     });
 
     socket.on('disconnect', ProcessDisconnection);
@@ -106,12 +108,14 @@ function ProcessConnection(socket) {
 
 function ProcessDisconnection(socket){
     // console.log(`Player ${players.length} disconnected`);
-    // console.log(`before ${LOBBY_ARRAY.length}`);
+    // console.log(`before ${GAME_ARRAY.length}`);
     removePlayer(socket);
-    console.log(LOBBY_ARRAY[0].players.length);
+    console.log(GAME_ARRAY[0].players.length);
     endGame();
-    // console.log(`after ${LOBBY_ARRAY.length}`);
+    // console.log(`after ${GAME_ARRAY.length}`);
     // players.splice(players.indexOf(socket.id), 1);
+
+    // RTS - PROPOSED IMPROVEMENT
 }
 
 
