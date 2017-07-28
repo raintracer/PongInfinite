@@ -7,6 +7,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const ejs = require('ejs');
+const Game = require('./Server/Game');
 
 const PLAYER_MAX = 2;
 
@@ -33,39 +34,6 @@ let io = socket(server);
 
 const GAME_ARRAY = [];
 
-addPlayer = (playerID) => {
-
-    let addedPlayer = false;
-
-    // GAME_ARRAY.forEach( (e, i, a) => {
-    //     if(e.players.length === 1){
-    //         console.log(`adding a new player...${e.players}`);
-
-    //         e.players.push(playerID);
-    //         addedPlayer = true;
-
-    //         break;
-    //     }
-    // });
-
-    for (let i = 0; i < GAME_ARRAY.length; i++){
-        let e = GAME_ARRAY[i];
-        if(e.players.length === 1){
-            console.log(`adding a new player...${e.players}`);
-
-            e.players.push(playerID);
-            addedPlayer = true;
-
-            break;
-        }
-    }
-
-    if(!addedPlayer){
-        console.log('all lobbies are full, new lobby created');
-        createGame(playerID);
-    }
-};
-
 // CREATE A NEW INSTANCE OF THE GAME AND RETURN A HANDLE TO IT
 createGame = (socket, playerID) => {
     GAME_ARRAY.push(new Game(GAME_ARRAY, GAME_ARRAY.length, playerID));
@@ -75,7 +43,7 @@ createGame = (socket, playerID) => {
 // RETURNS THE INDEX OF A GAME THAT IS NOT FULL OF PLAYERS, IF NONE ARE AVAILABLE RETURN -1
 getAvailableGameIndex = () =>{
 
-    // LOOK THROUGH AVAILABLE GAMES
+    // LOOK THROUGH AVAILABLE GAMES FOR AN OPEN SLOT
     for (let i = 0; i < GAME_ARRAY.length; i++){
         
         if (GAME_ARRAY[i].player.length < PLAYER_MAX) {
@@ -84,6 +52,7 @@ getAvailableGameIndex = () =>{
 
     }
 
+    // IF NO MATCH IS FOUND, RETURN -1
     return -1;
 
 }
@@ -130,23 +99,12 @@ function ProcessConnection(socket) {
     console.log('lobby array', GAME_ARRAY.length);
     console.log('players length: ', GAME_ARRAY[0].players.length);
 
-    // players.push(socket.id);
-
-    // socket.emit('AssignPlayer', {player: players.length});
-
-// once two players have connected call ServerMain --> Create()
-    // ASSIGN PLAYERS STEP 2)
-    // if(players.length === 2){
-    //     console.log (Main.Create());
-    //     console.log(players);
-    // }
-
     socket.on('keyPress', function (data) {
         // Main.Move(data); OBSOLETE, REPLACE WITH PROPER FUNCTIONALITY.
     });
 
     socket.on('disconnect', ProcessDisconnection);
-
+    
 }
 
 function ProcessDisconnection(socket){
