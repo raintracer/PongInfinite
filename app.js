@@ -55,7 +55,7 @@ getAvailableGameIndex = () => {
     // LOOK THROUGH AVAILABLE GAMES FOR AN OPEN SLOT
     for (let i = 0; i < GAME_ARRAY.length; i++){
         console.log(`Checking player length of Game ${i}: ${GAME_ARRAY[i].players.length} players.`)
-        if (GAME_ARRAY[i].players.length < PLAYER_MAX) {
+        if (GAME_ARRAY[i].players.length < GAME_ARRAY[i].MaxPlayers) {
             return i;
         } 
     }
@@ -99,7 +99,7 @@ function ProcessConnection(socket) {
     let AvailableGameIndex = getAvailableGameIndex();
     if (AvailableGameIndex === -1){
         console.log ("No available game found: Create new game.");
-        Game = createGame(GAME_ARRAY, socket);
+        Game = createGame(io);
         Game.AddPlayer(socket);
     } else{
         console.log ("Add player to existing game.");

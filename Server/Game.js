@@ -29,13 +29,13 @@ function Game (GAME_ARRAY, id, io) {
     this.lobby = true;
 
     this.Update = function(){
+
         if (this.lobby===true){
-            console.log("Lobby update");
             this.LobbyUpdate();
         } else{
-            console.log("Game update");
             this.GameUpdate();
         }
+        
     };
 
     this.LobbyUpdate = function(){
@@ -48,22 +48,28 @@ function Game (GAME_ARRAY, id, io) {
     };
 
     this.GameShow = function(){
-        io.emit('gameShow', this.factory.show());
+
+        // REQUEST AND EMIT THE DRAW ARRAY FOR THE GAME
+        data = {
+            DrawArray: this.factory.show()
+        };
+        this.io.emit('gameShow', data);
     };
     
     // SETUP THE GAME
     this.StartGame = function (){
         
+        console.log("Game started.");
         // set number of balls
         const numBalls = 10;
 
-        this.factory.paddleBottom = factory.createObject('Paddle', stageWidth / 2, stageHeight - 20, 255, 255, 255);
+        this.factory.paddleBottom = this.factory.createObject('Paddle', STAGE_WIDTH / 2, STAGE_HEIGHT - 20, 255, 255, 255);
         this.factory.paddleBottom.populateLasers();
-        this.factory.paddleTop = this.factory.createObject('Paddle', stageWidth / 2, 20, 255, 255, 255);
+        this.factory.paddleTop = this.factory.createObject('Paddle', STAGE_WIDTH / 2, 20, 255, 255, 255);
         this.factory.paddleTop.populateLasers();
 
         for (let i = 0; i < numBalls; i++) {
-            this.factory.createObject('Ball', stageWidth / 2, stageHeight / 2, 0, 0, 255);
+            this.factory.createObject('Ball', STAGE_WIDTH / 2, STAGE_HEIGHT / 2, 0, 0, 255);
         }
 
         this.factory.randomizeBalls();
@@ -82,13 +88,18 @@ function Game (GAME_ARRAY, id, io) {
     };
 
     this.AddPlayer = function(socket){
+        console.log(`Player ${socket.id} added.`);
         this.players.push(socket);
+        console.log (`Game ${this.id} has ${this.players.length} players now.`);
+        
         if (this.players.length === this.MaxPlayers){
-            this.StartGame;
+            this.StartGame();
         }
+        
     };
 
-    this.interval = setInterval(this.Update, 16.6);
+    let that = this;
+    this.interval = setInterval(function(){ return that.Update(); }, 16.6);
 
 };
 
