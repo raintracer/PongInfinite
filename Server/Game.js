@@ -1,15 +1,29 @@
 /**
  * Created by Vampiire on 7/27/17.
+ *
+ *
+ * widen canvas
+ *  split 75% game play [game viewport]
+ *      (separated by a border)
+ *  25% strip [supplement viewport]
+ *      mini map [takes positional data and represents miniature vector icons of the gamestate]
+ *          have a scaler method to grow and shrink according to number of players
+ *      hot move section [hot move viewport] mini representation of area of map where big points are being scored
+ *
+ *
+ *
+ *
  */
 
-module.exports = Game;
+// module.exports = Game;
 
 
 
-const ObjectFactory = require('./Game/ObjectFactory');
-// const Player = require('./Game/Player');
-// const Camera = require('./Game/Camera');
-const Score = require('./Game/Score');
+const ObjectFactory = require('./GameFiles/ObjectFactory');
+const Player = require('./GameFiles/Player');
+const Camera = require('./GameFiles/Camera');
+const Score = require('./GameFiles/Score');
+require('socket.io');
 
 function Game (GAME_ARRAY, id, io) {
 
@@ -17,14 +31,14 @@ function Game (GAME_ARRAY, id, io) {
     this.GAME_ARRAY = GAME_ARRAY;
     this.id = id;
     this.close = false;
-    this.factory = new ObjectFactory();
     this.io = io;
-    this.players = [];
-
-    this.gameInstance = null;
-    this.MaxPlayers = 2;
+    this.factory = new ObjectFactory();
     this.score = new Score();
+    this.players = [];
+    this.MaxPlayers = 2;
     this.lobby = true;
+
+    // console.log(this.io);
 
     this.Update = function(){
 
@@ -81,7 +95,7 @@ function Game (GAME_ARRAY, id, io) {
 
     // CLEAR UPDATE INTERVAL AND DELETE SELF
     this.Quit = function(){
-        clearInterval(this.interval);
+        clearInterval(this.updateInterval);
         this.close = true;
     };
     
@@ -92,7 +106,9 @@ function Game (GAME_ARRAY, id, io) {
     this.AddPlayer = function(socket){
         console.log(`Player ${socket.id} added.`);
         this.players.push(new Player(socket, this.GetPlayerCount() + 1));
-        this.players[this.GetPlayerCount()-1].camera = new Camera(this.factory.Constants.STAGE_WIDTH/2, (this.GetPlayerCount()-1)*this.factory.Constants.STAGE_HEIGHT);
+        this.players[this.GetPlayerCount()-1].camera =
+            new Camera(this.factory.Constants.STAGE_WIDTH/2,
+            (this.GetPlayerCount()-1)*this.factory.Constants.STAGE_HEIGHT);
         
         console.log (`Game ${this.id} has ${this.GetPlayerCount()} players now.`);
         
@@ -103,9 +119,12 @@ function Game (GAME_ARRAY, id, io) {
     };
 
     let that = this;
-    this.interval = setInterval(function(){ return that.Update(); }, 16.6);
 
-};
+    this.updateInterval = setInterval(function(){ return that.Update(); }, 16.6);
+
+}
+
+module.exports = Game;
 
 /**
  * Created by Vampiire on 6/19/17.

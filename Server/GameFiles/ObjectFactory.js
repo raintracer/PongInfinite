@@ -34,7 +34,6 @@ function ObjectFactory(){
         PADDLE_FORCE: 6
     };
 
-    // this.objectQuantity = 0;
     this.objectsMade = 0;
     this.gameObjects = [];
 
@@ -67,7 +66,6 @@ function ObjectFactory(){
         this.gameObjects.forEach( (e, i, a) => {
             if(e.id === id){
                 a.splice(i, 1);
-                this.objectsMade--;
             }
         });
     };
