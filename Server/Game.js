@@ -49,11 +49,31 @@ function Game (GAME_ARRAY, id, io) {
 
     this.GameShow = function(){
 
-        // REQUEST AND EMIT THE DRAW ARRAY FOR THE GAME
-        data = {
-            DrawArray: this.factory.show()
-        };
-        this.io.emit('gameShow', data);
+        let camx;
+        let camy;
+        
+        this.players.forEach( (e,i,a) => {
+           
+            // REQUEST AND EMIT THE DRAW ARRAY FOR THE GAME
+            
+            if (i===0){
+                camx = STAGE_WIDTH/2;
+                camy = 20;
+            } else{
+                camx = STAGE_WIDTH/2;
+                camy = STAGE_HEIGHT-20;
+            }
+
+            console.log(camx);
+            console.log(camy);
+
+            data = {
+                DrawArray: this.factory.show(camx, camy, STAGE_WIDTH, STAGE_HEIGHT)
+            };
+            e.emit('gameShow', data);
+
+        });
+        
     };
     
     // SETUP THE GAME
@@ -75,6 +95,7 @@ function Game (GAME_ARRAY, id, io) {
         this.factory.randomizeBalls();
         this.lobby = false;
 
+
     };
 
     // CLEAR UPDATE INTERVAL AND DELETE SELF
@@ -89,10 +110,11 @@ function Game (GAME_ARRAY, id, io) {
 
     this.AddPlayer = function(socket){
         console.log(`Player ${socket.id} added.`);
-        this.players.push(socket);
-        console.log (`Game ${this.id} has ${this.players.length} players now.`);
+        this.players.push(new Player(socket, this.GetPlayerCount() + 1));
         
-        if (this.players.length === this.MaxPlayers){
+        console.log (`Game ${this.id} has ${this.GetPlayerCount()} players now.`);
+        
+        if (this.GetPlayerCount() === this.MaxPlayers){
             this.StartGame();
         }
         

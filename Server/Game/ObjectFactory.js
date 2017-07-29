@@ -115,7 +115,7 @@ function ObjectFactory(){
 
     };
 
-    this.show = function() {
+    this.show = function(camx, camy, STAGE_WIDTH, STAGE_HEIGHT) {
 
         DrawArray = [];
 
@@ -127,8 +127,8 @@ function ObjectFactory(){
                 w: e.w,
                 h: e.h,
                 fill: {red: e.red, green: e.green, blue: e.blue},
-                x: e.x,
-                y: e.y
+                x: e.x-camx+STAGE_WIDTH/2,
+                y: e.y-camy+STAGE_HEIGHT/2
             });
         });
 
