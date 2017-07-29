@@ -4,6 +4,8 @@
 
 module.exports = ObjectFactory;
 
+const GameConstants = require('././Game.Constants');
+
 const Ball = require('./Ball');
 const Paddle = require('./Paddle');
 const Laser = require('./Laser');
@@ -24,8 +26,9 @@ const Constants = {
     paddleForce: 6
 };
 
-
 function ObjectFactory(){
+
+    console.log(`Object Factor knows the stage width: ${GameConstants.STAGE_WIDTH}`);
 
     // this.objectQuantity = 0;
     this.objectsMade = 0;
@@ -84,13 +87,13 @@ function ObjectFactory(){
         // checks if a ball has crossed either Y bound and awards the respective point
             // deletes old ball(s) and creates a new one to be randomized
             if( e.type === 'Ball'){
-                if(score.scorePoint(e)){
-                    if(!e.mini){
-                        let newBall = this.createObject('Ball', Constants.STAGE_WIDTH/2, Constants.STAGE_HEIGHT/2);
-                        newBall.randomize();
-                    }
-                    this.deleteObject(e.id);
-                }
+                // if(score.scorePoint(e)){
+                //     if(!e.mini){
+                //         let newBall = this.createObject('Ball', Constants.STAGE_WIDTH/2, Constants.STAGE_HEIGHT/2);
+                //         newBall.randomize();
+                //     }
+                //     this.deleteObject(e.id);
+                // }
             }
 
             if(e.type === 'Paddle'){
@@ -115,7 +118,7 @@ function ObjectFactory(){
 
     };
 
-    this.show = function(camx, camy, STAGE_WIDTH, STAGE_HEIGHT) {
+    this.show = function(camera, STAGE_WIDTH, STAGE_HEIGHT) {
 
         DrawArray = [];
 
@@ -127,8 +130,8 @@ function ObjectFactory(){
                 w: e.w,
                 h: e.h,
                 fill: {red: e.red, green: e.green, blue: e.blue},
-                x: e.x-camx+STAGE_WIDTH/2,
-                y: e.y-camy+STAGE_HEIGHT/2
+                x: e.x-camera.x+STAGE_WIDTH/2,
+                y: e.y-camera.y+STAGE_HEIGHT/2
             });
         });
 

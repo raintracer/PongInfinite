@@ -211,7 +211,7 @@ function Ball(parent, id, x, y, red=255, green=255, blue=255){
 
         }
 
-
+        
 
         // DETECT COLLISION BOUNDARIES - Disabled to allow pass-through and scoring
         // // top edge boundary crossing prevention
