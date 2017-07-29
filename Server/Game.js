@@ -11,6 +11,8 @@ const TRANSFER_COEFFICIENT = 0.4;
 const PADDLE_FORCE = 6;
 
 const ObjectFactory = require('./Game/ObjectFactory');
+const Player = require('./Game/Player');
+const Camera = require('./Game/Camera');
 const Score = require('./Game/Score');
 
 function Game (GAME_ARRAY, id, io) {
@@ -70,7 +72,7 @@ function Game (GAME_ARRAY, id, io) {
             data = {
                 DrawArray: this.factory.show(camx, camy, STAGE_WIDTH, STAGE_HEIGHT)
             };
-            e.emit('gameShow', data);
+            e.socket.emit('gameShow', data);
 
         });
         
@@ -111,6 +113,7 @@ function Game (GAME_ARRAY, id, io) {
     this.AddPlayer = function(socket){
         console.log(`Player ${socket.id} added.`);
         this.players.push(new Player(socket, this.GetPlayerCount() + 1));
+        this.players[this.GetPlayerCount()-1].camera = new Camera(STAGE_WIDTH/2, this.GetPlayerCount()*STAGE_HEIGHT);
         
         console.log (`Game ${this.id} has ${this.GetPlayerCount()} players now.`);
         

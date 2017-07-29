@@ -16,7 +16,6 @@ function Laser(parent, paddle, id, x, y, red=255, green=255, blue=255){
     this.AnimationArray = [.2,.4,.6,.8,1,1,.8,.6,.4, 0.2];
     this.frame = 0;
 
-
     this.parent = parent;
     this.type = "Laser";
     this.shape = 'ellipse';
