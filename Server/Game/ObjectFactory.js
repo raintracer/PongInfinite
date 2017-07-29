@@ -4,8 +4,6 @@
 
 module.exports = ObjectFactory;
 
-const GameConstants = require('././Game.Constants');
-
 const Ball = require('./Ball');
 const Paddle = require('./Paddle');
 const Laser = require('./Laser');
@@ -17,18 +15,24 @@ let paddleTop;
 let paddleBottom;
 let DrawArray = [];
 
-const Constants = {
-    // return { STAGE_WIDTH: 400, STAGE_HEIGHT: 500, CHAOS : 3, TRANSFER_COEFFICIENT : 0.4, PADDLE_FORCE: 6};
-    stageWidth: 400,
-    stageHeight: 500,
-    chaos: 3,
-    transferCoefficient: 0.4,
-    paddleForce: 6
-};
+// const Constants = {
+//     // return { STAGE_WIDTH: 400, STAGE_HEIGHT: 500, CHAOS : 3, TRANSFER_COEFFICIENT : 0.4, PADDLE_FORCE: 6};
+//     stageWidth: 400,
+//     stageHeight: 500,
+//     chaos: 3,
+//     transferCoefficient: 0.4,
+//     paddleForce: 6
+// };
 
 function ObjectFactory(){
 
-    console.log(`Object Factor knows the stage width: ${GameConstants.STAGE_WIDTH}`);
+    this.Constants = {
+        STAGE_WIDTH:  400,
+        STAGE_HEIGHT: 500,
+        CHAOS: 3,
+        TRANSFER_COEFFICIENT: 0.4,
+        PADDLE_FORCE: 6
+    };
 
     // this.objectQuantity = 0;
     this.objectsMade = 0;

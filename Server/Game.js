@@ -4,17 +4,11 @@
 
 module.exports = Game;
 
-Constants = {
-    STAGE_WIDTH:  400,
-    STAGE_HEIGHT: 500,
-    CHAOS: 3,
-    TRANSFER_COEFFICIENT: 0.4,
-    PADDLE_FORCE: 6
-};
+
 
 const ObjectFactory = require('./Game/ObjectFactory');
-const Player = require('./Game/Player');
-const Camera = require('./Game/Camera');
+// const Player = require('./Game/Player');
+// const Camera = require('./Game/Camera');
 const Score = require('./Game/Score');
 
 function Game (GAME_ARRAY, id, io) {
@@ -57,7 +51,7 @@ function Game (GAME_ARRAY, id, io) {
            
             // REQUEST AND EMIT THE DRAW ARRAY FOR THE GAME
             data = {
-                DrawArray: this.factory.show(e.camera, STAGE_WIDTH, STAGE_HEIGHT)
+                DrawArray: this.factory.show(e.camera, this.factory.Constants.STAGE_WIDTH, this.factory.Constants.STAGE_HEIGHT)
             };
             e.socket.emit('gameShow', data);
 
@@ -67,18 +61,16 @@ function Game (GAME_ARRAY, id, io) {
     
     // SETUP THE GAME
     this.StartGame = function (){
-        
-        console.log("Game started.");
-        // set number of balls
+
         const numBalls = 10;
 
-        this.factory.paddleBottom = this.factory.createObject('Paddle', STAGE_WIDTH / 2, STAGE_HEIGHT - 20, 255, 255, 255);
+        this.factory.paddleBottom = this.factory.createObject('Paddle', this.factory.Constants.STAGE_WIDTH / 2, this.factory.Constants.STAGE_HEIGHT - 20, 255, 255, 255);
         this.factory.paddleBottom.populateLasers();
-        this.factory.paddleTop = this.factory.createObject('Paddle', STAGE_WIDTH / 2, 20, 255, 255, 255);
+        this.factory.paddleTop = this.factory.createObject('Paddle', this.factory.Constants.STAGE_WIDTH / 2, 20, 255, 255, 255);
         this.factory.paddleTop.populateLasers();
 
         for (let i = 0; i < numBalls; i++) {
-            this.factory.createObject('Ball', STAGE_WIDTH / 2, STAGE_HEIGHT / 2, 0, 0, 255);
+            this.factory.createObject('Ball', this.factory.Constants.STAGE_WIDTH / 2, this.factory.Constants.STAGE_HEIGHT / 2, 0, 0, 255);
         }
 
         this.factory.randomizeBalls();
@@ -100,7 +92,7 @@ function Game (GAME_ARRAY, id, io) {
     this.AddPlayer = function(socket){
         console.log(`Player ${socket.id} added.`);
         this.players.push(new Player(socket, this.GetPlayerCount() + 1));
-        this.players[this.GetPlayerCount()-1].camera = new Camera(STAGE_WIDTH/2, (this.GetPlayerCount()-1)*STAGE_HEIGHT);
+        this.players[this.GetPlayerCount()-1].camera = new Camera(this.factory.Constants.STAGE_WIDTH/2, (this.GetPlayerCount()-1)*this.factory.Constants.STAGE_HEIGHT);
         
         console.log (`Game ${this.id} has ${this.GetPlayerCount()} players now.`);
         

@@ -40,7 +40,7 @@ createGame = (io) => {
     console.log("Game created:");
     console.log(`Number of games: ${GAME_ARRAY.length}`);
     return GAME_ARRAY[GAME_ARRAY.length-1];
-}
+};
 
 // RETURNS THE INDEX OF A GAME THAT IS NOT FULL OF PLAYERS, IF NONE ARE AVAILABLE RETURN -1
 getAvailableGameIndex = () => {
