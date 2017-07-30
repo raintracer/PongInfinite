@@ -1,17 +1,20 @@
 
+module.exports = Strip;
 
-function Strip(){
+function Strip(x, y, w, h){
     
-    let Objects = [];
-    let x;
-    let y;
-    
+    this.Objects = [];
+    this.x = x;
+    this.y = y;
+    this.w = w;
+    this.h = h;
+
     this.Update = function(){
 
-    }
+    };
 
     this.Show = function(){
 
-    }
+    };
 
 }
