@@ -14,6 +14,7 @@ function Ball(parent, id, x, y, red=255, green=255, blue=255){
     this.type = "Ball";
     this.shape = 'ellipse';
     this.parent = parent;
+    const constants = this.parent.constants;
 
 // boolean if the ball has been split by a laser collision
     this.mini = false;
@@ -225,6 +226,14 @@ function Ball(parent, id, x, y, red=255, green=255, blue=255){
         //     this.y = Constants.STAGE_HEIGHT - (this.h / 2);
         //     this.reflectY();
         // }
+
+        if (this.y < 0) {
+            this.y += parent.Constants.STAGE_HEIGHT;
+        }
+        
+        if (this.y > parent.Constants.STAGE_HEIGHT) {
+            this.y -= parent.Constants.STAGE_HEIGHT;
+        }
 
     };
 

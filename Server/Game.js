@@ -7,8 +7,8 @@ module.exports = Game;
 
 
 const ObjectFactory = require('./Game/ObjectFactory');
-// const Player = require('./Game/Player');
-// const Camera = require('./Game/Camera');
+const Player = require('./Game/Player');
+const Camera = require('./Game/Camera');
 const Score = require('./Game/Score');
 
 function Game (GAME_ARRAY, id, io) {
