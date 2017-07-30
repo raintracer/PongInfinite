@@ -43,6 +43,10 @@ function Game (GAME_ARRAY, id, io) {
     this.GameUpdate = function(){
         this.factory.update();
         this.GameShow();
+        this.players[0].camera.y +=5;
+        if (this.players[0].camera.y>this.factory.Constants.STAGE_HEIGHT/2){
+            this.players[0].camera.y-=this.factory.Constants.STAGE_HEIGHT;
+        }
     };
 
     this.GameShow = function(){

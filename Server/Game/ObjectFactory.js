@@ -131,6 +131,18 @@ function ObjectFactory(){
                 x: e.x-camera.x+Constants.STAGE_WIDTH/2,
                 y: e.y-camera.y+Constants.STAGE_HEIGHT/2
             });
+
+            // push an extra offset one to demo continuously drawn objects:
+            DrawArray.push({
+                type: e.type,
+                shape : e.shape,
+                w: e.w,
+                h: e.h,
+                fill: {red: e.red, green: e.green, blue: e.blue},
+                x: e.x-camera.x+Constants.STAGE_WIDTH/2,
+                y: e.y-camera.y-Constants.STAGE_HEIGHT/2
+            });
+
         });
 
         return DrawArray;
