@@ -59,16 +59,32 @@ function Game (GAME_ARRAY, id, io) {
 
     this.GameShow = function(){
         
-        this.players.forEach( (e,i,a) => {
+        this.players.forEach( (player, playerIndex, a) => {
            
             // Determine the strips that the player will see
+            let DrawArray = [];
             let strips = [];
+            let stripY = [];
+            let camera = player.Camera;
+            let StageTop = camera.StageTopEdgeArenaPosition();
+            strips.push(this.Arena.GetStripAtArenaPosition(camera.x, StageTop));
+            stripY[0] = StageTop;
+            let VisibleStripCount = Math.ceil(this.Factory.Constants.STAGE_HEIGHT/this.Arena.Constants.STRIP_HEIGHT);
+
+            // Push as many strips as it takes to fill the screen, even if the same strip must be used multiple times
+            for (let i = 1; i <= VisibleStripCount; i++){
+                let k = (strips[0]+i) % this.Arena.StripArray.length;
+                strips.push(this.Arena.StripArray[i]);
+            }
+
+            // Request the strips draw arrays with their important offsets
+
 
             // REQUEST AND EMIT THE DRAW ARRAY FOR THE GAME
             data = {
-                DrawArray: this.Factory.show(e.Camera)
+                DrawArray: DrawArray
             };
-            e.socket.emit('gameShow', data);
+            player.socket.emit('gameShow', data);
 
         });
         
