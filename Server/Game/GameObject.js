@@ -3,14 +3,14 @@
  */
 
 
-module.exports = GameObject;
+module.exports = FactoryObject;
 
 const Constants = { STAGE_WIDTH: 400, STAGE_HEIGHT: 500, CHAOS : 1, TRANSFER_COEFFICIENT : 0.4};
 
-function GameObject(Game, id, x, y, red=255, green=255, blue=255) {
+function FactoryObject(Factory, id, x, y, red=255, green=255, blue=255) {
 
 // position coordinates
-    this.Game = Game;
+    this.Factory = Factory;
     this.x = x;
     this.y = y;
     this.w = 0;
@@ -25,15 +25,15 @@ function GameObject(Game, id, x, y, red=255, green=255, blue=255) {
     this.green = green;
     this.blue = blue;
 
-// x,y velocities of the game object
+// x,y velocities of the Factory object
     this.xvel = 0;
     this.yvel = 0;
 
-// static and dynamic friction factors for the game object
+// static and dynamic friction factors for the Factory object
     this.friction = 0.6;
     this.staticFriction = 0.5;
 
-// game object acceleration in the x direction, passes a force which continuously accelerates the object per call
+// Factory object acceleration in the x direction, passes a force which continuously accelerates the object per call
     this.accX = function(force){
         this.xvel += force;
     };
@@ -43,8 +43,8 @@ function GameObject(Game, id, x, y, red=255, green=255, blue=255) {
         this.yvel += force;
     };
 
-// game object update function which continuously updates per call with x,y velocities and movement of the game objects
-// applies the dynamic friction factor per call and limits the game object to a minimum velocity of 0
+// Factory object update function which continuously updates per call with x,y velocities and movement of the Factory objects
+// applies the dynamic friction factor per call and limits the Factory object to a minimum velocity of 0
     this.update = function(){
         this.xvel *= this.friction;
         this.yvel *= this.friction;
@@ -61,8 +61,8 @@ function GameObject(Game, id, x, y, red=255, green=255, blue=255) {
         this.moveY();
     };
 
-// moves the game object in the x direction, assigns the old x position to the previous x position before movement
-// sets bounds in the x direction to contain the game object within the canvas
+// moves the Factory object in the x direction, assigns the old x position to the previous x position before movement
+// sets bounds in the x direction to contain the Factory object within the canvas
     this.moveX = function(){
 
         this.x += this.xvel;
@@ -85,7 +85,7 @@ function GameObject(Game, id, x, y, red=255, green=255, blue=255) {
         this.y += this.yvel;
     };
 
-// game object edges for use in collision detection
+// Factory object edges for use in collision detection
 // old edges are used in determining ball collision in order to
 // capture a collision despite the rapid velocity of the ball
 
@@ -121,41 +121,41 @@ function GameObject(Game, id, x, y, red=255, green=255, blue=255) {
         this.setPosition(position-this.w/2, this.y);
     };
 
-    this.collidesTopRight = function(game_object){
-        return game_object.containsPoint(this.rightEdge(),this.topEdge());
+    this.collidesTopRight = function(Factory_object){
+        return Factory_object.containsPoint(this.rightEdge(),this.topEdge());
     };
 
-    this.collidesTopLeft = function(game_object){
-        return game_object.containsPoint(this.leftEdge(),this.topEdge());
+    this.collidesTopLeft = function(Factory_object){
+        return Factory_object.containsPoint(this.leftEdge(),this.topEdge());
     };
 
-    this.collidesBottomRight = function(game_object){
-        return game_object.containsPoint(this.rightEdge(),this.bottomEdge());
+    this.collidesBottomRight = function(Factory_object){
+        return Factory_object.containsPoint(this.rightEdge(),this.bottomEdge());
     };
 
-    this.collidesBottomLeft = function(game_object){
-        return game_object.containsPoint(this.leftEdge(),this.bottomEdge());
+    this.collidesBottomLeft = function(Factory_object){
+        return Factory_object.containsPoint(this.leftEdge(),this.bottomEdge());
     };
 
-    this.collidesRight = function(game_object){
-        return game_object.containsPoint(this.rightEdge(),this.y)
+    this.collidesRight = function(Factory_object){
+        return Factory_object.containsPoint(this.rightEdge(),this.y)
 
     };
 
-    this.collidesLeft = function(game_object){
-        return game_object.containsPoint(this.leftEdge(),this.y);
+    this.collidesLeft = function(Factory_object){
+        return Factory_object.containsPoint(this.leftEdge(),this.y);
     };
 
-    this.collidesTop = function(game_object){
-        return game_object.containsPoint(this.x,this.topEdge());
+    this.collidesTop = function(Factory_object){
+        return Factory_object.containsPoint(this.x,this.topEdge());
     };
 
-    this.collidesBottom = function(game_object){
-        return game_object.containsPoint(this.x,this.bottomEdge());
+    this.collidesBottom = function(Factory_object){
+        return Factory_object.containsPoint(this.x,this.bottomEdge());
     };
 
-    this.collidesAny = function(game_object){
-        return (this.collidesTopLeft(game_object) || this.collidesTop(game_object) || this.collidesTopRight(game_object) || this.collidesRight(game_object) || this.collidesBottomRight(game_object) || this.collidesBottom(game_object) || this.collidesBottomLeft(game_object) || this.collidesLeft(game_object));
+    this.collidesAny = function(Factory_object){
+        return (this.collidesTopLeft(Factory_object) || this.collidesTop(Factory_object) || this.collidesTopRight(Factory_object) || this.collidesRight(Factory_object) || this.collidesBottomRight(Factory_object) || this.collidesBottom(Factory_object) || this.collidesBottomLeft(Factory_object) || this.collidesLeft(Factory_object));
     };
 
     // Check if the point is inside the object, treating it like a rectangle
@@ -254,7 +254,7 @@ function GameObject(Game, id, x, y, red=255, green=255, blue=255) {
 }
 
 // Tyler's first prototype method.
-// GameObject.prototype.Test2 = function(){
+// FactoryObject.prototype.Test2 = function(){
 //     alert ("wut");
 //
 // };
