@@ -35,6 +35,12 @@ function Arena(Game, StripQuantity){
 
     this.Update = function(){
 
+        this.StripArray.forEach( (Strip,i,a) => {
+
+            Strip.Update();
+
+        });
+
     }
     
 }

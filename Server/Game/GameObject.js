@@ -49,7 +49,7 @@ function FactoryObject(Factory, id, x, y, red=255, green=255, blue=255) {
 
 // Factory object update function which continuously updates per call with x,y velocities and movement of the Factory objects
 // applies the dynamic friction factor per call and limits the Factory object to a minimum velocity of 0
-    this.update = function(){
+    this.Update = function(){
         this.xvel *= this.friction;
         this.yvel *= this.friction;
 

@@ -44,10 +44,13 @@ function Game (GAME_ARRAY, id, io) {
     };
 
     this.GameUpdate = function(){
-        this.Factory.update();
+
+        // Update objects through the Arena and strips.
+        this.Arena.Update();
         this.GameShow();
+
         this.players[0].camera.y +=5;
-        if (this.players[0].camera.y>this.Arena.h/2){
+        if (this.players[0].camera.y>this.Arena.h-Factory.Constants.STAGE_HEIGHT/2){
             this.players[0].camera.y-=this.Arena.h;
         }
     };

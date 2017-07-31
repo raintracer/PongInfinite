@@ -11,8 +11,11 @@ function Strip(Arena, id, x, y, w, h){
     this.w = w;
     this.h = h;
 
+    // Update each object without reassigning
     this.Update = function(){
-        
+        Objects.forEach( (object, i, a) => {
+            object.Update();
+        });
     };
 
     this.Show = function(){
