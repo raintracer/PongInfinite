@@ -13,6 +13,21 @@ function Camera(Game, x, y){
         this.y = y;
     };
 
+    this.Move = function(xvel, yvel){
+        
+        // Move the camera
+        this.x += xvel;
+        this.y += yvel;
+
+        let ArenaHeight = this.Game.Arena.h;
+        while (this.x < 0){
+            this.x += ArenaHeight;
+        }
+        while (this.x > ArenaHeight){
+            this.x -= ArenaHeight;
+        }
+    };
+
     this.StageTopEdgeArenaPosition = function(){
         let StageHeight = this.Game.Factory.Constants.STAGE_HEIGHT;
         let StageTop = this.y - StageHeight/2;

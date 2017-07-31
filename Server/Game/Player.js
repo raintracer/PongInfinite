@@ -23,6 +23,15 @@ function Player(Game, socket, id){
         right:false
     };
 
+    this.Update = function(){
+        if (this.keys.up){
+            this.Camera.Move(0,-10);
+        }
+        if (this.keys.down){
+            this.Camera.Move(0,10);
+        }
+    };
+
     this.CenterCameraOnPaddle = function(){
         this.Camera.SetPosition(this.paddle.x, this.paddle.y);
         // console.log (`Camera for Player ${this.id} has been moved to (${this.Camera.x}, ${this.Camera.y})`)

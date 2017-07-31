@@ -45,6 +45,11 @@ function Game (GAME_ARRAY, id, io) {
 
     this.GameUpdate = function(){
 
+        // Update players
+        this.players.forEach( player=>{
+            player.Update();
+        })
+
         // Update objects through the Arena and strips.
         this.Arena.Update();
         this.Factory.UpdateStrips();
@@ -119,9 +124,7 @@ function Game (GAME_ARRAY, id, io) {
             let StripCenter = this.Arena.GetStripCenter(i);
             e.paddle = this.Factory.createObject("Paddle",StripCenter.x,StripCenter.y,Math.random(255),Math.random(255),Math.random(255));
             e.paddle.populateLasers();
-            if (i%2===1){
-                e.paddle.imagetype = "Paddle2";
-            }
+            e.paddle.AssignTeam(i%2+1);
             e.CenterCameraOnPaddle();
 
         });

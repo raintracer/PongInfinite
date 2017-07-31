@@ -15,7 +15,11 @@ function Paddle(Factory, player, id, x,y, red = 255, green = 255, blue = 255){
     this.type = "Paddle";
     this.shape = 'rect';
     this.player = player;
+
+    // DEFAULT TEAM AND PADDLE IMAGE
     this.imagetype = "Paddle1";
+    this.team = 1;
+
     const LASER_SPEED = 2;
 
 // assigns the width and height of the paddle object
@@ -24,6 +28,11 @@ function Paddle(Factory, player, id, x,y, red = 255, green = 255, blue = 255){
 
 // dampening coefficient used when imparting the velocity of the paddle to the ball during collision
     this.dampen = .4;
+
+    this.AssignTeam = function(team){
+        this.team = team;
+        this.imagetype = `Paddle${this.team}`;
+    };
 
 // returns orientation of the paddle
     this.orientation = function(){
