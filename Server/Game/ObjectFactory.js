@@ -80,42 +80,48 @@ function ObjectFactory(Game){
         Balls.forEach( e => e.randomize());
     };
 
-    this.update = function(){
+    // this.update = function(){
 
-        this.gameObjects.forEach( (e, i, a) => {
+    //     this.gameObjects.forEach( (e, i, a) => {
 
-        // checks if a ball has crossed either Y bound and awards the respective point
-            // deletes old ball(s) and creates a new one to be randomized
-            if( e.type === 'Ball'){
-                // if(score.scorePoint(e)){
-                //     if(!e.mini){
-                //         let newBall = this.createObject('Ball', Constants.STAGE_WIDTH/2, Constants.STAGE_HEIGHT/2);
-                //         newBall.randomize();
-                //     }
-                //     this.deleteObject(e.id);
-                // }
-            }
+    //     // checks if a ball has crossed either Y bound and awards the respective point
+    //         // deletes old ball(s) and creates a new one to be randomized
+    //         if( e.type === 'Ball'){
+    //             // if(score.scorePoint(e)){
+    //             //     if(!e.mini){
+    //             //         let newBall = this.createObject('Ball', Constants.STAGE_WIDTH/2, Constants.STAGE_HEIGHT/2);
+    //             //         newBall.randomize();
+    //             //     }
+    //             //     this.deleteObject(e.id);
+    //             // }
+    //         }
 
-            if(e.type === 'Paddle'){
+    //         if(e.type === 'Paddle'){
 
-            }
+    //         }
 
-            if( e.type === 'Laser'){
+    //         if( e.type === 'Laser'){
 
-                if(e.shot){
-                    e.boundaryCheck();
-                    // e.pulseEffect();
-                    e.laserHit();
+    //             if(e.shot){
+    //                 e.boundaryCheck();
+    //                 // e.pulseEffect();
+    //                 e.laserHit();
 
-                } else{
-                    e.updateLaser();
-                }
-            }
+    //             } else{
+    //                 e.updateLaser();
+    //             }
+    //         }
 
-        // after applying specific update methods call the GameObject update on the object
-            e.update();
+    //     // after applying specific update methods call the GameObject update on the object
+    //         e.update();
+    //     });
+
+    // };
+
+    this.UpdateStrips = function(){
+        this.gameObjects.forEach( (object,i,a) =>{
+            object.UpdateStrips();
         });
-
     };
 
     this.show = function(camera) {

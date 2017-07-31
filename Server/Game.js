@@ -47,6 +47,7 @@ function Game (GAME_ARRAY, id, io) {
 
         // Update objects through the Arena and strips.
         this.Arena.Update();
+        this.Factory.UpdateStrips();
         this.GameShow();
 
         this.players[0].camera.y +=5;
