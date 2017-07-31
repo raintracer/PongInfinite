@@ -105,6 +105,22 @@ function GameObject(Game, id, x, y, red=255, green=255, blue=255) {
         return this.y + this.h/2;
     };
 
+    this.alignTopEdge = function(position){
+        this.setPosition(this.x, position+this.h/2);
+    };
+
+    this.alignBottomEdge = function(position){
+        this.setPosition(this.x, position-this.h/2);
+    };
+
+    this.alignLeftEdge = function(position){
+        this.setPosition(position+this.w/2, this.y);
+    };
+
+    this.alignRightEdge = function(position){
+        this.setPosition(position-this.w/2, this.y);
+    };
+
     this.collidesTopRight = function(game_object){
         return game_object.containsPoint(this.rightEdge(),this.topEdge());
     };
