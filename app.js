@@ -19,8 +19,9 @@ module.exports = server = app.listen(port, function(){
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended : false}));
 app.set('view engine', 'ejs');
+
+app.use(express.static('Client'));
 app.use('/', controller);
-// app.use(express.static('Client'));
 
 // let socket = require('socket.io');
 // let io = socket(server);
