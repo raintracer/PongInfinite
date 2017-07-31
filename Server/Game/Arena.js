@@ -27,6 +27,11 @@ function Arena(Game, StripQuantity){
         return Coordinate;
     }
 
+    // Return the index of the strip that a position lays within
+    this.GetStripAtArenaPosition = function(x,y){
+        return int(y / this.Constants.STRIP_HEIGHT);
+    };
+
     this.update = function(){
 
     }

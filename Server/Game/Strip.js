@@ -1,8 +1,9 @@
 
 
 
-function Strip(Arena, x, y, w, h){
+function Strip(Arena, id, x, y, w, h){
     
+    this.id = id;
     this.Arena = Arena;
     this.Objects = [];
     this.x = x;
@@ -11,11 +12,11 @@ function Strip(Arena, x, y, w, h){
     this.h = h;
 
     this.Update = function(){
-
+        
     };
 
     this.Show = function(){
-
+        
     };
 
 }
