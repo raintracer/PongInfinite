@@ -47,8 +47,8 @@ function Game (GAME_ARRAY, id, io) {
         this.Factory.update();
         this.GameShow();
         this.players[0].camera.y +=5;
-        if (this.players[0].camera.y>this.Factory.Constants.STAGE_HEIGHT/2){
-            this.players[0].camera.y-=this.Factory.Constants.STAGE_HEIGHT;
+        if (this.players[0].camera.y>this.Arena.h/2){
+            this.players[0].camera.y-=this.Arena.h;
         }
     };
 
@@ -58,7 +58,7 @@ function Game (GAME_ARRAY, id, io) {
            
             // REQUEST AND EMIT THE DRAW ARRAY FOR THE GAME
             data = {
-                DrawArray: this.Factory.show(e.camera, this.Factory.Constants.STAGE_WIDTH, this.Factory.Constants.STAGE_HEIGHT)
+                DrawArray: this.Factory.show(e.Camera)
             };
             e.socket.emit('gameShow', data);
 
@@ -81,9 +81,10 @@ function Game (GAME_ARRAY, id, io) {
         this.players.forEach( (e,i,a) => {
 
             // Create a paddle in the corresponding strip.
-            let StripCenter = this.Arena.GetStripCenter();
+            let StripCenter = this.Arena.GetStripCenter(i);
             e.paddle = this.Factory.createObject("Paddle",StripCenter.x,StripCenter.y,Math.random(255),Math.random(255),Math.random(255));
             e.paddle.populateLasers();
+            e.CenterCameraOnPaddle();
 
         });
 

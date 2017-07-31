@@ -6,7 +6,7 @@ function Arena(Game, StripQuantity){
 
     this.Game = Game;
     this.Constants = {
-        STRIP_HEIGHT : 400,
+        STRIP_HEIGHT : 100,
         STRIP_WIDTH : 400
     };
 
@@ -23,6 +23,7 @@ function Arena(Game, StripQuantity){
             x: this.Constants.STRIP_WIDTH / 2,
             y: this.Constants.STRIP_HEIGHT * (StripIndex + 0.5)
         };
+        console.log(Coordinate);
         return Coordinate;
     }
 

@@ -228,11 +228,11 @@ function Ball(Factory, id, x, y, red=255, green=255, blue=255){
         // }
 
         if (this.y < 0) {
-            this.y += Factory.Constants.STAGE_HEIGHT;
+            this.y += Factory.Game.Arena.h;
         }
         
-        if (this.y > Factory.Constants.STAGE_HEIGHT) {
-            this.y -= Factory.Constants.STAGE_HEIGHT;
+        if (this.y > Factory.Game.Arena.h) {
+            this.y -= Factory.Game.Arena.h;
         }
 
     };
