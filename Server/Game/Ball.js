@@ -8,13 +8,13 @@ const GameObject = require('./GameObject');
 
 const Constants = { STAGE_WIDTH: 400, STAGE_HEIGHT: 500, CHAOS : 10, TRANSFER_COEFFICIENT : 0.4};
 
-function Ball(parent, id, x, y, red=255, green=255, blue=255){
+function Ball(Factory, id, x, y, red=255, green=255, blue=255){
 
-    GameObject.call(this,parent,id,x,y, red, green, blue);
+    GameObject.call(this,Factory,id,x,y, red, green, blue);
     this.type = "Ball";
     this.shape = 'ellipse';
-    this.parent = parent;
-    const constants = this.parent.constants;
+    this.Factory = Factory;
+    const constants = this.Factory.constants;
 
 // boolean if the ball has been split by a laser collision
     this.mini = false;
@@ -50,7 +50,7 @@ function Ball(parent, id, x, y, red=255, green=255, blue=255){
         // console.log('moving in the x');
 
         this.x += this.xvel;
-        let HitObjects = parent.getObjectTypes("Ball");
+        let HitObjects = Factory.getObjectTypes("Ball");
 
         // DETECT COLLISION WITH OTHER BALLS
         for (let i = 0; i < HitObjects.length; i++) {
@@ -135,7 +135,7 @@ function Ball(parent, id, x, y, red=255, green=255, blue=255){
     this.moveY = function(){
 
         this.y += this.yvel;
-        let HitObjects = parent.getObjectTypes("Ball");
+        let HitObjects = Factory.getObjectTypes("Ball");
 
         // DETECT COLLISION WITH OTHER BALLS
         for (let i = 0; i < HitObjects.length; i++) {
@@ -196,19 +196,19 @@ function Ball(parent, id, x, y, red=255, green=255, blue=255){
         }
 
         // DETECT COLLISION WITH PADDLES AT ANY OF THE BALLS CORNERS OR SIDES
-        if (this.collidesAny(parent.paddleTop)){
-            this.setPosition(this.x, parent.paddleTop.bottomEdge() + this.h/2);
+        if (this.collidesAny(Factory.paddleTop)){
+            this.setPosition(this.x, Factory.paddleTop.bottomEdge() + this.h/2);
             this.yvel = Math.abs(this.yvel);
             this.yvel *= 1.1;
-            this.xvel += parent.paddleTop.xvel/10;
+            this.xvel += Factory.paddleTop.xvel/10;
 
         }
 
-        if (this.collidesAny(parent.paddleBottom)){
-            this.setPosition(this.x, parent.paddleBottom.topEdge() - this.h/2);
+        if (this.collidesAny(Factory.paddleBottom)){
+            this.setPosition(this.x, Factory.paddleBottom.topEdge() - this.h/2);
             this.yvel = -Math.abs(this.yvel);
             this.yvel *= 1.1;
-            this.xvel += parent.paddleTop.xvel/10;
+            this.xvel += Factory.paddleTop.xvel/10;
 
         }
 
@@ -228,11 +228,11 @@ function Ball(parent, id, x, y, red=255, green=255, blue=255){
         // }
 
         if (this.y < 0) {
-            this.y += parent.Constants.STAGE_HEIGHT;
+            this.y += Factory.Constants.STAGE_HEIGHT;
         }
         
-        if (this.y > parent.Constants.STAGE_HEIGHT) {
-            this.y -= parent.Constants.STAGE_HEIGHT;
+        if (this.y > Factory.Constants.STAGE_HEIGHT) {
+            this.y -= Factory.Constants.STAGE_HEIGHT;
         }
 
     };

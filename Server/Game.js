@@ -22,9 +22,11 @@ function Game (GAME_ARRAY, id, io) {
     this.players = [];
 
     this.gameInstance = null;
-    this.MaxPlayers = 2;
+    this.MaxPlayers = 5;
     this.score = new Score();
     this.lobby = true;
+
+    this.Arena;
 
     this.Update = function(){
 
@@ -65,6 +67,8 @@ function Game (GAME_ARRAY, id, io) {
     
     // SETUP THE GAME
     this.StartGame = function (){
+
+        // Create an Arena instance
 
         const numBalls = 10;
 

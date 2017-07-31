@@ -4,14 +4,13 @@
 
 
 module.exports = GameObject;
-// const Main = require('./ServerMain');
 
 const Constants = { STAGE_WIDTH: 400, STAGE_HEIGHT: 500, CHAOS : 1, TRANSFER_COEFFICIENT : 0.4};
 
-function GameObject(parent, id, x, y, red=255, green=255, blue=255) {
+function GameObject(Game, id, x, y, red=255, green=255, blue=255) {
 
 // position coordinates
-    this.parent = parent;
+    this.Game = Game;
     this.x = x;
     this.y = y;
     this.w = 0;
