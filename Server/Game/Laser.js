@@ -19,6 +19,7 @@ function Laser(Factory, paddle, id, x, y, red=255, green=255, blue=255){
     this.Factory = Factory;
     this.type = "Laser";
     this.shape = 'ellipse';
+    this.imagetype = "Laser";
 
     // the paddle the laser is associated with
     this.paddle = paddle;

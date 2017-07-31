@@ -28,7 +28,7 @@ function ObjectFactory(Game){
     this.Constants = {
         // return { STAGE_WIDTH: 400, STAGE_HEIGHT: 500, CHAOS : 3, TRANSFER_COEFFICIENT : 0.4, PADDLE_FORCE: 6};
         STAGE_WIDTH: 400,
-        STAGE_HEIGHT: 500,
+        STAGE_HEIGHT: 800,
         CHAOS: 3,
         TRANSFER_COEFFICIENT: 0.4,
         PADDLE_FORCE: 6
@@ -124,37 +124,37 @@ function ObjectFactory(Game){
         });
     };
 
-    this.show = function(camera) {
+    // this.show = function(camera) {
 
-        DrawArray = [];
-        let Constants = this.Constants;
-        this.gameObjects.forEach(function (e) {
+    //     DrawArray = [];
+    //     let Constants = this.Constants;
+    //     this.gameObjects.forEach(function (e) {
 
-            DrawArray.push({
-                type: e.type,
-                shape : e.shape,
-                w: e.w,
-                h: e.h,
-                fill: {red: e.red, green: e.green, blue: e.blue},
-                x: e.x-camera.x+Constants.STAGE_WIDTH/2,
-                y: e.y-camera.y+Constants.STAGE_HEIGHT/2
-            });
+    //         DrawArray.push({
+    //             type: e.type,
+    //             shape : e.shape,
+    //             w: e.w,
+    //             h: e.h,
+    //             fill: {red: e.red, green: e.green, blue: e.blue},
+    //             x: e.x-camera.x+Constants.STAGE_WIDTH/2,
+    //             y: e.y-camera.y+Constants.STAGE_HEIGHT/2
+    //         });
 
-            // push an extra offset one to demo continuously drawn objects:
-            // DrawArray.push({
-            //     type: e.type,
-            //     shape : e.shape,
-            //     w: e.w,
-            //     h: e.h,
-            //     fill: {red: e.red, green: e.green, blue: e.blue},
-            //     x: e.x-camera.x+Constants.STAGE_WIDTH/2,
-            //     y: e.y-camera.y-Constants.STAGE_HEIGHT/2
-            // });
+    //         // push an extra offset one to demo continuously drawn objects:
+    //         // DrawArray.push({
+    //         //     type: e.type,
+    //         //     shape : e.shape,
+    //         //     w: e.w,
+    //         //     h: e.h,
+    //         //     fill: {red: e.red, green: e.green, blue: e.blue},
+    //         //     x: e.x-camera.x+Constants.STAGE_WIDTH/2,
+    //         //     y: e.y-camera.y-Constants.STAGE_HEIGHT/2
+    //         // });
 
-        });
+    //     });
 
-        return DrawArray;
-    };
+    //     return DrawArray;
+    // };
 
     console.log(`Object Factor knows the stage width: ${this.Constants.STAGE_WIDTH}`);
 

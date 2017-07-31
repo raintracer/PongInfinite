@@ -7,7 +7,7 @@ function Arena(Game, StripQuantity){
     this.Game = Game;
     
     this.Constants = {
-        STRIP_HEIGHT : 50,
+        STRIP_HEIGHT : 300,
         STRIP_WIDTH : 400
     };
 

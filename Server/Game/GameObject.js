@@ -21,6 +21,7 @@ function FactoryObject(Factory, id, x, y, red=255, green=255, blue=255) {
     this.type = "General";
     this.shape = 'General';
 
+    this.imagetype = "None";
     this.red = red;
     this.green = green;
     this.blue = blue;

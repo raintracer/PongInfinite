@@ -65,6 +65,7 @@ function Strip(Arena, id, x, y, w, h){
             // Objects are populated to the Draw Array relative to the strip position and passed offset
             DrawArray.push({
                 type: object.type,
+                imagetype: object.imagetype,
                 shape : object.shape,
                 w: object.w,
                 h: object.h,

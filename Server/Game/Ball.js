@@ -14,6 +14,7 @@ function Ball(Factory, id, x, y, red=255, green=255, blue=255){
     this.type = "Ball";
     this.shape = 'ellipse';
     this.Factory = Factory;
+    this.imagetype = "Ball";
     const constants = this.Factory.constants;
 
 // boolean if the ball has been split by a laser collision

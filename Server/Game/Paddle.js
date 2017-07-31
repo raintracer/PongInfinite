@@ -15,6 +15,7 @@ function Paddle(Factory, player, id, x,y, red = 255, green = 255, blue = 255){
     this.type = "Paddle";
     this.shape = 'rect';
     this.player = player;
+    this.imagetype = "Paddle1";
     const LASER_SPEED = 2;
 
 // assigns the width and height of the paddle object

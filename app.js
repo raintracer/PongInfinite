@@ -107,12 +107,72 @@ function ProcessConnection(socket) {
         Game.AddPlayer(socket);
     }
 
-    socket.on('keyPress', function (data) {
-        // Main.Move(data); OBSOLETE, REPLACE WITH PROPER FUNCTIONALITY.
-    });
-
+    socket.on('keyPress', ProcessKeyPress);
+    socket.on('keyRelease', ProcessKeyRelease);
     socket.on('disconnect', ProcessDisconnection);
     
+}
+
+function ProcessKeyPress(data){
+
+    for(let i=0; i<GAME_ARRAY.length; i++){
+        let Game = GAME_ARRAY[i];
+        for(let j=0;j<Game.players.length;j++){
+            player = Game.players[j];
+            if(player.socket.id === data.socketID){
+                break;
+            }
+        }
+    }
+
+    // TURN ON THE CORRESPONDING KEYS
+    if (data.keyCode === 38){
+        // UP
+        player.keys.up = true;
+    } else if(data.keyCode === 37){
+        // LEFT
+        player.keys.left = true;
+    } else if(data.keyCode === 39){
+        // RIGHT
+        player.keys.right = true;
+    } else if(data.keyCode === 40){
+        // DOWN
+        player.keys.down = true;
+    }
+
+    // console.log(`Key pressed: ${data.keyCode}`);
+
+}
+
+function ProcessKeyRelease(data){
+
+    for(let i=0; i<GAME_ARRAY.length; i++){
+        let Game = GAME_ARRAY[i];
+        for(let j=0;j<Game.players.length;j++){
+            player = Game.players[j];
+            if(player.socket.id === data.socketID){
+                break;
+            }
+        }
+    }
+
+    // TURN ON THE CORRESPONDING KEYS
+    if (data.keyCode === 38){
+        // UP
+        player.keys.up = false;
+    } else if(data.keyCode === 37){
+        // LEFT
+        player.keys.left = false;
+    } else if(data.keyCode === 39){
+        // RIGHT
+        player.keys.right = false;
+    } else if(data.keyCode === 40){
+        // DOWN
+        player.keys.down = false;
+    }
+
+    // console.log(`Key released: ${data.keyCode}`);
+
 }
 
 function ProcessDisconnection(socket){

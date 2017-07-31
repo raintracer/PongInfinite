@@ -6,7 +6,7 @@ let GameGraphics = {};
 let player;
 
 // ALL YOUR CONSTANTS ARE BELONG TO US. I DON'T KNOW WHAT WERE YELLING ABOUT
-const STAGE_WIDTH = 400, STAGE_HEIGHT = 500;
+const STAGE_WIDTH = 400, STAGE_HEIGHT = 800;
 
 // Preload the game and socket listeners / emitters
 function preload(){
@@ -21,15 +21,25 @@ function preload(){
     GameGraphics["Ball"].noStroke();
     GameGraphics["Ball"].ellipse(10,10,20);
 
-    GameGraphics["Paddle"] = createGraphics(75, 20);
-    GameGraphics["Paddle"].fill(255,0,0);
-    GameGraphics["Paddle"].noStroke();
-    GameGraphics["Paddle"].rect(0,0,75,20);
+    GameGraphics["Paddle1"] = createGraphics(75, 20);
+    GameGraphics["Paddle1"].fill(255,0,0);
+    GameGraphics["Paddle1"].noStroke();
+    GameGraphics["Paddle1"].rect(0,0,75,20);
+
+    GameGraphics["Paddle2"] = createGraphics(75, 20);
+    GameGraphics["Paddle2"].fill(0,0,255);
+    GameGraphics["Paddle2"].noStroke();
+    GameGraphics["Paddle2"].rect(0,0,75,20);
 
     GameGraphics["Laser"] = createGraphics(15, 15);
     GameGraphics["Laser"].fill(0,255,0);
     GameGraphics["Laser"].noStroke();
     GameGraphics["Laser"].ellipse(7.5,7.5,15);
+
+    GameGraphics["None"] = createGraphics(20,20);
+    GameGraphics["None"].fill(255);
+    GameGraphics["None"].noStroke();
+    GameGraphics["None"].rect(0,0,20,20);
     // GameGraphics["Laser"].rect(0, 0, 5, 10);
 
     // UPDATE SOCKET SERVER ON TESTING
@@ -86,21 +96,31 @@ function assignPlayer(data){
     console.log(`You are player ${player}. ${player === 1 ? "Bottom Paddle" : "Top Paddle"}`);
 }
 
+// function getKeyID(){
+//     console.log(`keyCode recognized as ${keyCode}`);
+// }
+
+function keyPressed(){
+    console.log("Key Pressed");
+    data = {
+        key: key,
+        keyCode: keyCode,
+        socketID: socket.id
+    };
+    socket.emit('keyPress', data);
+}
+
+function keyReleased(){
+    console.log("Key Released");
+    data = {
+        key: key,
+        keyCode: keyCode,
+        socketID: socket.id
+    };
+    socket.emit('keyRelease', data);
+}
+
 function Update(data) {
-
-    let key;
-
-    if(keyIsDown(LEFT_ARROW)){
-        key = 'left';
-    }
-
-    if(keyIsDown(RIGHT_ARROW)){
-        key = 'right';
-    }
-
-    if(keyIsDown(LEFT_ARROW) || keyIsDown(RIGHT_ARROW)){
-        socket.emit('keyPress', { player : player, key : key} );
-    }
 
     background(0);
 
@@ -109,7 +129,9 @@ function Update(data) {
 
         data.DrawArray.forEach(function(e){
 
-            GameGraphics[e.type].fill(e.fill.red, e.fill.green, e.fill.blue);
+            // console.log(e.type);
+            // console.log(e.imagetype);
+            GameGraphics[e.imagetype].fill(e.fill.red, e.fill.green, e.fill.blue);
             // GameGraphics[e.type].noStroke();
             //
             //
@@ -129,7 +151,7 @@ function Update(data) {
 
 
             imageMode(CENTER);
-            image(GameGraphics[e.type], e.x, e.y, e.w, e.h);
+            image(GameGraphics[e.imagetype], e.x, e.y, e.w, e.h);
 
         });
 
@@ -139,19 +161,19 @@ function Update(data) {
 }
 
 // single press of a key, p5 listener
-function keyPressed(){
+// function keyPressed(){
 
-    let key;
+//     let key;
 
-    // single press of key
-    switch(keyCode){
-        case 38:
-            key = 'up';
-            break;
-    }
+//     // single press of key
+//     switch(keyCode){
+//         case 38:
+//             key = 'up';
+//             break;
+//     }
 
-    if(key){
-        socket.emit('keyPress', { player : player, key : key });
-    }
+//     if(key){
+//         socket.emit('keyPress', { player : player, key : key });
+//     }
 
-}
+// }
