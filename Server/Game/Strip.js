@@ -1,8 +1,9 @@
 
 module.exports = Strip;
 
-function Strip(x, y, w, h){
+function Strip(Arena, x, y, w, h){
     
+    this.Arena = Arena;
     this.Objects = [];
     this.x = x;
     this.y = y;

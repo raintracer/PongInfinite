@@ -1,6 +1,6 @@
 
 module.exports = Arena;
-Strip = require('./Strip')
+const Strip = require('./Strip')
 
 function Arena(Game, StripQuantity){
 
@@ -15,7 +15,7 @@ function Arena(Game, StripQuantity){
 
     this.StripArray = [];
     for (let i = 0; i<StripQuantity; i++) {
-        this.StripArray.push(New Strip(0, i*this.Constants.STRIP_HEIGHT, this.Constants.STRIP_WIDTH, this.Constants.STRIP_HEIGHT));
+        this.StripArray.push(New Strip(this, 0, i*this.Constants.STRIP_HEIGHT, this.Constants.STRIP_WIDTH, this.Constants.STRIP_HEIGHT));
     }
 
     this.update = function(){
