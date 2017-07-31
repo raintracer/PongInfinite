@@ -35,6 +35,12 @@ function Arena(Game, StripQuantity){
         // let StripIndex = Math.floor(y / this.Constants.STRIP_HEIGHT);
         // let StripID = this.StripArray[Math.floor(y / this.Constants.STRIP_HEIGHT)].id;
         // console.log(`Strip ${StripID} returned to object.`);
+        while(y<0){
+            y+=this.h;
+        }
+        while(y>=this.h){
+            y-=this.h;
+        }
         return this.StripArray[Math.floor(y / this.Constants.STRIP_HEIGHT)];
     };
 

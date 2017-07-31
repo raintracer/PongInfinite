@@ -30,6 +30,12 @@ function Player(Game, socket, id){
         if (this.keys.down){
             this.Camera.Move(0,10);
         }
+        if (this.keys.left){
+            this.paddle.accX(-10);
+        }
+        if (this.keys.right){
+            this.paddle.accX(10);
+        }
     };
 
     this.CenterCameraOnPaddle = function(){

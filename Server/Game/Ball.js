@@ -51,7 +51,7 @@ function Ball(Factory, id, x, y, red=255, green=255, blue=255){
         // console.log('moving in the x');
 
         this.x += this.xvel;
-        let HitObjects = Factory.getObjectTypes("Ball");
+        let HitObjects = Factory.gameObjects;
 
         // DETECT COLLISION WITH OTHER BALLS
         for (let i = 0; i < HitObjects.length; i++) {
@@ -136,7 +136,7 @@ function Ball(Factory, id, x, y, red=255, green=255, blue=255){
     this.moveY = function(){
 
         this.y += this.yvel;
-        let HitObjects = Factory.getObjectTypes("Ball");
+        let HitObjects = Factory.gameObjects;
 
         // DETECT COLLISION WITH OTHER BALLS
         for (let i = 0; i < HitObjects.length; i++) {
