@@ -51,9 +51,9 @@ function Game (GAME_ARRAY, id, io) {
 
         this.GameShow();
 
-        this.players[0].camera.y +=5;
-        if (this.players[0].camera.y>this.Arena.h-this.Factory.Constants.STAGE_HEIGHT/2){
-            this.players[0].camera.y-=this.Arena.h;
+        this.players[0].Camera.y +=5;
+        if (this.players[0].Camera.y>this.Arena.h-this.Factory.Constants.STAGE_HEIGHT/2){
+            this.players[0].Camera.y-=this.Arena.h;
         }
     };
 
@@ -61,25 +61,36 @@ function Game (GAME_ARRAY, id, io) {
         
         this.players.forEach( (player, playerIndex, a) => {
            
-            // Determine the strips that the player will see
+            // The Draw Array determines the positions objects will be drawn on the client stage 
             let DrawArray = [];
+
+            // Determine where the top strip is
             let strips = [];
-            let stripY = [];
             let camera = player.Camera;
             let StageTop = camera.StageTopEdgeArenaPosition();
             strips.push(this.Arena.GetStripAtArenaPosition(camera.x, StageTop));
-            stripY[0] = StageTop;
+            let TopStripOffset = strips[0].y - StageTop;
+
+            // Determine the strips that the player will see
             let VisibleStripCount = Math.ceil(this.Factory.Constants.STAGE_HEIGHT/this.Arena.Constants.STRIP_HEIGHT);
 
-            // Push as many strips as it takes to fill the screen, even if the same strip must be used multiple times
+            // Push as many strips as it takes to fill the screen, even if the strips must be cycled
             for (let i = 1; i <= VisibleStripCount; i++){
-                let k = (strips[0]+i) % this.Arena.StripArray.length;
-                strips.push(this.Arena.StripArray[i]);
+                let k = (strips[0].id+i) % this.Arena.StripArray.length;
+                // console.log (`Pushing strip ${k} to the StripsToDraw Array`);
+                strips.push(this.Arena.StripArray[k]);
             }
 
+            // console.log (`${strips.length} strips to be drawn.`);
+            // console.log(strips);
             // Request the strips draw arrays with their important offsets
-
-
+            strips.forEach( (strip, i , a) => {
+                // console.log(strip.GetDrawArray(0, TopStripOffset + i*this.Arena.h));
+                DrawArray = DrawArray.concat(strip.GetDrawArray(0, TopStripOffset + i*this.Arena.Constants.STRIP_HEIGHT));
+            })
+            
+            // console.log("Player " + player.id);
+            // console.log(DrawArray);
             // REQUEST AND EMIT THE DRAW ARRAY FOR THE GAME
             data = {
                 DrawArray: DrawArray
@@ -99,7 +110,7 @@ function Game (GAME_ARRAY, id, io) {
         // Reinitialize the Factory object
         this.Factory = new ObjectFactory(this);
         
-        const numBalls = 10;
+        const numBalls = 3;
         
         // For each player:
         this.players.forEach( (e,i,a) => {
@@ -113,7 +124,7 @@ function Game (GAME_ARRAY, id, io) {
         });
 
         for (let i = 0; i < numBalls; i++) {
-            this.Factory.createObject('Ball', this.Factory.Constants.STAGE_WIDTH / 2, this.Factory.Constants.STAGE_HEIGHT / 2, 0, 0, 255);
+            this.Factory.createObject('Ball', this.Arena.w / 2, this.Arena.h / 2, 0, 0, 255);
         }
 
         this.Factory.randomizeBalls();
@@ -134,7 +145,7 @@ function Game (GAME_ARRAY, id, io) {
 
     this.AddPlayer = function(socket){
         console.log(`Player ${socket.id} added.`);
-        this.players.push(new Player(socket, this.GetPlayerCount() + 1));
+        this.players.push(new Player(this, socket, this.GetPlayerCount() + 1));
         this.players[this.GetPlayerCount()-1].camera = new Camera(this.Factory.Constants.STAGE_WIDTH/2, (this.GetPlayerCount()-1)*this.Factory.Constants.STAGE_HEIGHT);
         
         console.log (`Game ${this.id} has ${this.GetPlayerCount()} players now.`);

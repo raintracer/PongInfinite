@@ -25,7 +25,7 @@ function Strip(Arena, id, x, y, w, h){
     // Add an object to the object array
     this.AssignObject = function(object){
         this.Objects.push(object);
-        console.log (`Strip ${this.id} has objects: ${this.Objects.length}`);
+        // console.log (`Strip ${this.id} has objects: ${this.Objects.length}`);
     };
 
     // Unassign a specified object
@@ -55,24 +55,27 @@ function Strip(Arena, id, x, y, w, h){
 
     };
 
-    this.GetDrawArray(Camera, OffsetX, OffsetY){
+    this.GetDrawArray = function(OffsetX, OffsetY){
         
         DrawArray = [];
         let Constants = this.Arena.Game.Factory.Constants;
         
         this.Objects.forEach( (object, i, a) => {
 
+            // Objects are populated to the Draw Array relative to the strip position and passed offset
             DrawArray.push({
                 type: object.type,
                 shape : object.shape,
                 w: object.w,
                 h: object.h,
                 fill: {red: object.red, green: object.green, blue: object.blue},
-                x: object.x - camera.x + Constants.STAGE_WIDTH/2 + OffsetX,
-                y: object.y - camera.y + Constants.STAGE_HEIGHT/2 + OffsetY
+                x: object.x - this.x + OffsetX,
+                y: object.y - this.y + OffsetY
             });
-            
+
         });
+
+        return DrawArray;
         
     }
 }

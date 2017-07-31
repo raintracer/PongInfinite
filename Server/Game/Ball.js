@@ -25,7 +25,7 @@ function Ball(Factory, id, x, y, red=255, green=255, blue=255){
     this.w = BallSize;
     this.h = BallSize;
 
-    this.randomize = function(x = Math.random()*Constants.STAGE_WIDTH, y = Math.random()*Constants.STAGE_HEIGHT, xvel = Math.random()*Constants.CHAOS, yvel = Math.random()*Constants.CHAOS){
+    this.randomize = function(x = Math.random()*this.Factory.Game.Arena.w, y = Math.random()*this.Factory.Game.Arena.h, xvel = Math.random()*Constants.CHAOS, yvel = Math.random()*Constants.CHAOS){
         this.x = x;
         this.y = y;
         this.xvel = xvel;
@@ -227,11 +227,11 @@ function Ball(Factory, id, x, y, red=255, green=255, blue=255){
         //     this.reflectY();
         // }
 
-        if (this.y < 0) {
+        while (this.y < 0) {
             this.y += Factory.Game.Arena.h;
         }
         
-        if (this.y > Factory.Game.Arena.h) {
+        while (this.y > Factory.Game.Arena.h) {
             this.y -= Factory.Game.Arena.h;
         }
 
