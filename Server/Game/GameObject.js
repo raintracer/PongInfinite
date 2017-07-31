@@ -32,6 +32,10 @@ function FactoryObject(Factory, id, x, y, red=255, green=255, blue=255) {
 // static and dynamic friction factors for the Factory object
     this.friction = 0.6;
     this.staticFriction = 0.5;
+    
+    // Assign this object to a strip
+    this.strip = this.Factory.Game.Arena.GetStripAtArenaPosition(this.x, this.y);
+    this.strip.AssignObject(this);
 
 // Factory object acceleration in the x direction, passes a force which continuously accelerates the object per call
     this.accX = function(force){
