@@ -23,7 +23,7 @@ function Game (GAME_ARRAY, id, io) {
     this.players = [];
 
     this.gameInstance = null;
-    this.MaxPlayers = 5;
+    this.MaxPlayers = 2;
     this.score = new Score();
     this.lobby = true;
 
@@ -48,10 +48,11 @@ function Game (GAME_ARRAY, id, io) {
         // Update objects through the Arena and strips.
         this.Arena.Update();
         this.Factory.UpdateStrips();
+
         this.GameShow();
 
         this.players[0].camera.y +=5;
-        if (this.players[0].camera.y>this.Arena.h-Factory.Constants.STAGE_HEIGHT/2){
+        if (this.players[0].camera.y>this.Arena.h-this.Factory.Constants.STAGE_HEIGHT/2){
             this.players[0].camera.y-=this.Arena.h;
         }
     };
@@ -60,6 +61,9 @@ function Game (GAME_ARRAY, id, io) {
         
         this.players.forEach( (e,i,a) => {
            
+            // Determine the strips that the player will see
+            let strips = [];
+
             // REQUEST AND EMIT THE DRAW ARRAY FOR THE GAME
             data = {
                 DrawArray: this.Factory.show(e.Camera)
@@ -74,7 +78,7 @@ function Game (GAME_ARRAY, id, io) {
     this.StartGame = function (){
 
         // Create an Arena instance
-        this.Arena = new Arena(this, this.GetPlayerCount);
+        this.Arena = new Arena(this, this.GetPlayerCount());
 
         // Reinitialize the Factory object
         this.Factory = new ObjectFactory(this);

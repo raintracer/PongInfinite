@@ -34,8 +34,9 @@ function FactoryObject(Factory, id, x, y, red=255, green=255, blue=255) {
     this.staticFriction = 0.5;
     
     // Assign this object to a strip
-    this.strip = this.Factory.Game.Arena.GetStripAtArenaPosition(this.x, this.y);
-    this.strip.AssignObject(this);
+    // console.log(this);
+    this.Strip = this.Factory.Game.Arena.GetStripAtArenaPosition(this.x, this.y);
+    this.Strip.AssignObject(this);
 
 // Factory object acceleration in the x direction, passes a force which continuously accelerates the object per call
     this.accX = function(force){
@@ -261,8 +262,7 @@ function FactoryObject(Factory, id, x, y, red=255, green=255, blue=255) {
 
         let CurrentStrip = Factory.Game.Arena.GetStripAtArenaPosition(this.x,this.y);
         if (CurrentStrip.id !== this.Strip.id){
-            this.Strip.UnassignObject(this);
-            CurrentStrip.AssignObject(this);
+            this.Strip.ReassignObject(this, CurrentStrip);
             this.Strip = CurrentStrip;
         }
     };

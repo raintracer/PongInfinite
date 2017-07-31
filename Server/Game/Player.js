@@ -17,7 +17,7 @@ function Player(socket, id){
 
     this.CenterCameraOnPaddle = function(){
         this.Camera.SetPosition(this.paddle.x, this.paddle.y);
-        console.log (`Camera for Player ${this.id} has been moved to (${this.Camera.x}, ${this.Camera.y})`)
+        // console.log (`Camera for Player ${this.id} has been moved to (${this.Camera.x}, ${this.Camera.y})`)
     };
 
 }

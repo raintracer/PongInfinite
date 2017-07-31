@@ -7,7 +7,7 @@ function Arena(Game, StripQuantity){
     this.Game = Game;
     
     this.Constants = {
-        STRIP_HEIGHT : 100,
+        STRIP_HEIGHT : 300,
         STRIP_WIDTH : 400
     };
 
@@ -18,6 +18,8 @@ function Arena(Game, StripQuantity){
     for (let i = 0; i<StripQuantity; i++) {
         this.StripArray.push( new Strip(this, i, 0, i*this.Constants.STRIP_HEIGHT, this.Constants.STRIP_WIDTH, this.Constants.STRIP_HEIGHT) );
     }
+
+    console.log ("Strip array length is " + this.StripArray.length);
 
     this.GetStripCenter = function(StripIndex){
         let Coordinate = {
@@ -30,7 +32,10 @@ function Arena(Game, StripQuantity){
 
     // Return the strip that a position lays within
     this.GetStripAtArenaPosition = function(x,y){
-        return this.StripArray[int(y / this.Constants.STRIP_HEIGHT)];
+        // let StripIndex = Math.floor(y / this.Constants.STRIP_HEIGHT);
+        // let StripID = this.StripArray[Math.floor(y / this.Constants.STRIP_HEIGHT)].id;
+        // console.log(`Strip ${StripID} returned to object.`);
+        return this.StripArray[Math.floor(y / this.Constants.STRIP_HEIGHT)];
     };
 
     this.Update = function(){

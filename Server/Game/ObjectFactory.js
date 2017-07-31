@@ -120,7 +120,7 @@ function ObjectFactory(Game){
 
     this.UpdateStrips = function(){
         this.gameObjects.forEach( (object,i,a) =>{
-            object.UpdateStrips();
+            object.UpdateStrip();
         });
     };
 
