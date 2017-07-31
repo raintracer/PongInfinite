@@ -72,15 +72,16 @@ function FactoryObject(Factory, id, x, y, red=255, green=255, blue=255) {
         this.x += this.xvel;
 
         // left edge boundary crossing prevention
-        if (this.x - (this.w / 2) < 0) {
-            this.x = this.w / 2;
-            this.xvel *= -1;
+        if (this.leftEdge() < 0) {
+            this.alignLeftEdge(0);
+            this.reflectX();
         }
 
         // right edge boundary crossing prevention
-        else if (this.x + (this.w / 2) > Constants.STAGE_WIDTH) {
-            this.x = Constants.STAGE_WIDTH - (this.w / 2);
-            this.xvel *= -1;
+        else if (this.rightEdge() > Factory.Game.Arena.w) {
+
+            this.alignRightEdge(Factory.Game.Arena.w);
+            this.reflectX();
         }
 
     };

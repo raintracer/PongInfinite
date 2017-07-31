@@ -9,14 +9,14 @@ const GameObject = require('./GameObject');
 
 const Constants = { STAGE_WIDTH: 400, STAGE_HEIGHT: 500, CHAOS : 10, TRANSFER_COEFFICIENT : 0.4};
 
-function Laser(parent, paddle, id, x, y, red=255, green=255, blue=255){
+function Laser(Factory, paddle, id, x, y, red=255, green=255, blue=255){
 
-    GameObject.call(this, parent, id, x, y, red, green, blue);
+    GameObject.call(this, Factory, id, x, y, red, green, blue);
 
     this.AnimationArray = [.2,.4,.6,.8,1,1,.8,.6,.4, 0.2];
     this.frame = 0;
 
-    this.parent = parent;
+    this.Factory = Factory;
     this.type = "Laser";
     this.shape = 'ellipse';
 
@@ -40,7 +40,7 @@ function Laser(parent, paddle, id, x, y, red=255, green=255, blue=255){
 
     // this.myPaddle = () => {
     //     let paddle;
-    //     this.direction === 1 ? paddle = parent.paddleTop : paddle = parent.paddleBottom;
+    //     this.direction === 1 ? paddle = Factory.paddleTop : paddle = Factory.paddleBottom;
     //     return paddle;
     // };
 
@@ -61,7 +61,7 @@ function Laser(parent, paddle, id, x, y, red=255, green=255, blue=255){
     };
 
     this.laserHit = function(){
-        parent.gameObjects.forEach( e => {
+        Factory.gameObjects.forEach( e => {
             if(this.collidesAny(e)) {
                 // console.log(`this laser's paddle ${this.paddle.player} paddle collided with ${e.paddle.player}`);
                 this.laserReact(e);
@@ -82,7 +82,7 @@ function Laser(parent, paddle, id, x, y, red=255, green=255, blue=255){
             case "Ball":
                 let n = 2;
                 while(n--) {
-                    let splitBall = parent.createObject('Ball', Constants.STAGE_WIDTH/2, Constants.STAGE_HEIGHT/2, 255, 255, 255);
+                    let splitBall = Factory.createObject('Ball', Constants.STAGE_WIDTH/2, Constants.STAGE_HEIGHT/2, 255, 255, 255);
                     splitBall.w *= 0.7;
                     splitBall.h *= 0.7;
                     splitBall.split = true;
