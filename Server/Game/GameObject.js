@@ -256,6 +256,17 @@ function FactoryObject(Factory, id, x, y, red=255, green=255, blue=255) {
         this.y = y;
     };
 
+    // Check to see if this object has moved to another Strip, and reassign if necessary
+    this.UpdateStrip = function(){
+
+        let CurrentStrip = Factory.Game.Arena.GetStripAtArenaPosition(this.x,this.y);
+        if (CurrentStrip.id !== this.Strip.id){
+            this.Strip.UnassignObject(this);
+            CurrentStrip.AssignObject(this);
+            this.Strip = CurrentStrip;
+        }
+    };
+
 }
 
 // Tyler's first prototype method.
