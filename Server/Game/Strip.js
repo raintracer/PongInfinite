@@ -1,5 +1,5 @@
 
-module.exports = Strip;
+
 
 function Strip(Arena, x, y, w, h){
     
@@ -19,3 +19,5 @@ function Strip(Arena, x, y, w, h){
     };
 
 }
+
+module.exports = Strip;

@@ -8,10 +8,10 @@ const GameObject = require('./GameObject');
 
 // paddle object, inherits gameobject properties
 // color can be passed or defaults to white (255, 255, 255)
-function Paddle(parent, player, id, x,y, red = 255, green = 255, blue = 255){
+function Paddle(Factory, player, id, x,y, red = 255, green = 255, blue = 255){
 
-    GameObject.call(this,parent,id,x,y,red, green, blue);
-    this.parent = parent;
+    GameObject.call(this,Factory,id,x,y,red, green, blue);
+    this.Factory = Factory;
     this.type = "Paddle";
     this.shape = 'rect';
     this.player = player;
@@ -41,7 +41,7 @@ function Paddle(parent, player, id, x,y, red = 255, green = 255, blue = 255){
     this.populateLasers = () =>{
         let numberOfLasers = 4;
         while(numberOfLasers--){
-            let laser = parent.createObject('Laser', this.x, this.y, 255, 0, 0, this);
+            let laser = Factory.createObject('Laser', this.x, this.y, 255, 0, 0, this);
 
 
         /*

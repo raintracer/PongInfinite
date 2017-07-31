@@ -196,21 +196,21 @@ function Ball(Factory, id, x, y, red=255, green=255, blue=255){
         }
 
         // DETECT COLLISION WITH PADDLES AT ANY OF THE BALLS CORNERS OR SIDES
-        if (this.collidesAny(Factory.paddleTop)){
-            this.setPosition(this.x, Factory.paddleTop.bottomEdge() + this.h/2);
-            this.yvel = Math.abs(this.yvel);
-            this.yvel *= 1.1;
-            this.xvel += Factory.paddleTop.xvel/10;
+        // if (this.collidesAny(Factory.paddleTop)){
+        //     this.setPosition(this.x, Factory.paddleTop.bottomEdge() + this.h/2);
+        //     this.yvel = Math.abs(this.yvel);
+        //     this.yvel *= 1.1;
+        //     this.xvel += Factory.paddleTop.xvel/10;
 
-        }
+        // }
 
-        if (this.collidesAny(Factory.paddleBottom)){
-            this.setPosition(this.x, Factory.paddleBottom.topEdge() - this.h/2);
-            this.yvel = -Math.abs(this.yvel);
-            this.yvel *= 1.1;
-            this.xvel += Factory.paddleTop.xvel/10;
+        // if (this.collidesAny(Factory.paddleBottom)){
+        //     this.setPosition(this.x, Factory.paddleBottom.topEdge() - this.h/2);
+        //     this.yvel = -Math.abs(this.yvel);
+        //     this.yvel *= 1.1;
+        //     this.xvel += Factory.paddleTop.xvel/10;
 
-        }
+        // }
 
         
 

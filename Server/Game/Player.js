@@ -5,6 +5,7 @@ function Player(socket, id){
 
     this.socket = socket,
     this.id = id;
+    this.paddle;
     
     // EXAMPLE PROPERTIES
     let name;

@@ -17,7 +17,9 @@ let DrawArray = [];
 
 
 
-function ObjectFactory(){
+function ObjectFactory(Game){
+
+    this.Game = Game;
 
     // this.objectQuantity = 0;
     this.objectsMade = 0;

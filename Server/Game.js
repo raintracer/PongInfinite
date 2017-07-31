@@ -18,7 +18,7 @@ function Game (GAME_ARRAY, id, io) {
     this.GAME_ARRAY = GAME_ARRAY;
     this.id = id;
     this.close = false;
-    this.factory = new ObjectFactory();
+    this.Factory = new ObjectFactory();
     this.io = io;
     this.players = [];
 
@@ -44,11 +44,11 @@ function Game (GAME_ARRAY, id, io) {
     };
 
     this.GameUpdate = function(){
-        this.factory.update();
+        this.Factory.update();
         this.GameShow();
         this.players[0].camera.y +=5;
-        if (this.players[0].camera.y>this.factory.Constants.STAGE_HEIGHT/2){
-            this.players[0].camera.y-=this.factory.Constants.STAGE_HEIGHT;
+        if (this.players[0].camera.y>this.Factory.Constants.STAGE_HEIGHT/2){
+            this.players[0].camera.y-=this.Factory.Constants.STAGE_HEIGHT;
         }
     };
 
@@ -58,7 +58,7 @@ function Game (GAME_ARRAY, id, io) {
            
             // REQUEST AND EMIT THE DRAW ARRAY FOR THE GAME
             data = {
-                DrawArray: this.factory.show(e.camera, this.factory.Constants.STAGE_WIDTH, this.factory.Constants.STAGE_HEIGHT)
+                DrawArray: this.Factory.show(e.camera, this.Factory.Constants.STAGE_WIDTH, this.Factory.Constants.STAGE_HEIGHT)
             };
             e.socket.emit('gameShow', data);
 
@@ -70,19 +70,28 @@ function Game (GAME_ARRAY, id, io) {
     this.StartGame = function (){
 
         // Create an Arena instance
+        this.Arena = new Arena(this, this.GetPlayerCount);
 
+        // Reinitialize the Factory object
+        this.Factory = new ObjectFactory(this);
+        
         const numBalls = 10;
+        
+        // For each player:
+        this.players.forEach( (e,i,a) => {
 
-        this.factory.paddleBottom = this.factory.createObject('Paddle', this.factory.Constants.STAGE_WIDTH / 2, this.factory.Constants.STAGE_HEIGHT - 20, 255, 255, 255);
-        this.factory.paddleBottom.populateLasers();
-        this.factory.paddleTop = this.factory.createObject('Paddle', this.factory.Constants.STAGE_WIDTH / 2, 20, 255, 255, 255);
-        this.factory.paddleTop.populateLasers();
+            // Create a paddle in the corresponding strip.
+            let StripCenter = this.Arena.GetStripCenter();
+            e.paddle = this.Factory.createObject("Paddle",StripCenter.x,StripCenter.y,Math.random(255),Math.random(255),Math.random(255));
+            e.paddle.populateLasers();
+
+        });
 
         for (let i = 0; i < numBalls; i++) {
-            this.factory.createObject('Ball', this.factory.Constants.STAGE_WIDTH / 2, this.factory.Constants.STAGE_HEIGHT / 2, 0, 0, 255);
+            this.Factory.createObject('Ball', this.Factory.Constants.STAGE_WIDTH / 2, this.Factory.Constants.STAGE_HEIGHT / 2, 0, 0, 255);
         }
 
-        this.factory.randomizeBalls();
+        this.Factory.randomizeBalls();
         this.lobby = false;
 
 
@@ -101,7 +110,7 @@ function Game (GAME_ARRAY, id, io) {
     this.AddPlayer = function(socket){
         console.log(`Player ${socket.id} added.`);
         this.players.push(new Player(socket, this.GetPlayerCount() + 1));
-        this.players[this.GetPlayerCount()-1].camera = new Camera(this.factory.Constants.STAGE_WIDTH/2, (this.GetPlayerCount()-1)*this.factory.Constants.STAGE_HEIGHT);
+        this.players[this.GetPlayerCount()-1].camera = new Camera(this.Factory.Constants.STAGE_WIDTH/2, (this.GetPlayerCount()-1)*this.Factory.Constants.STAGE_HEIGHT);
         
         console.log (`Game ${this.id} has ${this.GetPlayerCount()} players now.`);
         
@@ -136,7 +145,7 @@ function Game (GAME_ARRAY, id, io) {
 //     let paddle;
 
 //     // assign the paddle based on player
-//     player === 1 ? paddle = factory.paddleBottom : paddle = factory.paddleTop;
+//     player === 1 ? paddle = Factory.paddleBottom : paddle = Factory.paddleTop;
 
 //     switch(key){
 //         case 'left':
@@ -146,7 +155,7 @@ function Game (GAME_ARRAY, id, io) {
 //             paddle.accX(Constants.paddleForce);
 //             break;
 //         case 'up':
-//             // let laser = factory.createObject('Laser', paddle.x, paddle.topEdge() + (paddle.orientation()*20), 255, 0, 0);
+//             // let laser = Factory.createObject('Laser', paddle.x, paddle.topEdge() + (paddle.orientation()*20), 255, 0, 0);
 //             // laser.accY(paddle.orientation() * 10);
 //             paddle.fire();
 //     }
