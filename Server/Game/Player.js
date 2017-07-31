@@ -2,12 +2,13 @@
 
 const Camera = require('./Camera');
 
-function Player(socket, id){
+function Player(Game, socket, id){
 
+    this.Game = Game;
     this.socket = socket,
     this.id = id;
     this.paddle;
-    this.Camera = new Camera(0,0);
+    this.Camera = new Camera(this.Game, 0,0);
     
     // EXAMPLE PROPERTIES
     let name;
