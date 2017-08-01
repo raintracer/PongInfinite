@@ -44,7 +44,7 @@ function Ball(Factory, id, x, y, red=255, green=255, blue=255){
     };
 
 // negates GameObject dynamic friction
-    this.friction = 1;
+    this.friction = .9999;
     this.staticFriction = 0;
 
     this.SetFlavor = function(flavor){

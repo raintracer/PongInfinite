@@ -41,9 +41,10 @@ function Player(Game, socket, id){
 
         if  (this.keys.a){
             this.paddle.reflectFactor = 0.75;
-        }
-        if  (this.keys.s){
+        } else if  (this.keys.s){
             this.paddle.reflectFactor = 1.25;
+        } else {
+            this.paddle.reflectFactor = 1;
         }
 
     };
