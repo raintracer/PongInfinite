@@ -21,6 +21,18 @@ function preload(){
     GameGraphics["Ball"].noStroke();
     GameGraphics["Ball"].ellipse(10,10,20);
 
+    GameGraphics["Ball0"] = createGraphics(20, 20);
+    GameGraphics["Ball0"].fill(255);
+    GameGraphics["Ball0"].noStroke();
+    GameGraphics["Ball0"].ellipse(10,10,20);
+    GameGraphics["Ball0"].fill(0);
+    GameGraphics["Ball0"].ellipse(10,10,18);
+
+    GameGraphics["Ball1"] = createGraphics(20, 20);
+    GameGraphics["Ball1"].fill(255);
+    GameGraphics["Ball1"].noStroke();
+    GameGraphics["Ball1"].ellipse(10,10,20);
+
     GameGraphics["Paddle1"] = createGraphics(75, 20);
     GameGraphics["Paddle1"].fill(255,0,0);
     GameGraphics["Paddle1"].noStroke();
@@ -131,7 +143,7 @@ function Update(data) {
 
             // console.log(e.type);
             // console.log(e.imagetype);
-            GameGraphics[e.imagetype].fill(e.fill.red, e.fill.green, e.fill.blue);
+            // GameGraphics[e.imagetype].fill(e.fill.red, e.fill.green, e.fill.blue);
             // GameGraphics[e.type].noStroke();
             //
             //
@@ -151,6 +163,7 @@ function Update(data) {
 
 
             imageMode(CENTER);
+            // console.log(e.imagetype);
             image(GameGraphics[e.imagetype], e.x, e.y, e.w, e.h);
 
         });

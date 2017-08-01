@@ -30,7 +30,8 @@ function ObjectFactory(Game){
         STAGE_WIDTH: 400,
         STAGE_HEIGHT: 800,
         CHAOS: 3,
-        TRANSFER_COEFFICIENT: 0.4,
+        // TRANSFER_COEFFICIENT: 0.4,
+        TRANSFER_COEFFICIENT: 0,
         PADDLE_FORCE: 6
     };
 

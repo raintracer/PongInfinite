@@ -123,19 +123,20 @@ function Game (GAME_ARRAY, id, io) {
             // Create a paddle in the corresponding strip.
             let StripCenter = this.Arena.GetStripCenter(i);
             e.paddle = this.Factory.createObject("Paddle",StripCenter.x,StripCenter.y,Math.random(255),Math.random(255),Math.random(255));
-            e.paddle.populateLasers();
+            // e.paddle.populateLasers();
             e.paddle.AssignTeam(i%2+1);
             e.CenterCameraOnPaddle();
 
         });
 
         for (let i = 0; i < numBalls; i++) {
-            this.Factory.createObject('Ball', this.Arena.w / 2, this.Arena.h / 2, 0, 0, 255);
+            let ball = this.Factory.createObject('Ball', this.Arena.w / 2, this.Arena.h / 2, 0, 0, 255);
+            // console.log (ball.type);
+            ball.SetFlavor(i%2);
         }
 
         this.Factory.randomizeBalls();
         this.lobby = false;
-
 
     };
 
@@ -159,7 +160,6 @@ function Game (GAME_ARRAY, id, io) {
         if (this.GetPlayerCount() === this.MaxPlayers){
             this.StartGame();
         }
-        
     };
 
     let that = this;

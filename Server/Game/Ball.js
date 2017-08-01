@@ -17,6 +17,9 @@ function Ball(Factory, id, x, y, red=255, green=255, blue=255){
     this.imagetype = "Ball";
     const constants = this.Factory.constants;
 
+// Set the default flavor
+    this.flavor = 0;
+
 // boolean if the ball has been split by a laser collision
     this.mini = false;
 
@@ -194,7 +197,7 @@ function Ball(Factory, id, x, y, red=255, green=255, blue=255){
 
                 }
             }
-        }
+        };
 
         // DETECT COLLISION WITH PADDLES AT ANY OF THE BALLS CORNERS OR SIDES
         // if (this.collidesAny(Factory.paddleTop)){
@@ -236,6 +239,11 @@ function Ball(Factory, id, x, y, red=255, green=255, blue=255){
             this.y -= Factory.Game.Arena.h;
         }
 
+    };
+
+    this.SetFlavor = function(flavor){
+        this.flavor = flavor;
+        this.imagetype = `Ball${flavor}`;
     };
 
 }
