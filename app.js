@@ -124,7 +124,7 @@ function ProcessKeyPress(data){
             }
         }
     }
-
+    
     // TURN ON THE CORRESPONDING KEYS
     if (data.keyCode === 38){
         // UP
@@ -138,6 +138,12 @@ function ProcessKeyPress(data){
     } else if(data.keyCode === 40){
         // DOWN
         player.keys.down = true;
+    } else if(data.keyCode === 65){
+        // A KEY
+        player.keys.a = true;
+    } else if(data.keyCode === 83){
+        // S Key
+        player.keys.s = true;
     }
 
     // console.log(`Key pressed: ${data.keyCode}`);
@@ -169,6 +175,12 @@ function ProcessKeyRelease(data){
     } else if(data.keyCode === 40){
         // DOWN
         player.keys.down = false;
+    }  else if(data.keyCode === 65){
+        // A KEY
+        player.keys.a = false;
+    } else if(data.keyCode === 83){
+        // S Key
+        player.keys.s = false;
     }
 
     // console.log(`Key released: ${data.keyCode}`);

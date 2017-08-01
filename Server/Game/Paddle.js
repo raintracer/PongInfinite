@@ -15,6 +15,7 @@ function Paddle(Factory, player, id, x,y, red = 255, green = 255, blue = 255){
     this.type = "Paddle";
     this.shape = 'rect';
     this.player = player;
+    this.reflectFactor = 1;
 
     // DEFAULT TEAM AND PADDLE IMAGE
     this.imagetype = "Paddle1";

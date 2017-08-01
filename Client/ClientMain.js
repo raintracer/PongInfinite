@@ -43,6 +43,12 @@ function preload(){
     GameGraphics["Paddle2"].noStroke();
     GameGraphics["Paddle2"].rect(0,0,75,20);
 
+    GameGraphics["PaddleHighlight"] = createGraphics(75, 20);
+    GameGraphics["PaddleHighlight"].noFill();
+    GameGraphics["PaddleHighlight"].strokeWeight(5);
+    GameGraphics["PaddleHighlight"].stroke(100,255,0);
+    GameGraphics["PaddleHighlight"].rect(0,0,75,20);
+
     GameGraphics["Laser"] = createGraphics(15, 15);
     GameGraphics["Laser"].fill(0,255,0);
     GameGraphics["Laser"].noStroke();
@@ -113,7 +119,8 @@ function assignPlayer(data){
 // }
 
 function keyPressed(){
-    console.log("Key Pressed");
+    // console.log("Key Pressed");
+    console.log(`Key pressed: ${keyCode}`)
     data = {
         key: key,
         keyCode: keyCode,
@@ -123,7 +130,7 @@ function keyPressed(){
 }
 
 function keyReleased(){
-    console.log("Key Released");
+    // console.log("Key Released");
     data = {
         key: key,
         keyCode: keyCode,

@@ -20,7 +20,9 @@ function Player(Game, socket, id){
         up:false,
         down:false,
         left:false,
-        right:false
+        right:false,
+        a:false,
+        s:false
     };
 
     this.Update = function(){
@@ -36,6 +38,14 @@ function Player(Game, socket, id){
         if (this.keys.right){
             this.paddle.accX(10);
         }
+
+        if  (this.keys.a){
+            this.paddle.reflectFactor = 0.75;
+        }
+        if  (this.keys.s){
+            this.paddle.reflectFactor = 1.25;
+        }
+
     };
 
     this.CenterCameraOnPaddle = function(){

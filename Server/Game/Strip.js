@@ -55,7 +55,7 @@ function Strip(Arena, id, x, y, w, h){
 
     };
 
-    this.GetDrawArray = function(OffsetX, OffsetY){
+    this.GetDrawArray = function(player, OffsetX, OffsetY){
         
         DrawArray = [];
         let Constants = this.Arena.Game.Factory.Constants;
@@ -73,6 +73,19 @@ function Strip(Arena, id, x, y, w, h){
                 x: object.x - this.x + OffsetX,
                 y: object.y - this.y + OffsetY
             });
+
+            // Add a highlight around a paddle that belongs to the player
+            if (object.type === "Paddle" && object.id === player.paddle.id){
+                DrawArray.push({
+                    type: "PaddleHighlight",
+                    imagetype: "PaddleHighlight",
+                    shape : object.shape,
+                    w: object.w,
+                    h: object.h,
+                    x: object.x - this.x + OffsetX,
+                    y: object.y - this.y + OffsetY
+                });
+            }
 
         });
 

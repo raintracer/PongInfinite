@@ -91,7 +91,8 @@ function Game (GAME_ARRAY, id, io) {
             // Request the strips draw arrays with their important offsets
             strips.forEach( (strip, i , a) => {
                 // console.log(strip.GetDrawArray(0, TopStripOffset + i*this.Arena.h));
-                DrawArray = DrawArray.concat(strip.GetDrawArray(0, TopStripOffset + i*this.Arena.Constants.STRIP_HEIGHT));
+                let NewDrawArray = strip.GetDrawArray(player, 0, TopStripOffset + i*this.Arena.Constants.STRIP_HEIGHT);
+                DrawArray = DrawArray.concat(NewDrawArray);
             })
             
             // console.log("Player " + player.id);
@@ -137,7 +138,7 @@ function Game (GAME_ARRAY, id, io) {
 
         this.Factory.randomizeBalls();
         this.lobby = false;
-
+        
     };
 
     // CLEAR UPDATE INTERVAL AND DELETE SELF
