@@ -12,7 +12,7 @@ function Arena(Game, StripQuantity){
     };
 
     /*TEST*/
-    StripQuantity*=2;
+    // StripQuantity*=2;
 
     this.h = this.Constants.STRIP_HEIGHT * StripQuantity;
     this.w = this.Constants.STRIP_WIDTH;

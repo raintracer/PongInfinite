@@ -278,11 +278,11 @@ function GameObject(Factory, id, x, y, red=255, green=255, blue=255) {
         this.Factory.paddleRegistry.forEach( (paddleY,i,a) => {
 
             if (this.y > paddleY && oldY < paddleY) {
-                // The ball went down past a paddle
-                console.log("A ball went down");
+                // The object went down past a paddle
+                this.PassPaddle(false);
             } else if (this.y < paddleY && oldY > paddleY){
-                // The ball went up past a paddle
-                console.log("A ball went up");
+                // The object went up past a paddle
+                this.PassPaddle(true);
             }
         });
 
@@ -295,6 +295,17 @@ function GameObject(Factory, id, x, y, red=255, green=255, blue=255) {
             this.y -= Factory.Game.Arena.h;
         }
 
+    };
+
+    this.PassPaddle = function(PassedUp){
+        switch(this.type){
+            case "Ball":
+                // PassedUp ? console.log("A ball went up") : console.log("A ball went down");
+                PassedUp ? this.SetFlavor(1) : this.SetFlavor(0);
+                break;
+            default:
+                break;
+        }
     };
 
 // Factory object edges for use in collision detection
@@ -541,6 +552,10 @@ function GameObject(Factory, id, x, y, red=255, green=255, blue=255) {
         //     }
         //
         // }
+    };
+
+    this.SetFlavor = function(){
+        // Has no meaning for default object
     };
 
 }
