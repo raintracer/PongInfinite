@@ -11,6 +11,9 @@ function Arena(Game, StripQuantity){
         STRIP_WIDTH : 400
     };
 
+    /*TEST*/
+    StripQuantity*=2;
+
     this.h = this.Constants.STRIP_HEIGHT * StripQuantity;
     this.w = this.Constants.STRIP_WIDTH;
 
@@ -28,7 +31,7 @@ function Arena(Game, StripQuantity){
         };
         console.log(Coordinate);
         return Coordinate;
-    }
+    };
 
     // Return the strip that a position lays within
     this.GetStripAtArenaPosition = function(x,y){

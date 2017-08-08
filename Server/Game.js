@@ -27,7 +27,7 @@ function Game (GAME_ARRAY, id, io) {
     this.score = new Score();
     this.lobby = true;
 
-    this.Arena;
+    this.Arena = {};
 
     this.Update = function(){
 
@@ -48,7 +48,7 @@ function Game (GAME_ARRAY, id, io) {
         // Update players
         this.players.forEach( player=>{
             player.Update();
-        })
+        });
 
         // Update objects through the Arena and strips.
         this.Arena.Update();
@@ -93,7 +93,7 @@ function Game (GAME_ARRAY, id, io) {
                 // console.log(strip.GetDrawArray(0, TopStripOffset + i*this.Arena.h));
                 let NewDrawArray = strip.GetDrawArray(player, 0, TopStripOffset + i*this.Arena.Constants.STRIP_HEIGHT);
                 DrawArray = DrawArray.concat(NewDrawArray);
-            })
+            });
             
             // console.log("Player " + player.id);
             // console.log(DrawArray);
@@ -116,7 +116,7 @@ function Game (GAME_ARRAY, id, io) {
         // Reinitialize the Factory object
         this.Factory = new ObjectFactory(this);
         
-        const numBalls = 6;
+        const numBalls = 1;
         
         // For each player:
         this.players.forEach( (e,i,a) => {
@@ -166,7 +166,7 @@ function Game (GAME_ARRAY, id, io) {
     let that = this;
     this.interval = setInterval(function(){ return that.Update(); }, 16.6);
 
-};
+}
 
 /**
  * Created by Vampiire on 6/19/17.

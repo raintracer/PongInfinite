@@ -459,13 +459,70 @@ function FactoryObject(Factory, id, x, y, red=255, green=255, blue=255) {
     };
 
     // Check to see if this object has moved to another Strip, and reassign if necessary
+    // This function assumes that the object did not move more than one strip away from the previous strip
+    // If that becomes possible, a more robust method must be used
     this.UpdateStrip = function(){
 
         let CurrentStrip = this.Factory.Game.Arena.GetStripAtArenaPosition(this.x,this.y);
         // console.log(`${this.xvel}, ${this.yvel}`)
+
         if (CurrentStrip.id !== this.Strip.id){
+
+            let OldStripID = this.Strip.id;
+            let NewStripID = CurrentStrip.id;
+
+            console.log(`OldStripID: ${OldStripID}`);
+            console.log(`NewStripID: ${NewStripID}`);
+
             this.Strip.ReassignObject(this, CurrentStrip);
             this.Strip = CurrentStrip;
+
+            // Determine if the strip went up or down
+            let IntervalStepUp;
+            if (OldStripID < NewStripID) {
+                // Account for the fact that the OldStrip may have been at 0, meaning the NewStrip ID is actually down one
+                if (OldStripID === 0){
+                    // Check to see if the New Strip ID is the next highest
+                    if (NewStripID === 1){
+                        // The New Strip ID is higher
+                        IntervalStepUp = true;
+                    } else{
+                        // [This should perhaps check that the NewStrip ID is at the end of the Strip IDs. This leaves it open to error]
+                        // The New Strip ID is lower
+                        IntervalStepUp = false;
+                    }
+                } else{
+                    // The New Strip ID is definitely higher
+                    IntervalStepUp = true;
+                }
+            } else if (OldStripID > NewStripID) {
+                // Account for the fact that the OldStrip may have been at the max, meaning the NewStrip ID is actually up one
+                if (NewStripID === 0){
+                    // Check to see if the Old Strip ID is the next highest
+                    if (OldStripID === 1){
+                        // The New Strip ID is lower
+                        IntervalStepUp = false;
+                    } else{
+                        // The New Strip ID is higher
+                        IntervalStepUp = true;
+                    }
+                } else{
+                    // The New Strip ID is definitely lower
+                    IntervalStepUp = false;
+                }
+            } else {
+                console.log("Warning: Strip was reassigned to a strip with a matching ID");
+            }
+
+            // Perform the appropriate action based on the strip movement
+            switch (this.type) {
+                case "Ball":
+                    IntervalStepUp ? console.log("A ball went up") : console.log("A ball went down");
+                    break;
+                default:
+                    break;
+            }
+
         }
     };
 

@@ -5,7 +5,7 @@ const Camera = require('./Camera');
 function Player(Game, socket, id){
 
     this.Game = Game;
-    this.socket = socket,
+    this.socket = socket;
     this.id = id;
     this.paddle;
     this.Camera = new Camera(this.Game, 0,0);

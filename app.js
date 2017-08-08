@@ -79,7 +79,7 @@ removePlayer = (socket) => {
 // END THE GAME IN THE SPECIFIED INDEX
 endGame = (GameIndex) => {
 
-    GAME_ARRAY[GameIndex].Quit;
+    GAME_ARRAY[GameIndex].Quit();
     GAME_ARRAY.splice(GameIndex, 1);
 
     // GAME_ARRAY.forEach( (e, i, a) => {

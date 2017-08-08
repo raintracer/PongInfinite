@@ -15,8 +15,6 @@ let paddleTop;
 let paddleBottom;
 let DrawArray = [];
 
-
-
 function ObjectFactory(Game){
 
     this.Game = Game;
@@ -24,6 +22,7 @@ function ObjectFactory(Game){
     // this.objectQuantity = 0;
     this.objectsMade = 0;
     this.gameObjects = [];
+    // this.paddleRegistry = []; // Contains a list of default paddle y positions
 
     this.Constants = {
         // return { STAGE_WIDTH: 400, STAGE_HEIGHT: 500, CHAOS : 3, TRANSFER_COEFFICIENT : 0.4, PADDLE_FORCE: 6};
@@ -81,83 +80,11 @@ function ObjectFactory(Game){
         Balls.forEach( e => e.randomize());
     };
 
-    // this.update = function(){
-
-    //     this.gameObjects.forEach( (e, i, a) => {
-
-    //     // checks if a ball has crossed either Y bound and awards the respective point
-    //         // deletes old ball(s) and creates a new one to be randomized
-    //         if( e.type === 'Ball'){
-    //             // if(score.scorePoint(e)){
-    //             //     if(!e.mini){
-    //             //         let newBall = this.createObject('Ball', Constants.STAGE_WIDTH/2, Constants.STAGE_HEIGHT/2);
-    //             //         newBall.randomize();
-    //             //     }
-    //             //     this.deleteObject(e.id);
-    //             // }
-    //         }
-
-    //         if(e.type === 'Paddle'){
-
-    //         }
-
-    //         if( e.type === 'Laser'){
-
-    //             if(e.shot){
-    //                 e.boundaryCheck();
-    //                 // e.pulseEffect();
-    //                 e.laserHit();
-
-    //             } else{
-    //                 e.updateLaser();
-    //             }
-    //         }
-
-    //     // after applying specific update methods call the GameObject update on the object
-    //         e.update();
-    //     });
-
-    // };
-
     this.UpdateStrips = function(){
         this.gameObjects.forEach( (object,i,a) =>{
             object.UpdateStrip();
         });
     };
-
-    // this.show = function(camera) {
-
-    //     DrawArray = [];
-    //     let Constants = this.Constants;
-    //     this.gameObjects.forEach(function (e) {
-
-    //         DrawArray.push({
-    //             type: e.type,
-    //             shape : e.shape,
-    //             w: e.w,
-    //             h: e.h,
-    //             fill: {red: e.red, green: e.green, blue: e.blue},
-    //             x: e.x-camera.x+Constants.STAGE_WIDTH/2,
-    //             y: e.y-camera.y+Constants.STAGE_HEIGHT/2
-    //         });
-
-    //         // push an extra offset one to demo continuously drawn objects:
-    //         // DrawArray.push({
-    //         //     type: e.type,
-    //         //     shape : e.shape,
-    //         //     w: e.w,
-    //         //     h: e.h,
-    //         //     fill: {red: e.red, green: e.green, blue: e.blue},
-    //         //     x: e.x-camera.x+Constants.STAGE_WIDTH/2,
-    //         //     y: e.y-camera.y-Constants.STAGE_HEIGHT/2
-    //         // });
-
-    //     });
-
-    //     return DrawArray;
-    // };
-
-    console.log(`Object Factor knows the stage width: ${this.Constants.STAGE_WIDTH}`);
 
 }
 
