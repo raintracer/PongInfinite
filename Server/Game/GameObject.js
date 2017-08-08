@@ -2,11 +2,11 @@
  * Created by Richard Tyler on 5/21/2017.
  */
 
-module.exports = FactoryObject;
+module.exports = GameObject;
 
 const Constants = { STAGE_WIDTH: 400, STAGE_HEIGHT: 500, CHAOS : 1, TRANSFER_COEFFICIENT : 0.4};
 
-function FactoryObject(Factory, id, x, y, red=255, green=255, blue=255) {
+function GameObject(Factory, id, x, y, red=255, green=255, blue=255) {
 
 // position coordinates
     this.Factory = Factory;
@@ -178,6 +178,9 @@ function FactoryObject(Factory, id, x, y, red=255, green=255, blue=255) {
     // sets bounds in the y direction to contain the game object within the canvas
     this.moveY = function(){
 
+        // Record the old y position
+        let oldY = this.y;
+
         this.y += this.yvel;
         let HitObjects = Factory.gameObjects;
 
@@ -237,7 +240,7 @@ function FactoryObject(Factory, id, x, y, red=255, green=255, blue=255) {
 
                 }
             }
-        };
+        }
 
         // DETECT COLLISION WITH PADDLES AT ANY OF THE BALLS CORNERS OR SIDES
         // if (this.collidesAny(Factory.paddleTop)){
@@ -271,6 +274,19 @@ function FactoryObject(Factory, id, x, y, red=255, green=255, blue=255) {
         //     this.reflectY();
         // }
 
+        // Determine if a paddle axis was crossed
+        this.Factory.paddleRegistry.forEach( (paddleY,i,a) => {
+
+            if (this.y > paddleY && oldY < paddleY) {
+                // The ball went down past a paddle
+                console.log("A ball went down");
+            } else if (this.y < paddleY && oldY > paddleY){
+                // The ball went up past a paddle
+                console.log("A ball went up");
+            }
+        });
+
+        // Loop the arena on the object
         while (this.y < 0) {
             this.y += Factory.Game.Arena.h;
         }
@@ -466,64 +482,65 @@ function FactoryObject(Factory, id, x, y, red=255, green=255, blue=255) {
         let CurrentStrip = this.Factory.Game.Arena.GetStripAtArenaPosition(this.x,this.y);
         // console.log(`${this.xvel}, ${this.yvel}`)
 
-        if (CurrentStrip.id !== this.Strip.id){
-
-            let OldStripID = this.Strip.id;
-            let NewStripID = CurrentStrip.id;
-
-            console.log(`OldStripID: ${OldStripID}`);
-            console.log(`NewStripID: ${NewStripID}`);
-
-            this.Strip.ReassignObject(this, CurrentStrip);
-            this.Strip = CurrentStrip;
-
-            // Determine if the strip went up or down
-            let IntervalStepUp;
-            if (OldStripID < NewStripID) {
-                // Account for the fact that the OldStrip may have been at 0, meaning the NewStrip ID is actually down one
-                if (OldStripID === 0){
-                    // Check to see if the New Strip ID is the next highest
-                    if (NewStripID === 1){
-                        // The New Strip ID is higher
-                        IntervalStepUp = true;
-                    } else{
-                        // [This should perhaps check that the NewStrip ID is at the end of the Strip IDs. This leaves it open to error]
-                        // The New Strip ID is lower
-                        IntervalStepUp = false;
-                    }
-                } else{
-                    // The New Strip ID is definitely higher
-                    IntervalStepUp = true;
-                }
-            } else if (OldStripID > NewStripID) {
-                // Account for the fact that the OldStrip may have been at the max, meaning the NewStrip ID is actually up one
-                if (NewStripID === 0){
-                    // Check to see if the Old Strip ID is the next highest
-                    if (OldStripID === 1){
-                        // The New Strip ID is lower
-                        IntervalStepUp = false;
-                    } else{
-                        // The New Strip ID is higher
-                        IntervalStepUp = true;
-                    }
-                } else{
-                    // The New Strip ID is definitely lower
-                    IntervalStepUp = false;
-                }
-            } else {
-                console.log("Warning: Strip was reassigned to a strip with a matching ID");
-            }
-
-            // Perform the appropriate action based on the strip movement
-            switch (this.type) {
-                case "Ball":
-                    IntervalStepUp ? console.log("A ball went up") : console.log("A ball went down");
-                    break;
-                default:
-                    break;
-            }
-
-        }
+        // This procedure failed to determine strip change in two strip arenas
+        // if (CurrentStrip.id !== this.Strip.id){
+        //
+        //     let OldStripID = this.Strip.id;
+        //     let NewStripID = CurrentStrip.id;
+        //
+        //     console.log(`OldStripID: ${OldStripID}`);
+        //     console.log(`NewStripID: ${NewStripID}`);
+        //
+        //     this.Strip.ReassignObject(this, CurrentStrip);
+        //     this.Strip = CurrentStrip;
+        //
+        //     // Determine if the strip went up or down
+        //     let IntervalStepUp;
+        //     if (OldStripID < NewStripID) {
+        //         // Account for the fact that the OldStrip may have been at 0, meaning the NewStrip ID is actually down one
+        //         if (OldStripID === 0){
+        //             // Check to see if the New Strip ID is the next highest
+        //             if (NewStripID === 1){
+        //                 // The New Strip ID is higher
+        //                 IntervalStepUp = true;
+        //             } else{
+        //                 // [This should perhaps check that the NewStrip ID is at the end of the Strip IDs. This leaves it open to error]
+        //                 // The New Strip ID is lower
+        //                 IntervalStepUp = false;
+        //             }
+        //         } else{
+        //             // The New Strip ID is definitely higher
+        //             IntervalStepUp = true;
+        //         }
+        //     } else if (OldStripID > NewStripID) {
+        //         // Account for the fact that the OldStrip may have been at the max, meaning the NewStrip ID is actually up one
+        //         if (NewStripID === 0){
+        //             // Check to see if the Old Strip ID is the next highest
+        //             if (OldStripID === 1){
+        //                 // The New Strip ID is lower
+        //                 IntervalStepUp = false;
+        //             } else{
+        //                 // The New Strip ID is higher
+        //                 IntervalStepUp = true;
+        //             }
+        //         } else{
+        //             // The New Strip ID is definitely lower
+        //             IntervalStepUp = false;
+        //         }
+        //     } else {
+        //         console.log("Warning: Strip was reassigned to a strip with a matching ID");
+        //     }
+        //
+        //     // Perform the appropriate action based on the strip movement
+        //     switch (this.type) {
+        //         case "Ball":
+        //             IntervalStepUp ? console.log("A ball went up") : console.log("A ball went down");
+        //             break;
+        //         default:
+        //             break;
+        //     }
+        //
+        // }
     };
 
 }

@@ -22,7 +22,7 @@ function ObjectFactory(Game){
     // this.objectQuantity = 0;
     this.objectsMade = 0;
     this.gameObjects = [];
-    // this.paddleRegistry = []; // Contains a list of default paddle y positions
+    this.paddleRegistry = []; // Contains a list of default paddle y positions
 
     this.Constants = {
         // return { STAGE_WIDTH: 400, STAGE_HEIGHT: 500, CHAOS : 3, TRANSFER_COEFFICIENT : 0.4, PADDLE_FORCE: 6};
@@ -46,6 +46,9 @@ function ObjectFactory(Game){
         }
         else if (objectType === "Paddle"){
             object = new Paddle(this, this.getObjectTypes("Paddle").length+1, this.objectsMade, x, y, red, green, blue);
+
+            // Add this paddle to the paddleRegistry
+            this.paddleRegistry.push(object.y);
         }
         else {
             console.log(`Unrecognized object: ${objectType}`);
