@@ -50,7 +50,7 @@ function Camera(Game, x, y){
 
     this.StageTopEdgeArenaPosition = function(){
         let StageHeight = this.Game.Factory.Constants.STAGE_HEIGHT;
-        let StageTop = this.y - StageHeight/2;
+        let StageTop = this.y - this.GetVisibleArenaHeight()/2;
 
         while (StageTop < 0){
             StageTop += this.Game.Arena.h;

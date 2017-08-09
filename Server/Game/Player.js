@@ -23,7 +23,9 @@ function Player(Game, socket, id){
         left:false,
         right:false,
         a:false,
-        s:false
+        s:false,
+        q:false,
+        e:false
     };
 
     this.Update = function(){
@@ -47,6 +49,13 @@ function Player(Game, socket, id){
             this.paddle.reflectFactor = 1.25;
         } else {
             this.paddle.reflectFactor = 1;
+        }
+
+        if (this.keys.q){
+            this.Camera.moveZ(-.02);
+        }
+        if (this.keys.e){
+            this.Camera.moveZ(+.02);
         }
 
     };

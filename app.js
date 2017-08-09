@@ -144,6 +144,12 @@ function ProcessKeyPress(data){
     } else if(data.keyCode === 83){
         // S Key
         player.keys.s = true;
+    } else if(data.keyCode === 81) {
+        // Q Key
+        player.keys.q = true;
+    } else if(data.keyCode === 69){
+        // E Key
+        player.keys.e = true;
     }
 
     // console.log(`Key pressed: ${data.keyCode}`);
@@ -181,6 +187,12 @@ function ProcessKeyRelease(data){
     } else if(data.keyCode === 83){
         // S Key
         player.keys.s = false;
+    } else if(data.keyCode === 81) {
+        // Q Key
+        player.keys.q = false;
+    } else if(data.keyCode === 69){
+        // E Key
+        player.keys.e = false;
     }
 
     // console.log(`Key released: ${data.keyCode}`);

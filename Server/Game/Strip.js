@@ -59,7 +59,8 @@ function Strip(Arena, id, x, y, w, h){
         
         DrawArray = [];
         let Constants = this.Arena.Game.Factory.Constants;
-        
+        let scale = player.Camera.z;
+
         this.Objects.forEach( (object, i, a) => {
 
             // Objects are populated to the Draw Array relative to the strip position and passed offset
@@ -71,7 +72,8 @@ function Strip(Arena, id, x, y, w, h){
                 h: object.h,
                 fill: {red: object.red, green: object.green, blue: object.blue},
                 x: object.x - this.x + OffsetX,
-                y: object.y - this.y + OffsetY
+                y: object.y - this.y + OffsetY,
+                scale: scale
             });
 
             // Add a highlight around a paddle that belongs to the player
@@ -83,8 +85,10 @@ function Strip(Arena, id, x, y, w, h){
                     w: object.w,
                     h: object.h,
                     x: object.x - this.x + OffsetX,
-                    y: object.y - this.y + OffsetY
+                    y: object.y - this.y + OffsetY,
+                    scale: scale
                 });
+
             }
 
         });
