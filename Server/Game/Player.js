@@ -52,10 +52,10 @@ function Player(Game, socket, id){
         }
 
         if (this.keys.q){
-            this.Camera.moveZ(-.02);
+            this.Camera.moveZ(-.01);
         }
         if (this.keys.e){
-            this.Camera.moveZ(+.02);
+            this.Camera.moveZ(+.01);
         }
 
     };

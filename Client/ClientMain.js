@@ -4,9 +4,16 @@ let canvas;
 let ballCollide, pointAwarded, paddleCollide, mute = true;
 let GameGraphics = {};
 let player;
+let frame = 0;
+
+let RailColor = {
+    Red:255,
+    Green:255,
+    Blue:255
+};
 
 // ALL YOUR CONSTANTS ARE BELONG TO US. I DON'T KNOW WHAT WERE YELLING ABOUT
-const STAGE_WIDTH = 400, STAGE_HEIGHT = 800;
+const STAGE_WIDTH = 450, STAGE_HEIGHT = 800;
 
 // Preload the game and socket listeners / emitters
 function preload(){
@@ -142,6 +149,37 @@ function keyReleased(){
 function Update(data) {
 
     background(0);
+    DrawScale = data.DrawArray[0].scale;
+
+    // Color Pulse
+    frame++;
+    if (frame === 60){
+        CrawlSpeed = 100;
+        frame = 0;
+    } else{
+        CrawlSpeed = 10;
+    }
+
+    // Color Crawl
+    RailColor.Red += CrawlSpeed*(Math.random()*2-1);
+    RailColor.Green += CrawlSpeed*(Math.random()*2-1);
+    RailColor.Blue += CrawlSpeed*(Math.random()*2-1);
+
+    RailColor.Red < 0 ? RailColor.Red = 0 : 0;
+    RailColor.Green < 0 ? RailColor.Green = 0 : 0;
+    RailColor.Blue < 0 ? RailColor.Blue = 0 : 0;
+
+    RailColor.Red > 255 ? RailColor.Red = 255 : 0;
+    RailColor.Green > 255 ? RailColor.Green = 255 : 0;
+    RailColor.Blue > 255 ? RailColor.Blue = 255 : 0;
+
+    // Draw Rails
+    scale(scale);
+    fill(RailColor.Red, RailColor.Green, RailColor.Blue);
+    rect(5,0,5,STAGE_HEIGHT);
+    rect(20,0,5,STAGE_HEIGHT);
+    rect(STAGE_WIDTH-10,0,5,STAGE_HEIGHT);
+    rect(STAGE_WIDTH-25,0,5,STAGE_HEIGHT);
 
     // prevents crash if data is not available for the loop due to server hangup
     if(data){
@@ -159,7 +197,8 @@ function Update(data) {
             // switch(e.shape){
             //     case 'rect':
             //         console.log('rect called');
-            //         GameGraphics[e.type].rect(e.x, e.y, e.w, e.h);
+            //         GameGraphics[e.type].rect(e.x, e.y, e.w, e.h);rs
+
             //         break;
             //     case 'ellipse':
             //         GameGraphics[e.type].ellipse(e.x, e.y, e.w, e.h);
@@ -168,10 +207,8 @@ function Update(data) {
 
         // draw from center to match server side draw method
 
-
             imageMode(CENTER);
-            // console.log(e.imagetype);
-            image(GameGraphics[e.imagetype], e.x, e.y, e.w, e.h);
+            image(GameGraphics[e.imagetype], (25 + e.x) /*Uncomment to scale x : * DrawScale+(STAGE_WIDTH-50)*(1-DrawScale)/2*/, e.y*DrawScale, e.w, e.h*DrawScale);
 
         });
 

@@ -16,7 +16,7 @@ function Game (GAME_ARRAY, id, io) {
 
     this.Constants = {
         // return { STAGE_WIDTH: 400, STAGE_HEIGHT: 500, CHAOS : 3, TRANSFER_COEFFICIENT : 0.4, PADDLE_FORCE: 6};
-        STAGE_WIDTH: 400,
+        STAGE_WIDTH: 450,
         STAGE_HEIGHT: 800,
         CHAOS: 3,
 
@@ -34,6 +34,7 @@ function Game (GAME_ARRAY, id, io) {
 
     this.gameInstance = null;
     this.MaxPlayers = 2;
+    this.StartPlayers = 2;
     // this.score = new Score();
     this.lobby = true;
 
@@ -88,7 +89,7 @@ function Game (GAME_ARRAY, id, io) {
             let TopStripOffset = strips[0].y - StageTop;
 
             // Determine the strips that the player will see
-            let VisibleStripCount = Math.ceil(this.Constants.STAGE_HEIGHT/this.Arena.Constants.STRIP_HEIGHT) + 1;
+            let VisibleStripCount = Math.ceil(player.Camera.GetVisibleArenaHeight()/this.Arena.Constants.STRIP_HEIGHT) + 1;
 
             // Push as many strips as it takes to fill the screen, even if the strips must be cycled
             for (let i = 1; i <= VisibleStripCount; i++){
@@ -166,7 +167,14 @@ function Game (GAME_ARRAY, id, io) {
         console.log(`Player ${socket.id} added.`);
         this.players.push(new Player(this, socket, this.GetPlayerCount() + 1));
         this.players[this.GetPlayerCount()-1].camera = new Camera(this, this.Constants.STAGE_WIDTH/2, (this.GetPlayerCount()-1)*this.Constants.STAGE_HEIGHT);
-        
+
+        // If the jump-start player count is reached, add players with duplicate sockets
+        if (this.GetPlayerCount() === this.StartPlayers){
+            for (i=1; i<=this.MaxPlayers - this.StartPlayers; i++){
+                // Duplicate this player
+                this.AddPlayer(socket);
+            }
+        }
 
         console.log (`Game ${this.id} has ${this.GetPlayerCount()} players now.`);
         
