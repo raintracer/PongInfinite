@@ -9,7 +9,7 @@ const Paddle = require('./Paddle');
 const Laser = require('./Laser');
 const Score = require('./Score');
 
-const score = new Score();
+// const score = new Score();
 
 let paddleTop;
 let paddleBottom;
@@ -24,15 +24,7 @@ function ObjectFactory(Game){
     this.gameObjects = [];
     this.paddleRegistry = []; // Contains a list of default paddle y positions
 
-    this.Constants = {
-        // return { STAGE_WIDTH: 400, STAGE_HEIGHT: 500, CHAOS : 3, TRANSFER_COEFFICIENT : 0.4, PADDLE_FORCE: 6};
-        STAGE_WIDTH: 400,
-        STAGE_HEIGHT: 800,
-        CHAOS: 3,
-        // TRANSFER_COEFFICIENT: 0.4,
-        TRANSFER_COEFFICIENT: 0,
-        PADDLE_FORCE: 6
-    };
+    this.Constants = this.Game.Constants;
 
     this.createObject = function(objectType,x,y,red,green,blue, option = null){
 

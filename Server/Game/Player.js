@@ -5,9 +5,10 @@ const Camera = require('./Camera');
 function Player(Game, socket, id){
 
     this.Game = Game;
+
     this.socket = socket;
     this.id = id;
-    this.paddle;
+    this.paddle = {};
     this.Camera = new Camera(this.Game, 0,0);
     
     // EXAMPLE PROPERTIES
@@ -26,6 +27,7 @@ function Player(Game, socket, id){
     };
 
     this.Update = function(){
+
         if (this.keys.up){
             this.Camera.Move(0,-10);
         }

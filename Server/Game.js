@@ -9,22 +9,32 @@ module.exports = Game;
 const ObjectFactory = require('./Game/ObjectFactory');
 const Player = require('./Game/Player');
 const Camera = require('./Game/Camera');
-const Score = require('./Game/Score');
+// const Score = require('./Game/Score');
 const Arena = require('./Game/Arena');
 
 function Game (GAME_ARRAY, id, io) {
 
+    this.Constants = {
+        // return { STAGE_WIDTH: 400, STAGE_HEIGHT: 500, CHAOS : 3, TRANSFER_COEFFICIENT : 0.4, PADDLE_FORCE: 6};
+        STAGE_WIDTH: 400,
+        STAGE_HEIGHT: 800,
+        CHAOS: 3,
+
+        // TRANSFER_COEFFICIENT: 0.4,
+        TRANSFER_COEFFICIENT: 0,
+        PADDLE_FORCE: 6
+    };
     // this.route = name of dynamic lobby route given by player
     this.GAME_ARRAY = GAME_ARRAY;
     this.id = id;
     this.close = false;
-    this.Factory = new ObjectFactory();
+    this.Factory = {};
     this.io = io;
     this.players = [];
 
     this.gameInstance = null;
     this.MaxPlayers = 2;
-    this.score = new Score();
+    // this.score = new Score();
     this.lobby = true;
 
     this.Arena = {};
@@ -56,10 +66,11 @@ function Game (GAME_ARRAY, id, io) {
 
         this.GameShow();
 
-        this.players[0].Camera.y +=5;
-        if (this.players[0].Camera.y>this.Arena.h-this.Factory.Constants.STAGE_HEIGHT/2){
-            this.players[0].Camera.y-=this.Arena.h;
-        }
+        // Scroll Camera for Player 1
+        // this.players[0].Camera.y +=5;
+        // if (this.players[0].Camera.y>this.Arena.h-this.Factory.Constants.STAGE_HEIGHT/2){
+        //     this.players[0].Camera.y-=this.Arena.h;
+        // }
     };
 
     this.GameShow = function(){
@@ -77,7 +88,7 @@ function Game (GAME_ARRAY, id, io) {
             let TopStripOffset = strips[0].y - StageTop;
 
             // Determine the strips that the player will see
-            let VisibleStripCount = Math.ceil(this.Factory.Constants.STAGE_HEIGHT/this.Arena.Constants.STRIP_HEIGHT);
+            let VisibleStripCount = Math.ceil(this.Constants.STAGE_HEIGHT/this.Arena.Constants.STRIP_HEIGHT) + 1;
 
             // Push as many strips as it takes to fill the screen, even if the strips must be cycled
             for (let i = 1; i <= VisibleStripCount; i++){
@@ -116,7 +127,7 @@ function Game (GAME_ARRAY, id, io) {
         // Reinitialize the Factory object
         this.Factory = new ObjectFactory(this);
         
-        const numBalls = 1;
+        const numBalls = 50;
         
         // For each player:
         this.players.forEach( (e,i,a) => {
@@ -154,8 +165,9 @@ function Game (GAME_ARRAY, id, io) {
     this.AddPlayer = function(socket){
         console.log(`Player ${socket.id} added.`);
         this.players.push(new Player(this, socket, this.GetPlayerCount() + 1));
-        this.players[this.GetPlayerCount()-1].camera = new Camera(this.Factory.Constants.STAGE_WIDTH/2, (this.GetPlayerCount()-1)*this.Factory.Constants.STAGE_HEIGHT);
+        this.players[this.GetPlayerCount()-1].camera = new Camera(this, this.Constants.STAGE_WIDTH/2, (this.GetPlayerCount()-1)*this.Constants.STAGE_HEIGHT);
         
+
         console.log (`Game ${this.id} has ${this.GetPlayerCount()} players now.`);
         
         if (this.GetPlayerCount() === this.MaxPlayers){
