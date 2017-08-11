@@ -128,7 +128,7 @@ function Game (GAME_ARRAY, id, io) {
         // Reinitialize the Factory object
         this.Factory = new ObjectFactory(this);
         
-        const numBalls = 50;
+        const numBalls = 5;
         
         // For each player:
         this.players.forEach( (e,i,a) => {

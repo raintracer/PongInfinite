@@ -208,7 +208,7 @@ function Update(data) {
         // draw from center to match server side draw method
 
             imageMode(CENTER);
-            image(GameGraphics[e.imagetype], (25 + e.x) /*Uncomment to scale x : * DrawScale+(STAGE_WIDTH-50)*(1-DrawScale)/2*/, e.y*DrawScale, e.w, e.h*DrawScale);
+            image(GameGraphics[e.imagetype], (25 + e.x) * DrawScale+(STAGE_WIDTH-50)*(1-DrawScale)/2, e.y*DrawScale, e.w*DrawScale, e.h*DrawScale);
 
         });
 
