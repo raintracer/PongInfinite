@@ -31,6 +31,7 @@ function Game (GAME_ARRAY, id, io) {
     this.Factory = {};
     this.io = io;
     this.players = [];
+    this.sounds = [];
 
     this.gameInstance = null;
     this.MaxPlayers = 2;
@@ -42,6 +43,10 @@ function Game (GAME_ARRAY, id, io) {
 
     this.Update = function(){
 
+        // Clear the sounds
+        this.sounds = [];
+
+        // Update based on the game phase
         if (this.lobby===true){
             this.LobbyUpdate();
         } else{
@@ -109,9 +114,11 @@ function Game (GAME_ARRAY, id, io) {
             
             // console.log("Player " + player.id);
             // console.log(DrawArray);
+
             // REQUEST AND EMIT THE DRAW ARRAY FOR THE GAME
             data = {
-                DrawArray: DrawArray
+                DrawArray: DrawArray,
+                Sounds:this.sounds
             };
             player.socket.emit('gameShow', data);
 

@@ -3,6 +3,7 @@ let socket;
 let canvas;
 let ballCollide, pointAwarded, paddleCollide, mute = true;
 let GameGraphics = {};
+let SoundEffects = {};
 let player;
 let frame = 0;
 
@@ -22,6 +23,8 @@ function preload(){
     // ballCollide = loadSound('Sound Effects/Ball_Collide.mp3');
     // pointAwarded = loadSound('Sound Effects/Light_Fapping.mp3');
     // paddleCollide = loadSound('Sound Effects/Soft_Ding.mp3');
+
+    SoundEffects["BallCollide"] = loadSound("./Sound Effects/Ball_Collide.mp3");
 
     GameGraphics["Ball"] = createGraphics(20, 20);
     GameGraphics["Ball"].fill(255);
@@ -155,6 +158,7 @@ function Update(data) {
     frame++;
     if (frame === 60){
         CrawlSpeed = 100;
+
         frame = 0;
     } else{
         CrawlSpeed = 10;
@@ -184,6 +188,15 @@ function Update(data) {
     // prevents crash if data is not available for the loop due to server hangup
     if(data){
 
+        // Play sounds
+        data.Sounds.forEach( e => {
+            SoundEffects[e].play();
+        });
+        // if (data.Sounds.length>0){
+        //     console.log(data.Sounds);
+        // }
+
+        // Draw objects
         data.DrawArray.forEach(function(e){
 
             // console.log(e.type);
@@ -205,7 +218,7 @@ function Update(data) {
             //         break;
             // }
 
-        // draw from center to match server side draw method
+            // draw from center to match server side draw method
 
             imageMode(CENTER);
             image(GameGraphics[e.imagetype], (25 + e.x) * DrawScale+(STAGE_WIDTH-50)*(1-DrawScale)/2, e.y*DrawScale, e.w*DrawScale, e.h*DrawScale);

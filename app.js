@@ -45,7 +45,7 @@ createGame = (io) => {
 // RETURNS THE INDEX OF A GAME THAT IS NOT FULL OF PLAYERS, IF NONE ARE AVAILABLE RETURN -1
 getAvailableGameIndex = () => {
 
-    console.log (`Checking available games. Number of games: ${GAME_ARRAY.length}`)
+    console.log (`Checking available games. Number of games: ${GAME_ARRAY.length}`);
     // CHECK IF NO GAMES EXIST
     if (GAME_ARRAY.length === 0) {
         console.log ("No games found.");

@@ -105,10 +105,13 @@ function GameObject(Factory, id, x, y, red=255, green=255, blue=255) {
                 if (this.xvel > 0) {
 
                     // If there is a collision on the right
+
                     if (this.collidesRight(HitObjects[i]) || this.collidesTopRight(HitObjects[i]) || this.collidesBottomRight(HitObjects[i])) {
 
                         // Set the active object against the left side of the target object
                         this.setPosition(HitObjects[i].leftEdge() - this.w / 2, this.y);
+
+                        this.impact(HitObjects[i]);
 
                         // transfer Momentum
                         this.transferMomentumX(HitObjects[i]);
@@ -132,6 +135,8 @@ function GameObject(Factory, id, x, y, red=255, green=255, blue=255) {
 
                     // If there is a collision on the left
                     if (this.collidesLeft(HitObjects[i]) || this.collidesTopLeft(HitObjects[i]) || this.collidesBottomLeft(HitObjects[i])) {
+
+                        this.impact(HitObjects[i]);
 
                         // Set the active object against the left side of the target object
                         this.setPosition(HitObjects[i].rightEdge() + this.w / 2, this.y);
@@ -174,6 +179,28 @@ function GameObject(Factory, id, x, y, red=255, green=255, blue=255) {
 
     };
 
+    this.impact = function(HitObject){
+
+        // console.log("Impact");
+        switch(this.type){
+            case "Ball":
+                switch(HitObject.type){
+                    case "Ball":
+                        // Two Balls Hit
+
+                        this.Factory.Game.sounds.push("BallCollide");
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            default:
+                break;
+        }
+
+
+    };
+
         // moves the game object in the y direction, assigns the old y position to the previous y position before movement
     // sets bounds in the y direction to contain the game object within the canvas
     this.moveY = function(){
@@ -194,6 +221,8 @@ function GameObject(Factory, id, x, y, red=255, green=255, blue=255) {
 
                     // If there is a collision on the bottom
                     if (this.collidesBottomLeft(HitObjects[i]) || this.collidesBottom(HitObjects[i]) || this.collidesBottomRight(HitObjects[i])) {
+
+                        this.impact(HitObjects[i]);
 
                         this.setPosition(this.x, HitObjects[i].topEdge() - this.h / 2);
 
@@ -221,6 +250,8 @@ function GameObject(Factory, id, x, y, red=255, green=255, blue=255) {
                     // If there is a collision on the top
                     if (this.collidesTopLeft(HitObjects[i]) || this.collidesTop(HitObjects[i]) || this.collidesTopRight(HitObjects[i])) {
                         this.setPosition(this.x, HitObjects[i].bottomEdge() + this.h / 2);
+
+                        this.impact(HitObjects[i]);
 
                         // transfer Momentum
                         this.transferMomentumY(HitObjects[i]);
